@@ -6,7 +6,7 @@ Created on 28-Oct-2016
 import requests
 import json;
 #WIKI_API = "http://localhost/mediawiki/api.php";
-WIKI_API = "http://www.mediawiki.org/w/api.php";
+WIKI_API = "http://en.wikipedia.org/w/api.php";
 #'cmtitle':'Category:Machine_learning'
 #'cmtitle':'Category:Defunct airports in Prince Edward Island'
 # parameters = {'action':'query', 'list':'categorymembers','cmtitle':'Category:Machine learning', 'format':'json', u'cmcontinue': u'page|274545492f414d372b2f4b353745043d2f2749413741330342274545492f414d372b2f4b353745043d2f2749413741330133018f788f7e8f1a|19463198'}
@@ -51,5 +51,5 @@ def getArticles(depth, category):
                 articleList.append(artResp['title']);
     articleList = list(set(articleList));
     print articleList;
-getArticles(1, "Machine learning");   
+getArticles(1, "Machine_learning");   
         
