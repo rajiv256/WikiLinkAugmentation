@@ -1,6 +1,10 @@
 import wikipedia
 import re
 from collections import Counter
+import operator
+from categories import *;
+
+DEPTH = 2;
 
 stopListSmall = ["a","an","and","are","as","at","be","by","for","from","has","he","in","is","it","its","of","on","or","that","the","to","was","were","will","with",""];
 
@@ -32,5 +36,32 @@ def giveContent(article):
 def giveSummary(article):
     summry = wikipedia.summary(article);
     return summry;
+
+def pruneCategories(article):
+    categories = giveCategories();  # TODO by rajiv
+    simDict = {};
+    for catgry in categories:
+        simDict[catgry] = simArtclCtgry(article,catgry);
+    sortedList = sorted(simDict.items(),key=operator.itemgetter(1));
+    return sortedList[:2];
+
+def simArtclCtgry(article,catgry):
+    catgryPage = wikipedia.page("category:"+catgry);
+    catgryArtclsList = catgryPage.links;
+    if "category" in catgryArtclsList:
+        catgryArtclsList.remove("category");
+    catgrySimSum = 0;
+    for catgryArtcls in catgryArtclsList:
+        catgrySimSum += articleSimlarity(article,catgryArtcls); # TODO by sahiti
+    return catgrySimSum/len(catgryArtclsList);
+
+def pruneArticles(article,catgry,thrshld):
+    artclList = giveArticles(DEPTH,catgry)[1];     # DONE by hemanth
+    artclDict = {};
+    for catgryArtcl in artclList:
+        artclDict[catgryArtcl] = articleSimlarity(article,catgryArtcl);
+    sortedList = sorted(artclDict.items(),key=operator.itemgetter(1));
+    filterList = [x for (x,y) in sortedList if y > thrshld];
+    return filterList;
 
 t = giveContent("india")
