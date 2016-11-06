@@ -100,5 +100,3 @@ def categories(title) :
     name = [k.encode('utf-8') for k in name]
     return name
 
-
-
