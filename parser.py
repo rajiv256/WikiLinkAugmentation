@@ -15,7 +15,6 @@ def process(title) :        #returns xml
     ny = wi.WikipediaPage(title)
     s = ny.html()
     s = s.encode('utf8')
-
     soup = bs(s, 'lxml')
     #print soup
     return soup
@@ -74,6 +73,7 @@ def see_also(title) :
         if (len(str(part))<=10) :
             part = part.next_sibling
             continue
+        print part.get_text()
         parts.append(part.get_text())
         if (t >= 1000) :
             break
@@ -94,14 +94,11 @@ def see_also(title) :
     names = [k.encode('utf-8') for k in names]
     return names
 
-
-
-l = summary_links('expert system')
-print l , len(l)
-
-
-print see_also('expert system')
-
+def categories(title) :
+    ny = wi.WikipediaPage(title)
+    name = ny.categories
+    name = [k.encode('utf-8') for k in name]
+    return name
 
 
 
