@@ -64,4 +64,11 @@ def pruneArticles(article,catgry,thrshld):
     filterList = [x for (x,y) in sortedList if y > thrshld];
     return filterList;
 
+def giveSimArtcls(article,thrshld):
+    catgrys = pruneCategories(article);
+    totalSimList = [];
+    for catgry in catgrys:
+        totalSimList += pruneArticles(article,catgry,thrshld);
+    return totalSimList;
+
 t = giveContent("india")
