@@ -12,7 +12,12 @@ stopListBig = ["a","as","able","about","above","according","accordingly","across
 ,""];
 
 def givePrunedContent(article):
-    page = wikipedia.page(article);
+    print article
+    try:
+        page = wikipedia.page(article);
+    except wikipedia.exceptions.DisambiguationError as e:
+        return "NULL"
+
     content = page.content;
     # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
     content = content.lower();
@@ -35,6 +40,10 @@ def givePrunedContent(article):
     return content;
 
 def giveSummary(article):
+    try:
+        summry = wikipedia.summary(article);
+    except wikipedia.exceptions.DisambiguationError as e:
+        return "NULL"
     content = wikipedia.summary(article);
 
     content = content.lower();

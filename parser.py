@@ -10,7 +10,7 @@ def smoothing(l) :
     return ans
 
 
-def process(title) :
+def process(title) :        #returns xml
     ny = wi.WikipediaPage(title)
     s = ny.html()
     s = s.encode('utf8')
@@ -19,7 +19,7 @@ def process(title) :
     #print soup
     return soup
 
-def all_links(title) :
+def all_links(title) :   #return links for title
     soup = process(title)
     paragraphs = soup('p')
     links = []
@@ -33,7 +33,7 @@ def all_links(title) :
     return smoothing(links)
 
 
-def summary_links(title) :
+def summary_links(title) : #return summary links
     soup = process(title)
     part = soup.find('div')
     links = []
@@ -58,6 +58,15 @@ def summary_links(title) :
                 links += k('a')
             part = part.next_sibling
     return smoothing(links)
+
+def Filllinks(article):
+    article.summary_links =  summary_links(article.title)
+    article.hyperlinks = all_links(article.title)
+    return article;
+
+
+
+
 
 l = summary_links('expert system')
 print l , len(l)

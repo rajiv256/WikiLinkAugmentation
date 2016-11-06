@@ -1,21 +1,21 @@
 
 import math
 from _ast import In
+from collections import Counter
 
 wordDs ={}
 Allwords = []
 N = 0
 wordConceptVector = {}
 
-def setN(x,y):
-    global N
-    global ds
-    N = x
-    ds = y
-
-def printN():
-    print N
-    print ds
+def setallglobals(w,A,n):
+    global wordDs
+    global  Allwords
+    global  N
+    wordDs = w
+    Allwords = A
+    N = n
+    return
 
 
 
@@ -25,22 +25,24 @@ def add(wordfrequencies,p):
     else:
         wordfrequencies[p] = 1
     return 0
-
+'''
 def addword(word,words):
     if(word not in words):
         words += [word]
     return 0
-
+'''
+def add(lists , list):
+    lists = lists + list
+    return 0
 def calculateDs(Alldocuments):
     global wordDs
     global Allwords
     global N
     Allwords = []
     N = len(Alldocuments)
-    for doc in Alldocuments:
-        docwords = doc[1].split(" ")
-        map(lambda p : addword(p , Allwords) ,docwords )
-    print Allwords
+    docwords = map(lambda p : p[1].split(" ") ,Alldocuments)
+    Allwords = sum(docwords , [])
+    Allwords = list(set(Allwords))
     wordcounts = map( lambda doc : map( lambda p : (1 if (Allwords[p] in doc[1]) else 0 )  , range(len(Allwords)) ),Alldocuments )
     wordDs = map(  lambda p : (Allwords[p] , sum([wordcounts[i][p] for i in range(len(wordcounts)) ]) ) , range(len(Allwords)) )
     wordDs = dict(wordDs)
@@ -57,13 +59,9 @@ def linkTfIdf(links):
 
 
 def TfIdf(document):
-    docwords = []
-    if(isinstance(document , basestring)):
-        docwords = document[0].split(" ")
-    else:
-        docwords = document
-    termfrequencies = {}
-    map(lambda p : add(termfrequencies,p)  ,docwords);
+    global Allwords
+    docwords = document.split(" ")
+    termfrequencies = dict(Counter(docwords));
     docwords = termfrequencies.keys();
     localwordDs = {}
     for x in docwords:
@@ -76,6 +74,7 @@ def TfIdf(document):
     tfidf = map (lambda p : (p[0],termfrequencies[p[0]]*p[1]) ,InverseDocfreq )
     tfidf = dict(tfidf)
     return tfidf
+
 
 
 def Invertedindex(Alldocuments):

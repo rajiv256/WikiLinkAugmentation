@@ -52,4 +52,4 @@ def getArticles(depth, category):
     articleList = list(set(articleList));
     # print articleList;
     return (subCat,articleList);
-t = getArticles(1, "Machine learning");
+#t = getArticles(1, "Machine learning");
