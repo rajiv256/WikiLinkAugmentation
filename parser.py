@@ -1,5 +1,6 @@
 import  wikipedia as wi
 from bs4 import BeautifulSoup as bs
+import time
 
 def smoothing(l) :
     ans = []
@@ -59,14 +60,46 @@ def summary_links(title) : #return summary links
             part = part.next_sibling
     return smoothing(links)
 
-def Filllinks(article):
+def fill_links(article):
     article.summary_links =  summary_links(article.title)
     article.hyperlinks = all_links(article.title)
     return article;
 
+def see_also(title) :
+    soup = process(title)
+    part = soup.div
+    parts = []
+    t = 0
+    while (part != None) :
+        if (len(str(part))<=10) :
+            part = part.next_sibling
+            continue
+        parts.append(part.get_text())
+        if (t >= 1000) :
+            break
+        t += 1
+        part = part.next_sibling
+    i = len(parts)-1
+    s = ""
+    while (i > 0) :
+        k = parts[i]
 
+        if ("See also" in k.encode('utf-8')) :
+            s = parts[i+1]
+            break
+        i -= 1
+    names = s.split("\n")
+    names = [k.encode('utf-8') for k in names]
+    return names
 
 
 
 l = summary_links('expert system')
 print l , len(l)
+
+
+print see_also('expert system')
+
+
+
+
