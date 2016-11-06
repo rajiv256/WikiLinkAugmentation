@@ -35,7 +35,21 @@ def givePrunedContent(article):
     return content;
 
 def giveSummary(article):
-    summry = wikipedia.summary(article);
+    content = wikipedia.summary(article);
+
+    content = content.lower();
+    content = re.sub('[!@#$%&()\n=\'\",.]*','',content);
+    content = re.sub('[0-9]*','',content);
+
+    words = [];
+    for w in content.split(" "):
+        try:
+            words.append(str(w));
+        except UnicodeEncodeError:
+            pass
+    words = [w for w in words if w not in stopListBig];
+
+    summry = " ".join(words);
     return summry;
 
 def pruneCategories(article):
