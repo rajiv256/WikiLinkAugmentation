@@ -88,6 +88,8 @@ def see_also(title) :
             s = parts[i+1]
             break
         i -= 1
+    if (len(s)==0) :
+        return []
     names = s.split("\n")
     names = [k.encode('utf-8') for k in names]
     return names
