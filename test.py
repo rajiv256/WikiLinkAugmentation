@@ -1,41 +1,27 @@
 import  wikipedia as wi
 from bs4 import BeautifulSoup as bs
+from ArticleClass import *
+from variable import allTfIdf
+from content import *
+from tfidf import *
+import pickle
 
-def process(title) :
-    ny = wi.WikipediaPage(title)
-    s = ny.html()
-    s = s.encode('utf8')
-    soup = bs(s, 'lxml')
-    return soup
-def summary_links(title) :
-    soup = process(title)
-    part = soup.div
-    links = []
-    t = 0
-    while t < 100 :
-        if (len(str(part)) <20) :
-            part = part.next_sibling
-            continue
-        attributes = part.attrs
-        if (attributes is None) :
-            part = part.next_sibling
-            continue
-        if (attributes.has_key('id') == True) :
-            if (attributes['id'] == 'toc') :
-                break
-            else :
-                part = part.next_sibling
-        else :
-            s = str(part)
-            print s
-            if ('<p>' in s) :
-                k = bs(s,'lxml')
-                links += k('a')
-            part = part.next_sibling
-    return links
+global allTfIdf
+allTfIdf = pickle.load(open("AlldocTfIdfs_mini.pkl", "rb" ))
+allTfIdf = map(lambda p : (p[0] , (p[1],p[2])) , allTfIdf)
+allTfIdf = dict(allTfIdf)
+wordDs = pickle.load( open("wordDs_mini.pkl", "rb") )
+Allwords = pickle.load( open("Allwords_mini.pkl", "rb") )
+N = len(allTfIdf.keys())
+setallglobals(wordDs,Allwords,N)
+print "setted all globals"
+
+target_article = "Iterator"
+target_a = Article("Iterator")
+print "article created succesfully"
+artlist = giveSimArtcls(target_a,0.10)
+print artlist
 
 
-table = summary_links('New York')
 
-#.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling.next_sibling
-print len(table)
+

@@ -2,8 +2,14 @@ import wikipedia
 import re
 from collections import Counter
 import operator
-from categories import *;
-from variable import *;
+from ArticleClass import *
+from variable import *
+from categories import *
+from ArticlesSimIndex import *
+from parser import *
+from socket import error as SocketError
+import errno
+
 
 def givePrunedContent(article):
     print article
@@ -11,7 +17,12 @@ def givePrunedContent(article):
         page = wikipedia.page(article);
     except wikipedia.exceptions.DisambiguationError as e:
         return "NULL"
-
+    except wikipedia.exceptions.PageError as e:
+        return "NULL"
+    except SocketError as e:
+        if e.errno != errno.ECONNRESET:
+            raise  # Not error we are looking for
+        pass  # Handle error here.
     content = page.content;
     # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
     content = content.lower();
@@ -38,6 +49,13 @@ def giveSummary(article):
         summry = wikipedia.summary(article);
     except wikipedia.exceptions.DisambiguationError as e:
         return "NULL"
+    except wikipedia.exceptions.PageError as e:
+        return "NULL"
+    except SocketError as e:
+        if e.errno != errno.ECONNRESET:
+            raise  # Not error we are looking for
+        pass  # Handle error here.
+
     content = wikipedia.summary(article);
 
     content = content.lower();
@@ -56,7 +74,9 @@ def giveSummary(article):
     return summry;
 
 def pruneCategories(article):
-    categories = giveCategories(article.title);  # TODO by rajiv
+    title = article.title
+    categories = get_categories(title)[:1];  # TODO by rajiv
+    print categories
     simDict = {};
     for catgryTitle in categories:
         simDict[catgryTitle] = simArtclCtgry(article,catgryTitle);
@@ -76,17 +96,19 @@ def simArtclCtgry(article,catgryTitle):
     return catgrySimSum/len(catgryArtclsList);
 
 def pruneArticles(article,catgryTitle,thrshld):
-    artclList = giveArticles(DEPTH,catgryTitle)[1];     # DONE by hemanth returns subCat & articles
+    artclList = getArticles(DEPTH,catgryTitle)[1];     # DONE by hemanth returns subCat & articles
     artclDict = {};
     for artclTitle in artclList:
         artcl = Article(artclTitle);
-        artclDict[artcl] = similarity(article,artcl);
+        artclDict[artcl] = articleSimilarity(article,artcl);
     sortedList = sorted(artclDict.items(),key=operator.itemgetter(1));
     filterList = [x for (x,y) in sortedList if y > thrshld];
     return filterList;
 
 def giveSimArtcls(article,thrshld):
     catgrys = pruneCategories(article);
+    print "pruned articles"
+    print catgrys
     totalSimList = [];
     for catgry in catgrys:
         totalSimList += pruneArticles(article,catgry,thrshld);

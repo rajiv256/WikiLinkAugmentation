@@ -1,5 +1,6 @@
 from variable import *;
-
+from tfidf import *
+from content import *
 class Article(object):
     '''Article Class'''
     title = ""

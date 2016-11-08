@@ -27,7 +27,7 @@ target.close()
 print len(Alldocumentstitles)
 
 #check
-#Alldocumentstitles = Alldocumentstitles[:]
+Alldocumentstitles = Alldocumentstitles[:1000]
 
 start = time.time()
 Alldocuments = map(lambda p : (p, givePrunedContent(p),giveSummary(p) ) , Alldocumentstitles)
@@ -43,12 +43,14 @@ print wordDs
 print len(Allwords)
 print Allwords
 print N
-pickle.dump(wordDs, open("wordDs_short.pkl", "wb") )
-pickle.dump(Allwords, open("Allwords_short.pkl", "wb") )
+pickle.dump(wordDs, open("wordDs_short1.pkl", "wb") )
+pickle.dump(Allwords, open("Allwords_short1.pkl", "wb") )
 print "wordDs obtained"
+AllTfIdfs = map(lambda doc: (doc[0], Tf(doc[1]) ,Tf(doc[2]) ), Alldocuments)
 
-AllTfIdfs = map(lambda doc: (doc[0], TfIdf(doc[1]) ,TfIdf(doc[2]) ), Alldocuments)
-pickle.dump(Allwords, open("AlldocTfIdfs_short.pkl", "wb") )
+
+#AllTfIdfs = map(lambda doc: (doc[0], TfIdf(doc[1]) ,TfIdf(doc[2]) ), Alldocuments)
+pickle.dump(AllTfIdfs, open("AlldocTfIdfs_short1.pkl", "wb") )
 end =time.time()
 print (end-start)
 #pickle.dump(N, open( "N.pkl", "wb" ) )

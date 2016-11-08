@@ -57,6 +57,10 @@ def linkTfIdf(links):
     tfidf = dict(tfidf)
     return tfidf
 
+def Tf(document):
+    docwords = document.split(" ")
+    termfrequencies = dict(Counter(docwords));
+    return termfrequencies
 
 def TfIdf(document):
     global Allwords
