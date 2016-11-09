@@ -10,7 +10,7 @@ def smoothing(l) :
     for k in l :
         k = k.encode('utf8')
         lsoup = bs(k,'lxml')
-        ans.append((lsoup('a')[0].text.encode('utf8'),lsoup('a')[0]['href']))
+        ans.append((lsoup('a')[0].text.encode('utf8').lower(),lsoup('a')[0]['href']))
     return ans
 
 
@@ -47,10 +47,12 @@ def all_links(title) :   #return links for title
 def summary_links(title) : #return summary links
     soup = process(title)
     part = soup.find('p')
-
+    print part
     links = []
     t = 0
     while t < 100 :
+        if (part is None) :
+            break
         if (len(str(part)) <20) :
             part = part.next_sibling
             continue
@@ -120,4 +122,4 @@ def get_categories(title) :
         pass  # Handle error here.
 
 
-#print summary_links('Algorithm')
+print summary_links('Kinetic priority queue')
