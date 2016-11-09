@@ -35,7 +35,8 @@ def all_links(title) :   #return links for title
 
 def summary_links(title) : #return summary links
     soup = process(title)
-    part = soup.find('div')
+    part = soup.find('p')
+
     links = []
     t = 0
     while t < 100 :
@@ -100,3 +101,4 @@ def categories(title) :
     name = [k.encode('utf-8') for k in name]
     return name
 
+#print summary_links('Algorithm')
