@@ -45,8 +45,9 @@ def givePrunedContent(article):
     return content;
 
 def giveSummary(article):
+    content = "NULL"
     try:
-        summry = wikipedia.summary(article);
+        content = wikipedia.summary(article);
     except wikipedia.exceptions.DisambiguationError as e:
         return "NULL"
     except wikipedia.exceptions.PageError as e:
@@ -56,7 +57,6 @@ def giveSummary(article):
             raise  # Not error we are looking for
         pass  # Handle error here.
 
-    content = wikipedia.summary(article);
 
     content = content.lower();
     content = re.sub('[!@#$%&()\n=\'\",.]*','',content);
