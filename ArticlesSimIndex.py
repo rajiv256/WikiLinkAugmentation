@@ -10,7 +10,7 @@ def articleSimilarity(article1,article2):
     #Tfidf1 = TfIdf(article1.summary)
     #Tfidf2 = TfIdf(article2.summary)
 
-    Sim1 = CosSim(article1.summryTfidf,article2.summryTfidf)
+    Sim1 = CosSim(article1.summryTfIdf,article2.summryTfIdf)
     if(article1.summaryhyperlinks == []):
         article1 = fill_links(article1.title)
     if(article2.summaryhyperlinks == []):
@@ -28,5 +28,5 @@ def artcatsimilarity(category,article2):
     #Tfidf1 = TfIdf(category.content)
     #Tfidf2 = TfIdf(article2.content)
 
-    Sim1 = CosSim(category.contentTfidf,article2.contentTfidf)
+    Sim1 = CosSim(category.contentTfIdf,article2.contentTfIdf)
     return Sim1

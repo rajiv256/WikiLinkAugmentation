@@ -1,4 +1,4 @@
-DEPTH = 2;
+DEPTH = 0;
 
 stopListSmall = ["a","an","and","are","as","at","be","by","for","from","has","he","in","is","it","its","of","on","or","that","the","to","was","were","will","with",""];
 

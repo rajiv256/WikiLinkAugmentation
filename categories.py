@@ -44,7 +44,7 @@ def getArticles(depth, category):
             articleList.append(artResp['title']);
         while('continue' in jsonResp):
             artParams['cmcontinue'] = jsonResp['continue']['cmcontinue'];
-            jsonResp = requests.get(WIKI_API, artParams);
+            jsonResp = requests.get(WIKI_API, artParams).json();
             if 'query' not in jsonResp or 'categorymembers' not in jsonResp['query']:
                 continue;
             for artResp in jsonResp['query']['categorymembers']:
@@ -52,4 +52,6 @@ def getArticles(depth, category):
     articleList = list(set(articleList));
     # print articleList;
     return (subCat,articleList);
-#t = getArticles(1, "Machine learning");
+#t = getArticles(0, "Machine learning");
+#print len(t[0])
+#print len(t[1])

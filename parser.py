@@ -1,6 +1,9 @@
 import  wikipedia as wi
 from bs4 import BeautifulSoup as bs
 import time
+from socket import error as SocketError
+import errno
+
 
 def smoothing(l) :
     ans = []
@@ -12,12 +15,20 @@ def smoothing(l) :
 
 
 def process(title) :        #returns xml
-    ny = wi.WikipediaPage(title)
-    s = ny.html()
-    s = s.encode('utf8')
-    soup = bs(s, 'lxml')
-    #print soup
-    return soup
+    try:
+        ny = wi.WikipediaPage(title)
+        s = ny.html()
+        s = s.encode('utf8')
+        soup = bs(s, 'lxml')
+        # print soup
+        return soup
+    except wi.exceptions.DisambiguationError as e:
+        return []
+    except SocketError as e:
+        if e.errno != errno.ECONNRESET:
+            raise  # Not error we are looking for
+        pass  # Handle error here.
+
 
 def all_links(title) :   #return links for title
     soup = process(title)
@@ -95,10 +106,18 @@ def see_also(title) :
     names = [k.encode('utf-8') for k in names]
     return names
 
-def categories(title) :
-    ny = wi.WikipediaPage(title)
-    name = ny.categories
-    name = [k.encode('utf-8') for k in name]
-    return name
+def get_categories(title) :
+    try:
+        ny = wi.WikipediaPage(title)
+        name = ny.categories
+        name = [k.encode('utf-8') for k in name]
+        return name
+    except wi.exceptions.DisambiguationError as e:
+        return []
+    except SocketError as e:
+        if e.errno != errno.ECONNRESET:
+            raise  # Not error we are looking for
+        pass  # Handle error here.
+
 
 #print summary_links('Algorithm')
