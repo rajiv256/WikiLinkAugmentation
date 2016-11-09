@@ -1,5 +1,6 @@
 from parser import *
 from ArticleClass import *
+from xgoogle.search import *
 
 query = 'New York'
 

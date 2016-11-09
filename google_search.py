@@ -1,20 +1,23 @@
-import urllib2
-import urllib
-import json
+from pyvirtualdisplay import Display
+from selenium import webdriver
+import selenium
+import time
+from selenium.webdriver.common.keys import Keys
 
-url = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&"
+display = Display(visible=0, size=(800, 600))
+display.start()
 
-query = raw_input("What do you want to search for ? >> ")
+driver = webdriver.Chrome()
 
-query = urllib.urlencode({'q' : query })
+#driver.get('http://www.google.com')
 
-response = urllib2.urlopen (url + query ).read()
-print response
-data = json.loads(response)
+driver.get("https://www.google.com/search?q=New York")
 
-results = data['responseData']['results']
+results = driver.find_elements_by_css_selector('h3')
+link = results[1].find_element_by_tag_name("a")
+href = link.get_attribute("href")
+driver.get(href)
+page = driver.find_element_by_tag_name("body").text
+print page
 
-for result in results:
-    title = result['title']
-    url = result['url']
-    print ( title + '; ' + url )
+display.stop()
