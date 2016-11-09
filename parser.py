@@ -49,6 +49,7 @@ def all_links(title) :   #return links for title
 def summary_links(title) : #return summary links
     soup = process(title)
     part = soup.find('p')
+    print part
     links = []
     t = 0
     #print soup
@@ -128,3 +129,4 @@ def get_categories(title) :
         if e.errno != errno.ECONNRESET:
             raise  # Not error we are looking for
         pass  # Handle error here.
+print summary_links('Kinetic priority queue')
