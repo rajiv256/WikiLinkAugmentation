@@ -15,7 +15,9 @@ def smoothing(l) :
 
 
 def process(title) :        #returns xml
+    #print title
     try:
+        #print title
         ny = wi.WikipediaPage(title)
         s = ny.html()
         s = s.encode('utf8')
@@ -50,6 +52,7 @@ def summary_links(title) : #return summary links
     print part
     links = []
     t = 0
+    #print soup
     while t < 100 :
         if (part is None) :
             break
@@ -71,11 +74,17 @@ def summary_links(title) : #return summary links
                 k = bs(s,'lxml')
                 links += k('a')
             part = part.next_sibling
+    #print links
     return smoothing(links)
 
 def fill_links(article):
-    article.summary_links =  summary_links(article.title)
+    # print article.title, "*"*100
+    article.summaryhyperlinks =  summary_links(article.title)
     article.hyperlinks = all_links(article.title)
+    print "printing inside"
+    print article.title
+    print "summarylinks:"
+    print article.summaryhyperlinks
     return article;
 
 def see_also(title) :
@@ -120,6 +129,4 @@ def get_categories(title) :
         if e.errno != errno.ECONNRESET:
             raise  # Not error we are looking for
         pass  # Handle error here.
-
-
 print summary_links('Kinetic priority queue')

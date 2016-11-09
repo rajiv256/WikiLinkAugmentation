@@ -52,6 +52,9 @@ def getArticles(depth, category):
     articleList = list(set(articleList));
     # print articleList;
     return (subCat,articleList);
-#t = getArticles(0, "Machine learning");
-#print len(t[0])
-#print len(t[1])
+
+# t = getArticles(0, "Abstract data types");
+# print len(t[0])
+# print len(t[1])
+# print t[0]
+# print t[1]

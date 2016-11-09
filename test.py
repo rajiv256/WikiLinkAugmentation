@@ -15,13 +15,10 @@ Allwords = pickle.load( open("Allwords_mini.pkl", "rb") )
 N = len(allTfIdf.keys())
 setallglobals(wordDs,Allwords,N)
 print "setted all globals"
-
+print wordDs
+print N
 target_article = "Iterator"
 target_a = Article("Iterator")
 print "article created succesfully"
 artlist = giveSimArtcls(target_a,0.10)
 print artlist
-
-
-
-

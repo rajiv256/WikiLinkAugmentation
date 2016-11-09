@@ -1,4 +1,5 @@
 from parser import *
+from ArticleClass import *
 
 query = 'New York'
 

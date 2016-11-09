@@ -1,21 +1,21 @@
 from variable import *;
 from tfidf import *
 from content import *
-class Article(object):
+
+class Article:
     '''Article Class'''
-    title = ""
-    content  = ""
-    summary = ""
-    contentTfIdf = {}
-    summryTfIdf = {}
-    summaryhyperlinks =[] #(word :link)
-    hyperlinks = []
-    SeeAlso = []
-    Categories = []
-    PrunedCategories = []
 
     def __init__(self, title):
         self.title = title;
+        self.content  = ""
+        self.summary = ""
+        self.contentTfIdf = {}
+        self.summryTfIdf = {}
+        self.summaryhyperlinks =[] #(word :link)
+        self.hyperlinks = []
+        self.SeeAlso = []
+        self.Categories = []
+        self.PrunedCategories = []
         if title not in allTfIdf.keys():
             self.contentTfIdf = TfIdf(givePrunedContent(title));
             self.summryTfIdf = TfIdf(giveSummary(title));
