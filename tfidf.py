@@ -18,22 +18,23 @@ def setallglobals(w,A,n):
     return
 
 
-
+'''
 def add(wordfrequencies,p):
     if p in wordfrequencies.keys():
         wordfrequencies[p] += 1
     else:
         wordfrequencies[p] = 1
     return 0
-'''
+
 def addword(word,words):
     if(word not in words):
         words += [word]
     return 0
-'''
+
 def add(lists , list):
     lists = lists + list
     return 0
+'''
 def calculateDs(Alldocuments):
     global wordDs
     global Allwords
@@ -49,10 +50,9 @@ def calculateDs(Alldocuments):
     return (wordDs,Allwords ,N)
 
 def linkTfIdf(links):
-    termfrequencies = {}
-    map(lambda p: add(termfrequencies, p), links);
+    termfrequencies = dict(Counter(links))
     docwords = termfrequencies.keys();
-    InverseDocfreq = map(lambda p: (p, math.log(N / min(map(lambda p : wordDs[p] if p in Allwords else 0 ,docwords) + [1]) )), docwords)
+    InverseDocfreq = map(lambda p: (p, math.log(N / min(map(lambda p : wordDs[p] if p in Allwords else 1 ,docwords) + [1]) )), docwords)
     tfidf = map(lambda p: (p[0], termfrequencies[p[0]] * p[1]), InverseDocfreq)
     tfidf = dict(tfidf)
     return tfidf
@@ -111,15 +111,15 @@ def DocConceptVector(document):
 
 def CosSim(tfidf1,tfidf2):
     len1 = len(tfidf1)
-    mag1 = math.sqrt(sum(map(lambda p : (tfidf1[1]*tfidf1[1]) ),tfidf1))
-    mag2 = math.sqrt(sum(map(lambda p : (tfidf1[2]*tfidf1[2]) ),tfidf2))
+    mag1 = math.sqrt(sum(map(lambda p : p[1]*p[1],tfidf1.items())))
+    mag2 = math.sqrt(sum(map(lambda p : p[1]*p[1],tfidf2.items())))
     words1  = tfidf1.keys()
     words2 = tfidf2.keys()
     sim =0
     for i in words1:
         if i in words2:
-            sim += tfidf2[i]*tfidf1[1]
+            sim += tfidf2[i]*tfidf1[i]
+    if(mag1 ==0 or mag2==0 ):
+        return 0
     sim = float(sim) / (mag1*mag2)
-
-
-
+    return sim;

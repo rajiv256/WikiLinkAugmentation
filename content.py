@@ -2,7 +2,7 @@ import wikipedia
 import re
 from collections import Counter
 import operator
-from ArticleClass import *
+import ArticleClass
 from variable import *
 from categories import *
 from ArticlesSimIndex import *
@@ -91,16 +91,22 @@ def simArtclCtgry(article,catgryTitle):
     catgrySimSum = 0;
     for catgryArtclName in catgryArtclsList:
         # INITIALIZE THE CLASS AND NAME THE VARIABLE catgry
-        catgryArtcl = Article(catgryArtclName);
+        catgryArtcl = ArticleClass.Article(catgryArtclName);
         catgrySimSum += artcatsimilarity(article,catgryArtcl); # TODO by sahiti
     return catgrySimSum/len(catgryArtclsList);
 
 def pruneArticles(article,catgryTitle,thrshld):
+    print article
     artclList = getArticles(DEPTH,catgryTitle)[1];     # DONE by hemanth returns subCat & articles
+    print "artclList : ", artclList
     artclDict = {};
     for artclTitle in artclList:
-        artcl = Article(artclTitle);
+        if("Category" in artclTitle):
+            artclTitle = artclTitle.split("Category:")[1]
+        artcl = ArticleClass.Article(artclTitle);
         artclDict[artcl] = articleSimilarity(article,artcl);
+        print "ARTICLE SIMILARITY : "
+        print artclDict[artcl]
     sortedList = sorted(artclDict.items(),key=operator.itemgetter(1));
     filterList = [x for (x,y) in sortedList if y > thrshld];
     return filterList;

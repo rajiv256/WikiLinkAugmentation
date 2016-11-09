@@ -10,12 +10,14 @@ def smoothing(l) :
     for k in l :
         k = k.encode('utf8')
         lsoup = bs(k,'lxml')
-        ans.append((lsoup('a')[0].text.encode('utf8'),lsoup('a')[0]['href']))
+        ans.append((lsoup('a')[0].text.encode('utf8').lower(),lsoup('a')[0]['href']))
     return ans
 
 
 def process(title) :        #returns xml
+    #print title
     try:
+        #print title
         ny = wi.WikipediaPage(title)
         s = ny.html()
         s = s.encode('utf8')
@@ -46,10 +48,13 @@ def all_links(title) :   #return links for title
 
 def summary_links(title) : #return summary links
     soup = process(title)
-    part = soup.find('div')
+    part = soup.find('p')
     links = []
     t = 0
+    #print soup
     while t < 100 :
+        if (part is None) :
+            break
         if (len(str(part)) <20) :
             part = part.next_sibling
             continue
@@ -68,11 +73,17 @@ def summary_links(title) : #return summary links
                 k = bs(s,'lxml')
                 links += k('a')
             part = part.next_sibling
+    #print links
     return smoothing(links)
 
 def fill_links(article):
-    article.summary_links =  summary_links(article.title)
+    # print article.title, "*"*100
+    article.summaryhyperlinks =  summary_links(article.title)
     article.hyperlinks = all_links(article.title)
+    print "printing inside"
+    print article.title
+    print "summarylinks:"
+    print article.summaryhyperlinks
     return article;
 
 def see_also(title) :
@@ -117,5 +128,3 @@ def get_categories(title) :
         if e.errno != errno.ECONNRESET:
             raise  # Not error we are looking for
         pass  # Handle error here.
-
-
