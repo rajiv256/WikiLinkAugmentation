@@ -9,8 +9,8 @@ from tfidf import *
 
 #To calculate Tfidf and word concept vector
 Alldocumentstitles = []
-f = open("download_mini","r")
-target = open("Alltitles_mini","w")
+f = open("download_short","r")
+target = open("Alltitles_short","w")
 line = f.readline()
 line = f.readline()
 while(line):
@@ -28,31 +28,44 @@ print len(Alldocumentstitles)
 
 #check
 Alldocumentstitles = Alldocumentstitles[:1000]
-
+Alldocuments = []
+Allhtmls = []
 start = time.time()
-Alldocuments = map(lambda p : (p, givePrunedContent(p),giveSummary(p) ) , Alldocumentstitles)
-print "content obtained"
-Alldocuments = list(filter(lambda p : (p[1]!="NULL" and p[2]!="NULL") , Alldocuments ))
-print "filtering doing"
-#pickle.dump(Alldocuments, open( "Alldocuments.pkl", "wb" ) )
+i = 0
+while i<1000:
+    presentdocs = Alldocumentstitles[i:i+50]
+    i=i+50
+    print presentdocs
 
+    htmlcontents = map(lambda p : givePrunedContent(p)  , presentdocs )
+    Alldocuments += map(lambda p : (presentdocs[p], htmlcontents[p][0] ,giveSummary(presentdocs[p]) ) , range(len(presentdocs)))
+    Allhtmls += map(lambda p : (presentdocs[p], htmlcontents[p][1] ) , range(len(presentdocs)))
+    Allhtmls = list(filter(lambda p: (p[1] != "NULL"), Allhtmls))
+    pickle.dump(Allhtmls, open("Allhtmls_short1.pkl", "wb"))
+    print "content obtained"
+    Alldocuments = list(filter(lambda p : (p[1]!="NULL" and p[2]!="NULL") , Alldocuments ))
+    print "filtering doing"
+    pickle.dump(Alldocuments, open("Alldocuments_short1.pkl", "wb"))
+    #(wordDs,Allwords,N) = calculateDs(Alldocuments)
+    #print len(Allwords)
+    #print wordDs
+    #print Allwords
+    #pickle.dump(wordDs, open("wordDs_short1.pkl", "wb") )
+    #pickle.dump(Allwords, open("Allwords_short1.pkl", "wb") )
+    #print "wordDs obtained"
+    #AllTfIdfs = map(lambda doc: (doc[0], Tf(doc[1]) ,Tf(doc[2]) ), Alldocuments)
+    #allsums = sum(map(lambda p: sum(p[1].values()) , AllTfIdfs))
+    #AllTfIdfs = map(lambda doc: (doc[0], TfIdf(doc[1]) ,TfIdf(doc[2]) ), Alldocuments)
+    #pickle.dump(AllTfIdfs, open("AlldocTfs_short1.pkl", "wb") )
 
-(wordDs,Allwords,N) = calculateDs(Alldocuments)
-print len(wordDs.keys())
-print wordDs
-print len(Allwords)
-print Allwords
-print N
-pickle.dump(wordDs, open("wordDs_mini.pkl", "wb") )
-pickle.dump(Allwords, open("Allwords_mini.pkl", "wb") )
-print "wordDs obtained"
-# AllTfIdfs = map(lambda doc: (doc[0], Tf(doc[1]) ,Tf(doc[2]) ), Alldocuments)
-
-
-AllTfIdfs = map(lambda doc: (doc[0], TfIdf(doc[1]) ,TfIdf(doc[2]) ), Alldocuments)
-pickle.dump(AllTfIdfs, open("AlldocTfIdfs_mini.pkl", "wb") )
 end =time.time()
 print (end-start)
-#pickle.dump(N, open( "N.pkl", "wb" ) )
+
 #wordConceptVector = Invertedindex(Alldocuments)
 #print wordConceptVector
+
+
+
+
+
+

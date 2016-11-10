@@ -30,6 +30,8 @@ def process(title) :        #returns xml
         if e.errno != errno.ECONNRESET:
             raise  # Not error we are looking for
         pass  # Handle error here.
+    except:
+        return "NULL"
 
 
 def all_links(title) :   #return links for title
@@ -129,4 +131,5 @@ def get_categories(title) :
         if e.errno != errno.ECONNRESET:
             raise  # Not error we are looking for
         pass  # Handle error here.
-print summary_links('Kinetic priority queue')
+    except:
+        return "NULL"

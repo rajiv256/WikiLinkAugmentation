@@ -1,6 +1,6 @@
-from variable import *;
-from tfidf import *
-from content import *
+import variable
+import tfidf
+import content
 
 class Article:
     '''Article Class'''
@@ -16,10 +16,12 @@ class Article:
         self.SeeAlso = []
         self.Categories = []
         self.PrunedCategories = []
-        if title not in allTfIdf.keys():
-            self.contentTfIdf = TfIdf(givePrunedContent(title));
-            self.summryTfIdf = TfIdf(giveSummary(title));
-            allTfIdf[title] = (self.contentTfIdf,self.summryTfIdf);
+        if title not in variable.allTfIdf.keys():
+            print variable.allTfIdf
+            self.contentTfIdf = tfidf.TfIdf(content.givePrunedContent(title)[0]);
+            self.summryTfIdf = tfidf.TfIdf(content.giveSummary(title));
+            variable.allTfIdf[title] = (self.contentTfIdf,self.summryTfIdf);
         else:
-            self.contentTfIdf = allTfIdf[title][0]
-            self.summryTfIdf = allTfIdf[title][1]
+            print "Already present"
+            self.contentTfIdf = variable.allTfIdf[title][0]
+            self.summryTfIdf = variable.allTfIdf[title][1]

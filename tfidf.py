@@ -68,12 +68,15 @@ def TfIdf(document):
     termfrequencies = dict(Counter(docwords));
     docwords = termfrequencies.keys();
     localwordDs = {}
+
     for x in docwords:
         if (x in Allwords):
             Allwords += [x]
             localwordDs[x] = wordDs[x]
         else:
             localwordDs[x] = 1
+    print localwordDs
+    print N
     InverseDocfreq = map(lambda p : (p , math.log( N / localwordDs[p] ) ) ,docwords)
     tfidf = map (lambda p : (p[0],termfrequencies[p[0]]*p[1]) ,InverseDocfreq )
     tfidf = dict(tfidf)
@@ -83,7 +86,7 @@ def TfIdf(document):
 
 def Invertedindex(Alldocuments):
     global wordConceptMatrix
-    AllTfIdfs = map(lambda  doc :   (doc[0] , TfIdf(doc))  ,Alldocuments)
+    AllTfIdfs = map(lambda  doc :   (doc[0] , doc[1] )  ,Alldocuments)
     wordConceptMatrix1ist = map(lambda p : (p,makeWordconceptvector(AllTfIdfs,p)) , Allwords)
     wordConceptMatrix = dict(wordConceptMatrix1ist)
     return wordConceptMatrix
