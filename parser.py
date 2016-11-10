@@ -36,7 +36,7 @@ def process(title) :        #returns xml
 
 def all_links(title) :   #return links for title
     soup = process(title)
-    paragraphs = soup('p')
+    paragraphs = soup.find('p')
     links = []
     for k in paragraphs:
         if k is None:

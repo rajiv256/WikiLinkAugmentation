@@ -1,3 +1,9 @@
+from pyvirtualdisplay import Display
+from selenium import webdriver
+import selenium
+import time
+from selenium.webdriver.common.keys import Keys
+
 DEPTH = 0;
 
 stopListSmall = ["a","an","and","are","as","at","be","by","for","from","has","he","in","is","it","its","of","on","or","that","the","to","was","were","will","with",""];
@@ -6,3 +12,5 @@ stopListBig = ["a","as","able","about","above","according","accordingly","across
 ,""];
 
 allTfIdf = {};
+
+display = Display(visible=0, size=(800, 600))

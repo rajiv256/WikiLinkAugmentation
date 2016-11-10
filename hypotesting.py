@@ -27,7 +27,7 @@ target.close()
 print len(Alldocumentstitles)
 
 #check
-Alldocumentstitles = Alldocumentstitles[:1000]
+Alldocumentstitles = Alldocumentstitles[1000:2000]
 Alldocuments = []
 Allhtmls = []
 start = time.time()
@@ -37,15 +37,15 @@ while i<1000:
     i=i+50
     print presentdocs
 
-    htmlcontents = map(lambda p : givePrunedContent(p)  , presentdocs )
-    Alldocuments += map(lambda p : (presentdocs[p], htmlcontents[p][0] ,giveSummary(presentdocs[p]) ) , range(len(presentdocs)))
-    Allhtmls += map(lambda p : (presentdocs[p], htmlcontents[p][1] ) , range(len(presentdocs)))
-    Allhtmls = list(filter(lambda p: (p[1] != "NULL"), Allhtmls))
+    htmlcontents = filter(lambda y: (y[1] != "NULL"), zip(presentdocs,map(lambda p : giveRawContent(p)  , presentdocs )))
+
+    Alldocuments += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][0] ,htmlcontents[p][1][2] ) , range(len(htmlcontents)))
+    Allhtmls += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][1] ) , range(len(htmlcontents)))
     pickle.dump(Allhtmls, open("Allhtmls_short1.pkl", "wb"))
-    print "content obtained"
-    Alldocuments = list(filter(lambda p : (p[1]!="NULL" and p[2]!="NULL") , Alldocuments ))
-    print "filtering doing"
+    print "content obtained", i
+    print "filtering doing", i
     pickle.dump(Alldocuments, open("Alldocuments_short1.pkl", "wb"))
+
     #(wordDs,Allwords,N) = calculateDs(Alldocuments)
     #print len(Allwords)
     #print wordDs
@@ -63,9 +63,3 @@ print (end-start)
 
 #wordConceptVector = Invertedindex(Alldocuments)
 #print wordConceptVector
-
-
-
-
-
-

@@ -11,6 +11,41 @@ from socket import error as SocketError
 import sys,ssl
 import errno
 
+def giveRawContent(article):
+    print article
+    try:
+        page = wikipedia.page(article);
+    except wikipedia.exceptions.DisambiguationError as e:
+        return "NULL"
+    except wikipedia.exceptions.PageError as e:
+        return "NULL"
+    except SocketError as e:
+        if e.errno != errno.ECONNRESET:
+            raise  # Not error we are looking for
+        pass  # Handle error here.
+    except ssl.SSLError:
+        e = sys.exc_info()[1]
+        if e.errno == ssl.SSL_ERROR_EOF:
+            # This is almost certainly due to the cherrypy engine
+            # 'pinging' the socket to assert it's connectable;
+            # the 'ping' isn't SSL.
+            return "NULL"
+        elif e.errno == ssl.SSL_ERROR_SSL:
+            if e.args[1].endswith('http request'):
+                # The client is speaking HTTP to an HTTPS server.
+                return "NULL"
+            elif e.args[1].endswith('unknown protocol'):
+                # The client is speaking some non-HTTP protocol.
+                # Drop the conn.
+                return "NULL"
+        raise
+    except:
+        return "NULL"
+
+    content = page.content;
+    summry = page.summary;
+    HTML = page.html();
+    return (content,HTML,summry);
 
 def givePrunedContent(article):
     print article
