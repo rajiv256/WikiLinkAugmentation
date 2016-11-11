@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 import variable
 import wikipedia
 import re
-
+from tfidf import *
 # display = Display(visible=0, size=(800, 600))
 # display.start()
 #
@@ -82,3 +82,11 @@ def cleanText(content):
     words = [w for w in words if w not in variable.stopListBig];
     # print len(words);
     return words
+
+
+
+
+def CVgooglesmilarity(pagecontent,target,candidate):
+    pagetfidf = TfIdf(pagecontent)
+    DocConceptVector(pagetfidf)
+    return pagetfidf[target]*pagetfidf[candidate]

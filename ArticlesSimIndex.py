@@ -38,3 +38,5 @@ def artcatsimilarity(category,article2):
 
     Sim1 = CosSim(category.contentTfIdf,article2.contentTfIdf)
     return Sim1
+
+
