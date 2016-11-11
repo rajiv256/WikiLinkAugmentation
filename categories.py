@@ -39,16 +39,16 @@ def getArticles(depth, category):
             for catResp in jsonResp['query']['categorymembers']:
                 subCat.append(catResp['title']);
             while ('continue' in jsonResp):
-                catParams['cmcontinue'] = jsonResp['continue']['cmcontinue'];    
+                catParams['cmcontinue'] = jsonResp['continue']['cmcontinue'];
                 jsonResp = requests.get(WIKI_API, catParams).json();
                 if 'query' not in jsonResp or 'categorymembers' not in jsonResp['query']:
                     continue;
                 for catResp in jsonResp['query']['categorymembers']:
                     subCat.append(catResp['title']);
             idx = idx+1;
-    
+
     subCat = list(set(subCat));
-    print subCat;
+    # print subCat;
     for subcat in subCat:
         artParams = {'action':'query', 'list':'categorymembers', 'cmtitle':subcat, 'format':'json'}
         jsonResp = requests.get(WIKI_API, artParams).json();
@@ -60,7 +60,6 @@ def getArticles(depth, category):
         while('continue' in jsonResp):
             artParams['cmcontinue'] = jsonResp['continue']['cmcontinue'];
             jsonResp = requests.get(WIKI_API, artParams).json();
-            
             if 'query' not in jsonResp or 'categorymembers' not in jsonResp['query']:
                 break;
             for artResp in jsonResp['query']['categorymembers']:
