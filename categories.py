@@ -4,7 +4,6 @@ Created on 28-Oct-2016
 @author: hemanth
 '''
 import requests
-import json;
 #WIKI_API = "http://localhost/mediawiki/api.php";
 WIKI_API = "http://en.wikipedia.org/w/api.php";
 #'cmtitle':'Category:Machine_learning'
@@ -13,11 +12,26 @@ WIKI_API = "http://en.wikipedia.org/w/api.php";
 # r = requests.get("http://en.wikipedia.org/w/api.php", params=parameters);
 # print r.json()['query']['categorymembers'][0]['title'];
 
+def getCategories(article):
+    categoryList = [];
+    artParams = {'action':'query', 'titles':article, 'prop':'categories', 'format':'json', 'clshow': '!hidden'}
+    jsonResp = requests.get(WIKI_API, artParams).json();
+    _, val = jsonResp['query']['pages'].popitem();
+    for catResp in val['categories']:
+        categoryList.append(catResp['title']);
+    while('continue' in jsonResp):
+        artParams = {'action':'query', 'prop':'categories', 'titles':'article', 'clcontinue':jsonResp['continue']['clcontinue'], 'format':'json'}
+        jsonResp = requests.get(WIKI_API, artParams).json();
+        _, val = jsonResp['query']['pages'].popitem();
+        for catResp in val['categories']:
+            categoryList.append(catResp['title']);
+    return categoryList;
+        
 def getArticles(depth, category):
     articleList = [];
     subCat=['Category:'+category];
     idx=0;
-    for i in range(depth):
+    for _ in range(depth):
         length = len(subCat);
         while (idx<length):
             catParams = {'action':'query', 'list':'categorymembers','cmtype':'subcat', 'cmtitle':subCat[idx], 'format':'json'}
@@ -42,19 +56,17 @@ def getArticles(depth, category):
             continue;
         for artResp in jsonResp['query']['categorymembers']:
             articleList.append(artResp['title']);
+        print jsonResp;
         while('continue' in jsonResp):
             artParams['cmcontinue'] = jsonResp['continue']['cmcontinue'];
             jsonResp = requests.get(WIKI_API, artParams).json();
             if 'query' not in jsonResp or 'categorymembers' not in jsonResp['query']:
-                continue;
+                break;
             for artResp in jsonResp['query']['categorymembers']:
                 articleList.append(artResp['title']);
     articleList = list(set(articleList));
-    # print articleList;
-    return (subCat,articleList);
-
-# t = getArticles(0, "Abstract data types");
-# print len(t[0])
-# print len(t[1])
-# print t[0]
-# print t[1]
+    print articleList;
+    
+#getArticles(0, "Machine_learning");
+#print getCategories('Dia_(software)');
+        

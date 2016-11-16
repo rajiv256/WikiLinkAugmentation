@@ -7,14 +7,17 @@ from tfidf import *
 from parser import *
 
 def articleSimilarity(article1,article2):
-    #Tfidf1 = TfIdf(article1.summary)
-    #Tfidf2 = TfIdf(article2.summary)
-
-    Sim1 = CosSim(article1.summryTfIdf,article2.summryTfIdf)
     print "article1 : "
     print article1.title
     print "article2 : "
     print article2.title
+    Tfidf1 = article1.contentTfIdf
+    Tfidf2 = article2.contentTfIdf
+    print Tfidf2
+    ConceptSim = ConceptVectorSimilarity(Tfidf1,Tfidf2)
+    Sim1 = CosSim(article1.summryTfIdf,article2.summryTfIdf)
+    #forget summary hyperlinks for now ,it is not working.
+    '''
     if(article1.summaryhyperlinks == []):
         print "going inside"
         article1 = fill_links(article1)
@@ -31,10 +34,14 @@ def articleSimilarity(article1,article2):
     alpha = 0.5
     beta = 0.5
     return (alpha*Sim1 + beta*Sim2)
+    '''
+    return (Sim1,ConceptSim)
 
 def artcatsimilarity(category,article2):
     #Tfidf1 = TfIdf(category.content)
     #Tfidf2 = TfIdf(article2.content)
 
-    Sim1 = CosSim(category.contentTfIdf,article2.contentTfIdf)
+    Sim1 = ConceptVectorSimilarity(category.contentTfIdf,article2.contentTfIdf)
     return Sim1
+
+

@@ -16,11 +16,16 @@ class Article:
         self.SeeAlso = []
         self.Categories = []
         self.PrunedCategories = []
+        self.successful = True
         if title not in variable.allTfIdf.keys():
-            print variable.allTfIdf
-            self.contentTfIdf = tfidf.TfIdf(content.givePrunedContent(title)[0]);
-            self.summryTfIdf = tfidf.TfIdf(content.giveSummary(title));
-            variable.allTfIdf[title] = (self.contentTfIdf,self.summryTfIdf);
+            Content = content.givePrunedContent(title,"NULL")
+            if(Content == "NULL"):
+                self.successful = False
+            else:
+                print "getting content"
+                self.contentTfIdf = tfidf.TfIdf(Content);
+                self.summryTfIdf = tfidf.TfIdf(content.giveSummary(title,"NULL"));
+                variable.allTfIdf[title] = (self.contentTfIdf,self.summryTfIdf);
         else:
             print "Already present"
             self.contentTfIdf = variable.allTfIdf[title][0]
