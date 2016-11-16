@@ -27,7 +27,8 @@ target.close()
 print len(Alldocumentstitles)
 
 #check
-Alldocumentstitles = Alldocumentstitles[1000:2000]
+Alldocumentstitles = Alldocumentstitles[500:1000]
+index = 0.5
 Alldocuments = []
 Allhtmls = []
 start = time.time()
@@ -41,10 +42,10 @@ while i<1000:
 
     Alldocuments += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][0] ,htmlcontents[p][1][2] ) , range(len(htmlcontents)))
     Allhtmls += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][1] ) , range(len(htmlcontents)))
-    pickle.dump(Allhtmls, open("Allhtmls_short1.pkl", "wb"))
+    pickle.dump(Allhtmls, open("Allhtmls_short"+str(index)+".pkl", "wb"))
     print "content obtained", i
     print "filtering doing", i
-    pickle.dump(Alldocuments, open("Alldocuments_short1.pkl", "wb"))
+    pickle.dump(Alldocuments, open("Alldocuments_short"+str(index)+".pkl", "wb"))
 
     #(wordDs,Allwords,N) = calculateDs(Alldocuments)
     #print len(Allwords)

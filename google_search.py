@@ -29,11 +29,12 @@ import re
 variable.display.start()
 def giveArticlesGoogle(target,candidate):
 
-    query = target+","+candidate
+    query = target+" "+candidate
     driver = webdriver.Chrome("/home/mint/chromedriver")
     driver.get("https://www.google.com/search?q="+query)
     length =  len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
+    print results;
 
     noWiki = filter(lambda y: (y.find("en.wikipedia.org") == -1 and y.find(".pdf") == -1 and y.find("www.youtube.com") == -1 and y.find("books.google.co") == -1), results)
     # variable.display.stop()
@@ -49,17 +50,21 @@ def googleSimilarity(target,candidate):
     cLinks = map(lambda p: p.lower(),cLinks)
 
 
-    print target,tLinks
-    print candidate,cLinks
+    # print target,tLinks
+    # print candidate,cLinks
     htmlLinks = giveArticlesGoogle(target,candidate);
+    print "HTML Links :", htmlLinks;
     scr = 0
     driver = webdriver.Chrome("/home/mint/chromedriver")
     for link in htmlLinks:
         driver.get(link)
         words = cleanText(driver.find_element_by_tag_name("body").text);
-        print words
-        st = len(set(tLinks) & set(words))/float(len(tLinks));
-        sc = len(set(cLinks) & set(words))/float(len(cLinks));
+        # print words
+        # print words, tLinks;
+        st = len(set(tLinks) & set(words))/float(len(set(tLinks)));
+        sc = len(set(cLinks) & set(words))/float(len(set(cLinks)));
+        print set(words);
+        print link,st,sc;
         scr += st*sc
 
     return scr/len(htmlLinks)
@@ -67,7 +72,7 @@ def googleSimilarity(target,candidate):
 def cleanText(content):
     # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
     content = content.lower();
-    content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^]+',' ',content);
+    content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^<>\[\]|]+_',' ',content);
     content = re.sub('[0-9]+',' ',content);
     # print content;
     # content = re.sub('\\\u[0-9]*','',content);
