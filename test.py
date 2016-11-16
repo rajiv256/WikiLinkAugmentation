@@ -55,12 +55,14 @@ ds = sorted(ds , key = lambda p : p[3])
 #print TfIdf(contenthtml[0])
 '''
 
+#
+# target_article = "Fibonacci heap"
+# target_a = ArticleClass.Article("Iterator")
+# print "article created succesfully"
+# artlist = giveSimArtcls(target_a,0)
 
-target_article = "Fibonacci heap"
-target_a = ArticleClass.Article("Iterator")
-print "article created succesfully"
-artlist = giveSimArtcls(target_a,0)
 
+googlesimilarity2("Fibonacci heap" , "Binary heap")
 
 '''
 test =  variable.allTfIdf['Fibonacci heap']
@@ -78,4 +80,3 @@ for key in sortedtfidf:
 sim = ConceptVectorSimilarity(variable.allTfIdf['Fibonacci heap'][0] ,variable.allTfIdf['Iterator'][0] )
 print sim
 '''
-

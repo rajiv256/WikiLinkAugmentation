@@ -44,4 +44,9 @@ def artcatsimilarity(category,article2):
     Sim1 = ConceptVectorSimilarity(category.contentTfIdf,article2.contentTfIdf)
     return Sim1
 
-
+def hyperlinksimilarity(article1,article2):
+    article1 = fill_links(article1)
+    article2 = fill_links(article2)
+    artcl1Anchors = map(x[0] for x in article1.hyperlinks)
+    artcl2Anchors = map(x[0] for x in article2.hyperlinks)
+    return len(set(artcl1Anchors)&set(artcl2Anchors))/float(len(set(artcl1Anchors)|set(artcl2Anchors)))

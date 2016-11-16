@@ -4,7 +4,7 @@ import itertools
 from _ast import In
 from collections import Counter
 
-from nltk.corpus.reader.util import concat
+# from nltk.corpus.reader.util import concat
 
 wordDs ={}
 Allwords = []

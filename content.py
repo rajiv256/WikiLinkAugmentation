@@ -230,4 +230,16 @@ def giveSimArtcls(article,thrshld):
 
     return totalSimList;
 
-# t = givePrunedContent("india")
+# t = givePrunedContent("india")•
+def referenceSimilarity(target,allrelarticles):
+    simDict = {}
+    for relarticle in allrelarticles:
+        print "getting links"
+        links = [re.sub('_',' ',x[1].split("/")[-1]).lower() for x in all_links(relarticle)]
+        if target.lower() in links:
+            simDict[target.lower()] = 1.0/len(links);
+        else:
+            simDict[target.lower()] = 0
+    #links = map(lambda p : p.lower() , links)
+    # print links
+    return simDict;
