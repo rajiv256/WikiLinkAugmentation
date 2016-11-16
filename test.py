@@ -8,16 +8,27 @@ from tfidf import *
 
 import pickle
 
+Alldocuments = pickle.load(open("Alldocuments_mini.pkl", "rb" ))
+Alldocuments = map(lambda p : (p[0] ,givePrunedContent("NULL", p[1]),giveSummary("NULL" , p[2]) )  ,Alldocuments )
 
-variable.allTfIdf = pickle.load(open("AlldocTfIdfs_mini.pkl", "rb" ))
-variable.allTfIdf = map(lambda p : (p[0] , (p[1],p[2])) , variable.allTfIdf)
+#clcaulting all preliminary things
+(wordDs,Allwords,N)  = calculateDs(Alldocuments)
+
+variable.allTfIdf = map(lambda p : (p[0] , (TfIdf(p[1]) ,TfIdf(p[2]) ) ), Alldocuments)
 variable.allTfIdf = dict(variable.allTfIdf)
-wordDs = pickle.load( open("wordDs_mini.pkl", "rb") )
-Allwords = pickle.load( open("Allwords_mini.pkl", "rb") )
-N = len(variable.allTfIdf.keys())
+
+setallglobals(wordDs,Allwords,N,wordConceptMatrix)
+
 wordConceptMatrix = Invertedindex(variable.allTfIdf.items())
 
 setallglobals(wordDs,Allwords,N,wordConceptMatrix)
+'''
+variable.allTfIdf = pickle.load( open("AlldocTfIdfs_mini.pkl", "rb") )
+wordDs = pickle.load( open("wordDs_mini.pkl", "rb") )
+Allwords = pickle.load( open("Allwords_mini.pkl", "rb") )
+N = len(variable.allTfIdf.keys())
+'''
+
 print N
 print "setted all globals"
 
@@ -44,13 +55,13 @@ ds = sorted(ds , key = lambda p : p[3])
 #print TfIdf(contenthtml[0])
 '''
 
-'''
-target_article = "Iterator"
+
+target_article = "Fibonacci heap"
 target_a = ArticleClass.Article("Iterator")
 print "article created succesfully"
-artlist = pruneCategories(target_a)
-print artlist
-'''
+artlist = giveSimArtcls(target_a,0)
+
+
 '''
 test =  variable.allTfIdf['Fibonacci heap']
 test = test[0].items()

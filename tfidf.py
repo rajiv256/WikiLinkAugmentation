@@ -79,8 +79,6 @@ def TfIdf(document):
             localwordDs[x] = wordDs[x]
         else:
             localwordDs[x] = 1
-    print localwordDs
-    print N
     InverseDocfreq = map(lambda p : (p , math.log( N / localwordDs[p] ) ) ,docwords)
     tfidf = map (lambda p : (p[0],termfrequencies[p[0]]*p[1]) ,InverseDocfreq )
     tfidf = dict(tfidf)
@@ -97,9 +95,9 @@ def Invertedindex(Alldocuments):
     wordConceptMatrixtest = map(lambda p : p[0] , wordConceptMatrix1ist)
     if 'treehowever' in wordConceptMatrixtest:
         print 'double yes'
-
+        print wordConceptMatrix['treehowever']
     wordConceptMatrix = dict(wordConceptMatrix1ist)
-    print wordConceptMatrix['treehowever']
+
     return wordConceptMatrix
 
 def makeWordconceptvector(tfidfs ,word):
@@ -119,7 +117,9 @@ def dotproduct(conceptrelev,wordrelev):
 def DocConceptVector(document):
     doctfidf = document
     #doctfidf = TfIdf(document)
-    doctfidfkeys = list(filter(lambda p: wordConceptMatrix[p] != {}, doctfidf.keys()))
+    wordkeys =  wordConceptMatrix.keys()
+    doctfidfkeys = list(filter(lambda p: p in wordkeys , doctfidf.keys() ) )
+    doctfidfkeys = list(filter(lambda p: wordConceptMatrix[p] != {}, doctfidfkeys ))
     allocalConcepts = map(lambda p : wordConceptMatrix[p].keys() ,doctfidfkeys )
     allocalConcepts = list(itertools.chain(*allocalConcepts))
     allocalConcepts = list(set(allocalConcepts))

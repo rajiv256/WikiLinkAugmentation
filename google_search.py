@@ -30,7 +30,7 @@ variable.display.start()
 def giveArticlesGoogle(target,candidate):
 
     query = target+","+candidate
-    driver = webdriver.Chrome("/home/mint/chromedriver")
+    driver = webdriver.Chrome("/home/sahiti/chromedriver")
     driver.get("https://www.google.com/search?q="+query)
     length =  len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
@@ -39,7 +39,7 @@ def giveArticlesGoogle(target,candidate):
     # variable.display.stop()
     return noWiki;
 
-def googleSimilarity(target,candidate):
+def googleSimilarity1(target,candidate):
     tLinks = wikipedia.page(target).links
     cLinks = wikipedia.page(candidate).links
     tLinks.append(target)
@@ -53,7 +53,7 @@ def googleSimilarity(target,candidate):
     print candidate,cLinks
     htmlLinks = giveArticlesGoogle(target,candidate);
     scr = 0
-    driver = webdriver.Chrome("/home/mint/chromedriver")
+    driver = webdriver.Chrome("/home/sahiti/chromedriver")
     for link in htmlLinks:
         driver.get(link)
         words = cleanText(driver.find_element_by_tag_name("body").text);
@@ -63,6 +63,18 @@ def googleSimilarity(target,candidate):
         scr += st*sc
 
     return scr/len(htmlLinks)
+
+def googlesimilarity2(target,candidate):
+    htmlLinks = giveArticlesGoogle(target, candidate);
+    scr = 0
+    driver = webdriver.Chrome("/home/sahiti/chromedriver")
+    sim = 0;
+    for link in htmlLinks:
+        driver.get(link)
+        words = cleanText(driver.find_element_by_tag_name("body").text);
+        words = " ".join(words)
+        sim += CVgooglesmilarity(words,target,candidate)
+    print sim
 
 def cleanText(content):
     # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
@@ -83,7 +95,7 @@ def cleanText(content):
     # print len(words);
     return words
 
-
+googlesimilarity2("Fibonacci heap" , "Binary heap")
 
 
 def CVgooglesmilarity(pagecontent,target,candidate):
