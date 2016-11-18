@@ -8,12 +8,12 @@ import wikipedia
 import re
 from tfidf import *
 import math
-# display = Display(visible=0, size=(800, 600))
-# display.start()
+#display = Display(visible=0, size=(800, 600))
+#display.start()
 #
-# driver = webdriver.Chrome("/home/mint/chromedriver")
+#driver = webdriver.Chrome("chromedriver")
 #
-# #driver.get('http://www.google.com')
+#driver.get('http://www.google.com')
 #
 # query = raw_input("give the query :")
 # driver.get("https://www.google.com/search?q="+query)
@@ -25,9 +25,9 @@ import math
 # page = driver.find_element_by_tag_name("body").text
 # print page
 #
-# display.stop()
+#display.stop()
 
-variable.display.start()
+#variable.display.start()
 def giveArticlesGoogle(target,candidate,n):
 
     query = target+" "+candidate
@@ -128,3 +128,4 @@ def CVgooglesmilarity(pagecontent,target,candidate):
     pagetfidf = TfIdf(pagecontent)
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
+

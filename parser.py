@@ -29,10 +29,10 @@ def process(title) :        #returns xml
         else:
             ny = wi.WikipediaPage(title)
             s = ny.html()
-        print "coming here"
-        s = s.encode('utf8')
+        #print "coming here"
+        s = s.encode('utf-8')
         soup = bs(s, 'lxml')
-        print "PRINTING SOUP"
+        #print "PRINTING SOUP"
         return soup
     except wi.exceptions.DisambiguationError as e:
         print "disagbiguation error"
@@ -56,7 +56,7 @@ def all_links(title):   #return links for title
         for k in paragraphs:
             if k is None:
                 continue
-            k = k.encode('utf8')
+            k = k.encode('utf-8')
             lsoup = bs(k, 'lxml')
             links += lsoup('a')
         return smoothing(links)
@@ -121,7 +121,7 @@ def see_also(title) :
             if (len(str(part))<=10) :
                 part = part.next_sibling
                 continue
-            print part.get_text()
+            #print part.get_text()
             parts.append(part.get_text())
             if (t >= 1000) :
                 break
@@ -131,7 +131,7 @@ def see_also(title) :
         s = ""
         while (i > 0) :
             k = parts[i]
-
+            print k
             if ("See also" in k.encode('utf-8')) :
                 s = parts[i+1]
                 break
@@ -143,12 +143,33 @@ def see_also(title) :
         return names
     except:
         return []
+
+def filter_categories(categories_list) :
+    f = open('download_categories', 'r')
+    cats = []
+    while (True):
+        s = f.readline()
+        if (len(s) == 0):
+            break
+        splits = s.split(",")
+        ss = splits[1]
+        name = ss.split(":")[1][:-1]
+        name = str(name)
+        name = name.replace("_", " ")
+        cats.append(name)
+    ret = []
+    for k in categories_list :
+        if k in cats :
+            ret.append(k)
+    f.close()
+    return ret
+
 def get_categories(title) :
     try:
         ny = wi.WikipediaPage(title)
-        name = ny.categories
-        name = [k.encode('utf-8') for k in name]
-        return name
+        categories = ny.categories
+        categories = [k.encode('utf-8') for k in categories]
+        return filter_categories(categories) ;
     except wi.exceptions.DisambiguationError as e:
         return []
     except SocketError as e:
@@ -157,4 +178,5 @@ def get_categories(title) :
         pass  # Handle error here.
     except:
         return "NULL"
+
 
