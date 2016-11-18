@@ -11,6 +11,8 @@ def smoothing(l) :
     for k in l :
         k = k.encode('utf8')
         lsoup = bs(k,'lxml')
+        s = lsoup('a')[0].text.encode('utf8').lower()
+        #TODO : Remove any link with special characters like \x, [ etc.,
         ans.append((lsoup('a')[0].text.encode('utf8').lower(),lsoup('a')[0]['href']))
     return ans
 
@@ -21,12 +23,12 @@ def process(title) :        #returns xml
         print title
         s =  "NULL"
         print variable.allhtmls.keys()
-        # if(title in variable.allhtmls.keys()):
-        #     print "html page found successful"
-        #     s = variable.allhtmls[title]
-        # else:
-        ny = wi.WikipediaPage(title)
-        s = ny.html()
+        if(title in variable.allhtmls.keys()):
+            print "html page found successful"
+            s = variable.allhtmls[title]
+        else:
+            ny = wi.WikipediaPage(title)
+            s = ny.html()
         print "coming here"
         s = s.encode('utf8')
         soup = bs(s, 'lxml')
@@ -48,7 +50,7 @@ def process(title) :        #returns xml
 
 def all_links(title):   #return links for title
     soup = process(title)
-    paragraphs = soup.find('p')
+    paragraphs = soup('p')
     links = []
     try:
         for k in paragraphs:
@@ -156,5 +158,3 @@ def get_categories(title) :
     except:
         return "NULL"
 
-links = all_links("Iterator")
-print links
