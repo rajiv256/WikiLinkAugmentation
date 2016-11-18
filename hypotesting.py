@@ -27,25 +27,24 @@ target.close()
 print len(Alldocumentstitles)
 
 #check
-# Alldocumentstitles = Alldocumentstitles[500:1000]
-# index = 0.5
+#Alldocumentstitles = Alldocumentstitles[0:1000]
 Alldocuments = []
 Allhtmls = []
 start = time.time()
-# i = 0
-# while i<len(All):
-presentdocs = Alldocumentstitles    #[i:i+50]
-#     i=i+50
-print presentdocs
+i = 0
+while i<len(Alldocumentstitles):
+    presentdocs = Alldocumentstitles[:]
+    i=i+len(Alldocumentstitles)
+    print presentdocs
 
-htmlcontents = filter(lambda y: (y[1] != "NULL"), zip(presentdocs,map(lambda p : giveRawContent(p)  , presentdocs )))
+    htmlcontents = filter(lambda y: (y[1] != "NULL"), zip(presentdocs,map(lambda p : giveRawContent(p)  , presentdocs )))
 
-Alldocuments += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][0] ,htmlcontents[p][1][2] ) , range(len(htmlcontents)))
-Allhtmls += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][1] ) , range(len(htmlcontents)))
-pickle.dump(Allhtmls, open("Allhtmls_mini.pkl", "wb"))
-# print "filtering doing", i
-# print "content obtained", i
-pickle.dump(Alldocuments, open("Alldocuments_mini.pkl", "wb"))
+    Alldocuments += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][0] ,htmlcontents[p][1][2] ) , range(len(htmlcontents)))
+    Allhtmls += map(lambda p : (htmlcontents[p][0], htmlcontents[p][1][1] ) , range(len(htmlcontents)))
+    pickle.dump(Allhtmls, open("Allhtmls_mini.pkl", "wb"))
+    print "content obtained", i
+    print "filtering doing", i
+    pickle.dump(Alldocuments, open("Alldocuments_mini.pkl", "wb"))
 
     #(wordDs,Allwords,N) = calculateDs(Alldocuments)
     #print len(Allwords)

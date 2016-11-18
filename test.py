@@ -6,6 +6,7 @@ import variable
 from content import *
 from tfidf import *
 
+
 import pickle
 
 Alldocuments = pickle.load(open("Alldocuments_mini.pkl", "rb" ))
@@ -22,6 +23,10 @@ setallglobals(wordDs,Allwords,N,wordConceptMatrix)
 wordConceptMatrix = Invertedindex(variable.allTfIdf.items())
 
 setallglobals(wordDs,Allwords,N,wordConceptMatrix)
+
+variable.allhtmls = pickle.load(open("Allhtmls_mini.pkl", "rb" ))
+variable.allhtmls  = dict(variable.allhtmls)
+print variable.allhtmls.keys()
 '''
 variable.allTfIdf = pickle.load( open("AlldocTfIdfs_mini.pkl", "rb") )
 wordDs = pickle.load( open("wordDs_mini.pkl", "rb") )
@@ -55,14 +60,13 @@ ds = sorted(ds , key = lambda p : p[3])
 #print TfIdf(contenthtml[0])
 '''
 
-#
-# target_article = "Fibonacci heap"
-# target_a = ArticleClass.Article("Iterator")
-# print "article created succesfully"
-# artlist = giveSimArtcls(target_a,0)
 
-
-googlesimilarity2("Fibonacci heap" , "Binary heap")
+target_article = "Fibonacci heap"
+target_a = ArticleClass.Article("Iterator")
+print "article created succesfully"
+#artlist = giveSimArtcls(target_a,0)
+artlist = allrelevantarticles(target_a)
+hyperlinksimilarities(target_a.title,artlist[:1])
 
 '''
 test =  variable.allTfIdf['Fibonacci heap']
@@ -80,3 +84,4 @@ for key in sortedtfidf:
 sim = ConceptVectorSimilarity(variable.allTfIdf['Fibonacci heap'][0] ,variable.allTfIdf['Iterator'][0] )
 print sim
 '''
+

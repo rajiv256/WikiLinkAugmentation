@@ -243,3 +243,14 @@ def referenceSimilarity(target,allrelarticles):
     #links = map(lambda p : p.lower() , links)
     # print links
     return simDict;
+def allrelevantarticles(article):
+    catgrys = pruneCategories(article);
+    print "pruned articles"
+    print catgrys
+    totalRelList = [];
+
+    for catgry in catgrys:
+        artclList = getArticles(DEPTH, catgry)[1];  # DONE by hemanth returns subCat & articles
+        totalRelList +=  artclList;
+    return totalRelList
+# t = givePrunedContent("india")
