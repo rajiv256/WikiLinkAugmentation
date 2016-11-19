@@ -22,7 +22,7 @@ def process(title) :        #returns xml
     try:
         print title
         s =  "NULL"
-        print variable.allhtmls.keys()
+
         if(title in variable.allhtmls.keys()):
             print "html page found successful"
             s = variable.allhtmls[title]
@@ -50,7 +50,7 @@ def process(title) :        #returns xml
 
 def all_links(title):   #return links for title
     soup = process(title)
-    paragraphs = soup('p')
+    paragraphs = soup('p') + soup('table') + soup('ul')
     links = []
     try:
         for k in paragraphs:
@@ -69,12 +69,12 @@ def all_links(title):   #return links for title
 def summary_links(title) : #return summary links
     soup = process(title)
     part = soup.find('p')
-    print part
+    #print part
     links = []
     t = 0
     #print soup
     try:
-        print soup
+        #print soup
         while t < 100 :
             if (part is None) :
                 break
@@ -105,10 +105,6 @@ def fill_links(article):
     # print article.title, "*"*100
     article.summaryhyperlinks =  summary_links(article.title)
     article.hyperlinks = all_links(article.title)
-    print "printing inside"
-    print article.title
-    print "summarylinks:"
-    print article.summaryhyperlinks
     return article;
 
 def see_also(title) :

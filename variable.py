@@ -14,4 +14,5 @@ stopListBig = ["a","as","able","about","above","according","accordingly","across
 allTfIdf = {};
 
 allhtmls = {}
+Allcontent = {}
 display = Display(visible=0, size=(800, 600))
