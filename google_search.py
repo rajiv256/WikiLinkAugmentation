@@ -34,7 +34,7 @@ def giveArticlesGoogle(target,candidate,n):
     query = target+" "+candidate
     driver = webdriver.Firefox()
     driver.get("https://www.google.com/search?q="+query)
-    length =  len(driver.find_elements_by_css_selector('h3'))
+    length = len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
     print len(results);
     for i in range(2,n+1):
@@ -57,7 +57,7 @@ def googleSimilarity1(target,candidate,n):
 
     tLinks = map(lambda p: p.lower(),tLinks)
     cLinks = map(lambda p: p.lower(),cLinks)
-    print tLinks;
+    print tLinks
     # x=raw_input("hi");
 
     # print target,tLinks
@@ -125,7 +125,7 @@ def cleanText(content):
 googleSimilarity1("Fibonacci heap" , "Binary heap" , 2)
 
 
-def CVgooglesmilarity(pagecontent,target,candidate):
+def CVgooglesimilarity(pagecontent,target,candidate):
     pagetfidf = TfIdf(pagecontent)
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
