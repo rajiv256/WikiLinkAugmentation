@@ -65,9 +65,11 @@ def getArticles(depth, category):
             for artResp in jsonResp['query']['categorymembers']:
                 articleList.append(artResp['title']);
     articleList = list(set(articleList));
+    articleList = map(lambda p : p.encode('utf-8') , articleList)
+    subCat =  map(lambda p : p.encode('utf-8') , subCat)
     #print (subCat,articleList);
     return (subCat,articleList)
     
 #getArticles(0, "Machine_learning");
-#print getCategories('Dia_(software)');
+#print getCategories('Iterator');
         

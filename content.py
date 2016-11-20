@@ -1,3 +1,4 @@
+# coding=utf-8
 import wikipedia
 import re
 from collections import Counter
@@ -160,11 +161,13 @@ def giveSummary(article,Content):
 
 def pruneCategories(article):
     title = article.title
-    categories = get_categories(title)[:1];  # TODO by rajiv
+    categories = get_categories(title);  # TODO by rajiv
     print categories
     filters = filter(lambda p : (("Articles" in p) or ("articles" in p)) , categories )
     categories = filter(lambda p : p not in filters , categories)
     print categories
+    return categories
+    '''
     simDict = {};
     for catgryTitle in categories:
         simDict[catgryTitle] = simArtclCtgry(article,catgryTitle);
@@ -172,8 +175,8 @@ def pruneCategories(article):
     sortedList = [(x,y) for (x,y) in sorted(simDict.items(),key= lambda p : p[1],reverse = True )];
     print sortedList
     sortedList = [x for (x,y) in sortedList]
-    return sortedList[:1];
-
+    return sortedList[:];
+    '''
 
 
 def simArtclCtgry(article,catgryTitle):
@@ -214,7 +217,23 @@ def pruneArticles(article,catgryTitle,thrshld):
         print artclDict[artcl]
     sortedList = sorted(artclDict.items(),key = lambda p : p[1][1],reverse = True);
     filterList = [(x,(y,z)) for (x,(y,z)) in sortedList if z > thrshld];
-    return filterList;
+    return filterList
+
+
+def contentSim(target,relarticles):
+    print "artclList : ", relarticles
+    artclDict = {};
+    for artclTitle in relarticles:
+        if ("Category" in artclTitle):
+            artclTitle = artclTitle.split("Category:")[1]
+        artcl = ArticleClass.Article(artclTitle);
+        artclDict[artcl] = articleSimilarity(target, artcl);
+        #print artclTitle
+        print "ARTICLE SIMILARITY : "
+        #print artclDict[artcl]
+    sortedList = sorted(artclDict.items(), key=lambda p: p[1][1], reverse=True);
+    #filterList = [(x, (y, z)) for (x, (y, z)) in sortedList if z > thrshld];
+    return sortedList
 
 def giveSimArtcls(article,thrshld):
     catgrys = pruneCategories(article);
@@ -230,19 +249,43 @@ def giveSimArtcls(article,thrshld):
 
     return totalSimList;
 
-# t = givePrunedContent("india")•
+
+
 def referenceSimilarity(target,allrelarticles):
     simDict = {}
+    allrelarticles = map(lambda p :p.encode('utf-8') ,allrelarticles)
+    target = target.lower().split('(')[0][:-1]
+    print "Target:"
+    print target
     for relarticle in allrelarticles:
-        print "getting links"
+        candidate_article = ArticleClass.Article(relarticle)
+        if ("Category" in relarticle):
+            relarticle = relarticle.split("Category:")[1]
+        print "Relevant article:"
+        print relarticle
         links = [re.sub('_',' ',x[1].split("/")[-1]).lower() for x in all_links(relarticle)]
-        if target.lower() in links:
-            simDict[target.lower()] = 1.0/len(links);
+        map(lambda p : p.split('(')[0][:-1]  ,links )
+        print links
+        if target in links:
+            print "present in links"
+            simDict[relarticle] = 1.0       #/len(links);
         else:
-            simDict[target.lower()] = 0
-    #links = map(lambda p : p.lower() , links)
-    # print links
+            simDict[relarticle] = 0
+
+        #checking in content also
+        content = candidate_article.content
+        print "Content : "
+        print content
+        if(target in content):
+            print "present in content"
+            simDict[relarticle] = 1.0
+
+    simDict= sorted(simDict.items() , key = lambda p : p[1],reverse =True)
+    simDict = dict(simDict)
     return simDict;
+
+
+
 def allrelevantarticles(article):
     catgrys = pruneCategories(article);
     print "pruned articles"
@@ -253,4 +296,19 @@ def allrelevantarticles(article):
         artclList = getArticles(DEPTH, catgry)[1];  # DONE by hemanth returns subCat & articles
         totalRelList +=  artclList;
     return totalRelList
-# t = givePrunedContent("india")
+
+
+def hyperlinkSim(target , relarticles):
+    print "artclList : ", relarticles
+    artclDict = {};
+    for artclTitle in relarticles:
+        if ("Category" in artclTitle):
+            artclTitle = artclTitle.split("Category:")[1]
+        artcl = ArticleClass.Article(artclTitle);
+        artclDict[artcl] = hyperlinksimilarity(target, artcl);
+        # print artclTitle
+        #print "ARTICLE SIMILARITY : "
+        # print artclDict[artcl]
+    sortedList = sorted(artclDict.items(), key=lambda p: p[1], reverse=True);
+    # filterList = [(x, (y, z)) for (x, (y, z)) in sortedList if z > thrshld];
+    return sortedList

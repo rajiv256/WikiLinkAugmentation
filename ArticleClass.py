@@ -2,6 +2,7 @@ import variable
 import tfidf
 import content
 
+
 class Article:
     '''Article Class'''
 
@@ -22,11 +23,15 @@ class Article:
             if(Content == "NULL"):
                 self.successful = False
             else:
-                print "getting content"
                 self.contentTfIdf = tfidf.TfIdf(Content);
-                self.summryTfIdf = tfidf.TfIdf(content.giveSummary(title,"NULL"));
+                summary = content.giveSummary(title,"NULL")
+                self.summryTfIdf = tfidf.TfIdf(summary);
+                self.content = Content
+                self.summary = summary
                 variable.allTfIdf[title] = (self.contentTfIdf,self.summryTfIdf);
+                variable.Allcontent[title] = (self.content,self.summary)
         else:
-            print "Already present"
             self.contentTfIdf = variable.allTfIdf[title][0]
             self.summryTfIdf = variable.allTfIdf[title][1]
+            self.content = variable.Allcontent[title][0]
+            self.summary = variable.Allcontent[title][1]

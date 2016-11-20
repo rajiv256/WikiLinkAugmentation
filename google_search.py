@@ -11,7 +11,7 @@ import math
 #display = Display(visible=0, size=(800, 600))
 #display.start()
 #
-#driver = webdriver.Chrome("chromedriver")
+#driver = webdriver.Firefox("chromedriver")
 #
 #driver.get('http://www.google.com')
 #
@@ -28,10 +28,11 @@ import math
 #display.stop()
 
 #variable.display.start()
+PATH = "/home/sahiti/NLP/Project2/geckodriver"
 def giveArticlesGoogle(target,candidate,n):
 
     query = target+" "+candidate
-    driver = webdriver.Chrome("/home/mint/chromedriver")
+    driver = webdriver.Firefox()
     driver.get("https://www.google.com/search?q="+query)
     length = len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
@@ -66,7 +67,7 @@ def googleSimilarity1(target,candidate,n):
     scr = 0
     sqt = 0
     sqc = 0
-    driver = webdriver.Chrome("/home/mint/chromedriver")
+    driver = webdriver.Firefox()
     for link in htmlLinks:
         driver.get(link)
         words = cleanText(driver.find_element_by_tag_name("body").text);
@@ -93,13 +94,13 @@ def googleSimilarity1(target,candidate,n):
 def googlesimilarity2(target,candidate):
     htmlLinks = giveArticlesGoogle(target, candidate);
     scr = 0
-    driver = webdriver.Chrome("/home/mint/chromedriver")
+    driver = webdriver.Firefox()
     sim = 0;
     for link in htmlLinks:
         driver.get(link)
         words = cleanText(driver.find_element_by_tag_name("body").text);
         words = " ".join(words)
-        sim += CVgooglesimilarity(words,target,candidate)
+        sim += CVgooglesmilarity(words,target,candidate)
     print sim
 
 def cleanText(content):
@@ -121,7 +122,7 @@ def cleanText(content):
     # print len(words);
     return words
 
-# googlesimilarity2("Fibonacci heap" , "Binary heap")
+googleSimilarity1("Fibonacci heap" , "Binary heap" , 2)
 
 
 def CVgooglesimilarity(pagecontent,target,candidate):
@@ -129,26 +130,4 @@ def CVgooglesimilarity(pagecontent,target,candidate):
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
 
-import json
-import sys
-from topia.termextract import  tag
-from topia.termextract import extract
-import nltk
-
-from topia.termextract import extract
-
-f = open("dump/text",'r')
-text = str(f.readlines())
-f.close()
-
-tagger = tag.Tagger(language='english')
-tagger.initialize()
-
-# create the extractor with the tagger
-extractor = extract.TermExtractor(tagger=tagger)
-extractor.filter = extract.DefaultFilter(singleStrengthMinOccur=1)
-l = extractor(text)
-l.sort()
-l.reverse()
-print l
 

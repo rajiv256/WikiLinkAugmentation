@@ -48,9 +48,17 @@ def calculateDs(Alldocuments):
     docwords = map(lambda p : p[1].split(" ") ,Alldocuments)
     Allwords = sum(docwords , [])
     Allwords = list(set(Allwords))
-    wordcounts = map( lambda doc : map( lambda p : (1 if (Allwords[p] in doc[1]) else 0 )  , range(len(Allwords)) ),Alldocuments )
-    wordDs = map(  lambda p : (Allwords[p] , sum([wordcounts[i][p] for i in range(len(wordcounts)) ]) ) , range(len(Allwords)) )
-    wordDs = dict(wordDs)
+    #wordcounts = map( lambda doc : map( lambda p : (1 if (Allwords[p] in doc[1]) else 0 )  , range(len(Allwords)) ),Alldocuments )
+    length = len(Allwords)
+    print length
+    i = 0
+    wordds = []
+    while (i < length):
+        wordds += map(lambda p : (Allwords[p] , sum(map(lambda doc : (1 if (Allwords[p] in doc[1]) else 0) ,Alldocuments ))), range(i,min(i+1000,length)) )
+        i = i + 1000
+        print i
+
+    wordDs = dict(wordds)
     return (wordDs,Allwords ,N)
 
 def linkTfIdf(links):
@@ -66,13 +74,17 @@ def Tf(document):
     termfrequencies = dict(Counter(docwords));
     return termfrequencies
 
+
+Completedtfidf = 0
 def TfIdf(document):
+    global Completedtfidf
     global Allwords
     docwords = document.split(" ")
     termfrequencies = dict(Counter(docwords));
     docwords = termfrequencies.keys();
     localwordDs = {}
-
+    Completedtfidf += 1
+    print Completedtfidf
     for x in docwords:
         if (x in Allwords):
             Allwords += [x]
@@ -100,9 +112,14 @@ def Invertedindex(Alldocuments):
 
     return wordConceptMatrix
 
+Completedwords = 0
 def makeWordconceptvector(tfidfs ,word):
     conceptvector={}
     threshold = 0.1;
+    global Completedwords
+    Completedwords += 1;
+    if(Completedwords % 1000 == 0):
+        print Completedwords
     for t in tfidfs:
         contenttfidf = t[1]
         if word in contenttfidf.keys():

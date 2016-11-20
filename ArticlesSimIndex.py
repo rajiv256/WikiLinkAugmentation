@@ -7,13 +7,12 @@ from tfidf import *
 from parser import *
 
 def articleSimilarity(article1,article2):
-    print "article1 : "
-    print article1.title
-    print "article2 : "
-    print article2.title
+    # print "article1 : "
+    # print article1.title
+    # print "article2 : "
+    # print article2.title
     Tfidf1 = article1.contentTfIdf
     Tfidf2 = article2.contentTfIdf
-    print Tfidf2
     ConceptSim = ConceptVectorSimilarity(Tfidf1,Tfidf2)
     Sim1 = CosSim(article1.summryTfIdf,article2.summryTfIdf)
     #forget summary hyperlinks for now ,it is not working.
@@ -47,6 +46,12 @@ def artcatsimilarity(category,article2):
 def hyperlinksimilarity(article1,article2):
     article1 = fill_links(article1)
     article2 = fill_links(article2)
-    artcl1Anchors = map(x[0] for x in article1.hyperlinks)
-    artcl2Anchors = map(x[0] for x in article2.hyperlinks)
+    artcl1Anchors = map(lambda p : p[0] , article1.hyperlinks)
+    artcl2Anchors = map(lambda p : p[0] , article2.hyperlinks)
+    print "article 1 anchors"
+    print artcl1Anchors
+    print "article 2 anchors"
+    print artcl2Anchors
+    print len(set(artcl1Anchors)&set(artcl2Anchors))
+    print len(set(artcl1Anchors)|set(artcl2Anchors))
     return len(set(artcl1Anchors)&set(artcl2Anchors))/float(len(set(artcl1Anchors)|set(artcl2Anchors)))
