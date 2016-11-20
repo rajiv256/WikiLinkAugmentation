@@ -10,29 +10,25 @@ def smoothing(l) :
     ans = []
     for k in l :
         k = k.encode('utf8')
-        lsoup = bs(k,'lxml')
+        lsoup = bs(k,"lxml")
         s = lsoup('a')[0].text.encode('utf8').lower()
         #TODO : Remove any link with special characters like \x, [ etc.,
         ans.append((lsoup('a')[0].text.encode('utf8').lower(),lsoup('a')[0]['href']))
     return ans
 
 
-def process(title) :        #returns xml
-    #print title
+def process(title) :        #returns soup element
     try:
-        print title
         s =  "NULL"
-        print variable.allhtmls.keys()
+        #print variable.allhtmls.keys()
         if(title in variable.allhtmls.keys()):
-            print "html page found successful"
+            #print "html page found successful"
             s = variable.allhtmls[title]
         else:
             ny = wi.WikipediaPage(title)
             s = ny.html()
-        #print "coming here"
-        s = s.encode('utf-8')
-        soup = bs(s, 'lxml')
-        #print "PRINTING SOUP"
+        s = s.encode('ascii','ignore')
+        soup = bs(s, "lxml")
         return soup
     except wi.exceptions.DisambiguationError as e:
         print "disagbiguation error"
@@ -44,8 +40,9 @@ def process(title) :        #returns xml
         pass  # Handle error here.
     # except:
     #
-    #     print "some error"
+    #     #print "some error"
     #     return "NULL"
+
 
 
 def all_links(title):   #return links for title
@@ -57,7 +54,7 @@ def all_links(title):   #return links for title
             if k is None:
                 continue
             k = k.encode('utf-8')
-            lsoup = bs(k, 'lxml')
+            lsoup = bs(k, "lxml")
             links += lsoup('a')
         return smoothing(links)
     except:
@@ -69,12 +66,12 @@ def all_links(title):   #return links for title
 def summary_links(title) : #return summary links
     soup = process(title)
     part = soup.find('p')
-    print part
+    ##print part
     links = []
     t = 0
-    #print soup
+    ##print soup
     try:
-        print soup
+        #print soup
         while t < 100 :
             if (part is None) :
                 break
@@ -96,53 +93,48 @@ def summary_links(title) : #return summary links
                     k = bs(s,'lxml')
                     links += k('a')
                 part = part.next_sibling
-        #print links
+        ##print links
         return smoothing(links)
     except:
         return []
 
 def fill_links(article):
-    # print article.title, "*"*100
+    # #print article.title, "*"*100
     article.summaryhyperlinks =  summary_links(article.title)
     article.hyperlinks = all_links(article.title)
-    print "printing inside"
-    print article.title
-    print "summarylinks:"
-    print article.summaryhyperlinks
+    #print "printing inside"
+    #print article.title
+    #print "summarylinks:"
+    #print article.summaryhyperlinks
     return article;
 
 def see_also(title) :
     soup = process(title)
-    part = soup.div
-    parts = []
-    t = 0
-    try:
-        while (part != None) :
-            if (len(str(part))<=10) :
-                part = part.next_sibling
-                continue
-            #print part.get_text()
-            parts.append(part.get_text())
-            if (t >= 1000) :
-                break
-            t += 1
-            part = part.next_sibling
-        i = len(parts)-1
-        s = ""
-        while (i > 0) :
-            k = parts[i]
-            print k
-            if ("See also" in k.encode('utf-8')) :
-                s = parts[i+1]
-                break
-            i -= 1
-        if (len(s)==0) :
-            return []
-        names = s.split("\n")
-        names = [k.encode('utf-8') for k in names]
-        return names
-    except:
+    if str(type(soup))=='<type \'list\'>' :
         return []
+    el = soup.find('p')
+    for i in range(1,10000) :
+        if el is None :
+            break
+        if 'id=\"See_also\"' in el.encode('utf-8'):
+            el = el.next_sibling.next_sibling
+            if 'Portals' in el.encode('utf-8') :
+                el = el.next_sibling.next_sibling
+
+            subsoup = bs(el.encode('utf-8'))
+            links = subsoup('a')
+            ret = []
+            for k in links :
+                ret.append((k.get_text().encode('ascii','ignore'),k['href']))
+            return ret
+
+        el = el.next_sibling
+    return []
+
+
+
+l = seealso_('queue')
+print l
 
 def filter_categories(categories_list) :
     f = open('download_categories', 'r')
@@ -178,13 +170,6 @@ def get_categories(title) :
         pass  # Handle error here.
     except:
         return "NULL"
-
-
-
-
-
-
-
 
 
 

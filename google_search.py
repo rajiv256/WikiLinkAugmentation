@@ -99,7 +99,7 @@ def googlesimilarity2(target,candidate):
         driver.get(link)
         words = cleanText(driver.find_element_by_tag_name("body").text);
         words = " ".join(words)
-        sim += CVgooglesmilarity(words,target,candidate)
+        sim += CVgooglesimilarity(words,target,candidate)
     print sim
 
 def cleanText(content):
@@ -128,4 +128,27 @@ def CVgooglesimilarity(pagecontent,target,candidate):
     pagetfidf = TfIdf(pagecontent)
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
+
+import json
+import sys
+from topia.termextract import  tag
+from topia.termextract import extract
+import nltk
+
+from topia.termextract import extract
+
+f = open("dump/text",'r')
+text = str(f.readlines())
+f.close()
+
+tagger = tag.Tagger(language='english')
+tagger.initialize()
+
+# create the extractor with the tagger
+extractor = extract.TermExtractor(tagger=tagger)
+extractor.filter = extract.DefaultFilter(singleStrengthMinOccur=1)
+l = extractor(text)
+l.sort()
+l.reverse()
+print l
 

@@ -61,7 +61,7 @@ def getArticles(depth, category):
             artParams['cmcontinue'] = jsonResp['continue']['cmcontinue'];
             jsonResp = requests.get(WIKI_API, artParams).json();
             if 'query' not in jsonResp or 'categorymembers' not in jsonResp['query']:
-                break;
+                break
             for artResp in jsonResp['query']['categorymembers']:
                 articleList.append(artResp['title']);
     articleList = list(set(articleList));
