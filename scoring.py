@@ -45,9 +45,13 @@ def split_tuple(tuple) :
 #returns a tuple
 #first element will be a list of candidates
 #next element will be a table...each row contains scores of the corresponding candidate in the candidates list.
+
 def final_scores(tuple) :
+    target = tuple[0][0]
+    for i in range(len(tuple)) :
+        tuple[i] = tuple[i][1:]
     ret = split_tuple(tuple)
     candidates = ret[0]
     scores = normalize(ret[1])
-    return (candidates,scores)
-
+    return (target,candidates,scores) ;
+print final_scores([("hell","hath",1,1,1,1,1,1),("hell","fury",2,2,2,2,2,2)])
