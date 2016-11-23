@@ -109,36 +109,17 @@ def fill_links(article):
 
 def see_also(title) :
     soup = process(title)
-    part = soup.div
-    parts = []
-    t = 0
-    try:
-        while (part != None) :
-            if (len(str(part))<=10) :
-                part = part.next_sibling
-                continue
-            #print part.get_text()
-            parts.append(part.get_text())
-            if (t >= 1000) :
-                break
-            t += 1
-            part = part.next_sibling
-        i = len(parts)-1
-        s = ""
-        while (i > 0) :
-            k = parts[i]
-            print k
-            if ("See also" in k.encode('utf-8')) :
-                s = parts[i+1]
-                break
-            i -= 1
-        if (len(s)==0) :
-            return []
-        names = s.split("\n")
-        names = [k.encode('utf-8') for k in names]
-        return names
-    except:
-        return []
+    h2 = soup.find_all('h2')
+    ret = []
+    for k in h2 :
+        if "See also" in k.get_text() :
+            k = k.next_sibling.next_sibling
+            while (k.name != 'ul') :
+                k = k.next_sibling
+            links = k.find_all('li')
+            for li in links :
+               ret.append((li('a')[0].get_text().encode('ascii','ignore'),li('a')[0]['href'].encode('ascii','ignore')))
+    return ret
 
 def filter_categories(categories_list) :
     f = open('download_categories', 'r')
@@ -175,8 +156,7 @@ def get_categories(title) :
     except:
         return "NULL"
 
-
-
+print see_also('dijkstra\'s algorithm')
 
 
 
