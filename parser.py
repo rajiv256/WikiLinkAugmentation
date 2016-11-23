@@ -156,7 +156,7 @@ def get_categories(title) :
     except:
         return "NULL"
 
-print see_also('dijkstra\'s algorithm')
+print see_also('Alpha-beta pruning')
 
 
 

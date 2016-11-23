@@ -54,4 +54,4 @@ def final_scores(tuple) :
     candidates = ret[0]
     scores = normalize(ret[1])
     return (target,candidates,scores) ;
-print final_scores([("hell","hath",1,1,1,1,1,1),("hell","fury",2,2,2,2,2,2)])
+print final_scores([("hell","hath",1,1,1,1,1,1),("hell","no fury",2,2,2,2,2,2)])
