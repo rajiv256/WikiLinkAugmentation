@@ -27,12 +27,12 @@ import math
 #
 #display.stop()
 
-#variable.display.start()
-PATH = "/home/sahiti/NLP/Project2/geckodriver"
+variable.display.start()
+PATH = "/home/sahiti/NLP/Project2/chromedriver"
 def giveArticlesGoogle(target,candidate,n):
 
     query = target+" "+candidate
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome(PATH)
     driver.get("https://www.google.com/search?q="+query)
     length = len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
@@ -46,7 +46,8 @@ def giveArticlesGoogle(target,candidate,n):
 
     noWiki = filter(lambda y: (y.find("en.wikipedia.org") == -1 and y.find(".pdf") == -1 and y.find("www.youtube.com") == -1 and y.find("books.google.co") == -1), results)
     print len(noWiki);
-    # variable.display.stop()
+    #variable.display.stop()
+#    driver.close()
     return noWiki;
 
 def googleSimilarity1(target,candidate,n):
@@ -67,9 +68,10 @@ def googleSimilarity1(target,candidate,n):
     scr = 0
     sqt = 0
     sqc = 0
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome(PATH)
     for link in htmlLinks:
         driver.get(link)
+        print link
         words = cleanText(driver.find_element_by_tag_name("body").text);
         # print words
         # x=raw_input("hi");
@@ -85,7 +87,8 @@ def googleSimilarity1(target,candidate,n):
         scr += st*sc
         sqt += st*st
         sqc += sc*sc
-
+    variable.display.stop()
+    driver.close()
     if(sqt == 0 or sqc == 0):
         return 0;
     else:
@@ -94,7 +97,7 @@ def googleSimilarity1(target,candidate,n):
 def googlesimilarity2(target,candidate):
     htmlLinks = giveArticlesGoogle(target, candidate);
     scr = 0
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome(PATH)
     sim = 0;
     for link in htmlLinks:
         driver.get(link)
@@ -120,6 +123,7 @@ def cleanText(content):
         # print str(w);
     words = [w for w in words if w not in variable.stopListBig];
     # print len(words);
+
     return words
 
 googleSimilarity1("Fibonacci heap" , "Binary heap" , 2)

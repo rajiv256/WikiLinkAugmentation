@@ -84,7 +84,7 @@ def givePrunedContent(article,Content):
     else:
         content = Content
     #HTML = page.html();
-    # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
+    # content = content.decode('utf-8').encode('utf-8','xmlcharrefreplace');
     content = content.lower();
     content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^]+',' ',content);
     content = re.sub('[0-9]+',' ',content);
@@ -138,7 +138,7 @@ def giveSummary(article,Content):
             return "NULL"
     else:
         content = Content
-    # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
+    # content = content.decode('utf-8').encode('utf-8','xmlcharrefreplace');
     content = content.lower();
     content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^]+', ' ', content);
     content = re.sub('[0-9]+', ' ', content);
@@ -165,7 +165,6 @@ def pruneCategories(article):
     print categories
     filters = filter(lambda p : (("Articles" in p) or ("articles" in p)) , categories )
     categories = filter(lambda p : p not in filters , categories)
-    print categories
     return categories
     '''
     simDict = {};
@@ -221,7 +220,6 @@ def pruneArticles(article,catgryTitle,thrshld):
 
 
 def contentSim(target,relarticles):
-    print "artclList : ", relarticles
     artclDict = {};
     for artclTitle in relarticles:
         if ("Category" in artclTitle):
@@ -229,7 +227,6 @@ def contentSim(target,relarticles):
         artcl = ArticleClass.Article(artclTitle);
         artclDict[artcl] = articleSimilarity(target, artcl);
         #print artclTitle
-        print "ARTICLE SIMILARITY : "
         #print artclDict[artcl]
     sortedList = sorted(artclDict.items(), key=lambda p: p[1][1], reverse=True);
     #filterList = [(x, (y, z)) for (x, (y, z)) in sortedList if z > thrshld];
@@ -253,19 +250,13 @@ def giveSimArtcls(article,thrshld):
 
 def referenceSimilarity(target,allrelarticles):
     simDict = {}
-    allrelarticles = map(lambda p :p.encode('utf-8') ,allrelarticles)
     target = target.lower().split('(')[0][:-1]
-    print "Target:"
-    print target
     for relarticle in allrelarticles:
         candidate_article = ArticleClass.Article(relarticle)
         if ("Category" in relarticle):
             relarticle = relarticle.split("Category:")[1]
-        print "Relevant article:"
-        print relarticle
         links = [re.sub('_',' ',x[1].split("/")[-1]).lower() for x in all_links(relarticle)]
         map(lambda p : p.split('(')[0][:-1]  ,links )
-        print links
         if target in links:
             print "present in links"
             simDict[relarticle] = 1.0       #/len(links);
@@ -274,10 +265,7 @@ def referenceSimilarity(target,allrelarticles):
 
         #checking in content also
         content = candidate_article.content
-        print "Content : "
-        print content
         if(target in content):
-            print "present in content"
             simDict[relarticle] = 1.0
 
     simDict= sorted(simDict.items() , key = lambda p : p[1],reverse =True)
@@ -299,7 +287,6 @@ def allrelevantarticles(article):
 
 
 def hyperlinkSim(target , relarticles):
-    print "artclList : ", relarticles
     artclDict = {};
     for artclTitle in relarticles:
         if ("Category" in artclTitle):
@@ -312,3 +299,11 @@ def hyperlinkSim(target , relarticles):
     sortedList = sorted(artclDict.items(), key=lambda p: p[1], reverse=True);
     # filterList = [(x, (y, z)) for (x, (y, z)) in sortedList if z > thrshld];
     return sortedList
+
+
+def see_also_or_not(title,candidate):
+    links = see_also(title)
+    for i in links:
+        if(candidate.lower() == i[0].lower()):
+            return 1
+    return 0

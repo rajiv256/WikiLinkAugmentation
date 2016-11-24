@@ -3,7 +3,7 @@ import math
 import itertools
 from _ast import In
 from collections import Counter
-
+import pickle
 # from nltk.corpus.reader.util import concat
 
 wordDs ={}
@@ -15,6 +15,7 @@ def setallglobals(w,A,n,wcm):
     global wordDs
     global  Allwords
     global  N
+    global wordConceptMatrix
     wordDs = w
     Allwords = A
     N = n
@@ -97,29 +98,36 @@ def TfIdf(document):
     return tfidf
 
 
-
 def Invertedindex(Alldocuments):
     global wordConceptMatrix
     AllTfIdfs = map(lambda  doc :   (doc[0] , doc[1][0] )  ,Alldocuments)
     if 'treehowever' in Allwords:
         print 'yes'
-    wordConceptMatrix1ist = map(lambda p : (p,makeWordconceptvector(AllTfIdfs,p)) , Allwords)
-    wordConceptMatrixtest = map(lambda p : p[0] , wordConceptMatrix1ist)
-    if 'treehowever' in wordConceptMatrixtest:
-        print 'double yes'
-        print wordConceptMatrix['treehowever']
-    wordConceptMatrix = dict(wordConceptMatrix1ist)
-
+    length = len(Allwords)
+    print length
+    wordConceptMatrixlist = []
+    wordConceptMatrixlist = pickle.load(open("pickles/WordConceptMatrix_short.pkl", "rb"))
+    print len(wordConceptMatrixlist)
+    print wordConceptMatrixlist[0]
+    size = len(wordConceptMatrixlist)
+    i = size
+    print length
+    while(i < length):
+        wordConceptMatrixlist += map(lambda p : (Allwords[p],makeWordconceptvector(AllTfIdfs,Allwords[p])) , range(i,min(i+1000,length)) )
+        i += 1000;
+        print i
+        if( (i)% 5000 == 0):
+            print "dumping"
+            pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short.pkl", "wb"))
+    wordConceptMatrixtest = map(lambda p : p[0] , wordConceptMatrixlist)
+    pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short.pkl", "wb"))
+    print len(wordConceptMatrixlist)
+    wordConceptMatrix = wordConceptMatrixlist
     return wordConceptMatrix
 
-Completedwords = 0
 def makeWordconceptvector(tfidfs ,word):
     conceptvector={}
     threshold = 0.1;
-    global Completedwords
-    Completedwords += 1;
-    if(Completedwords % 1000 == 0):
-        print Completedwords
     for t in tfidfs:
         contenttfidf = t[1]
         if word in contenttfidf.keys():
@@ -131,8 +139,8 @@ def makeWordconceptvector(tfidfs ,word):
 
 def dotproduct(conceptrelev,wordrelev):
     return sum(map (lambda p: conceptrelev[p]*wordrelev[p] ,range(len(wordrelev)) ))
-def DocConceptVector(document):
-    doctfidf = document
+def DocConceptVector(Doctfidf):
+    doctfidf = Doctfidf
     #doctfidf = TfIdf(document)
     wordkeys =  wordConceptMatrix.keys()
     doctfidfkeys = list(filter(lambda p: p in wordkeys , doctfidf.keys() ) )
