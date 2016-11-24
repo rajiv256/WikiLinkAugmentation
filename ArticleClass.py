@@ -1,6 +1,6 @@
 import variable
 import tfidf
-import content
+from content import givePrunedContent,giveSummary
 
 
 class Article:
@@ -20,12 +20,12 @@ class Article:
         self.successful = True
         if title not in variable.allTfIdf.keys():
             print title
-            Content = content.givePrunedContent(title,"NULL")
+            Content = givePrunedContent(title,"NULL")
             if(Content == "NULL"):
                 self.successful = False
             else:
                 self.contentTfIdf = tfidf.TfIdf(Content);
-                summary = content.giveSummary(title,"NULL")
+                summary = giveSummary(title,"NULL")
                 self.summryTfIdf = tfidf.TfIdf(summary);
                 self.content = Content
                 self.summary = summary

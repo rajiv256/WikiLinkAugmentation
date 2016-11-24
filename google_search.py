@@ -116,7 +116,7 @@ def googleSimilarity1(target,candidate,n):
         return 0;
     else:
         return scr/math.sqrt(sqt*sqc)
-
+'''
 def googlesimilarity2(target,candidate):
     htmlLinks = giveArticlesGoogle(target, candidate);
     scr = 0
@@ -130,7 +130,7 @@ def googlesimilarity2(target,candidate):
         words = " ".join(words)
         sim += CVgooglesmilarity(words,target,candidate)
     print sim
-
+'''
 def cleanText(content):
     #print content
     # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
@@ -149,20 +149,20 @@ def cleanText(content):
         # print str(w);
     words = [w for w in words if w not in variable.stopListBig];
     # print len(words);
-
     return words
 
 #print googleSimilarity1("Fibonacci heap" , "Iterator" , 2)
 
 def getCandidateSimilarity(target, candidates, n):
-    simDict = {};
+    simDict = [];
     for candidate in candidates:
-	simDict[candidate] = googleSimilarity1(target, candidate, n);
+	    simDict += [ (candidate , googleSimilarity1(target, candidate, n) ) ] ;
+    simDict = dict ( sorted(simDict , key = lambda p : p [1] ,reverse = True) )
     return simDict;
 
 #candidates = ["Iterator", "Binary heap", "Adaptive heap sort", "Fibonacci prime", "Graph isomorphism", "Dijkstra's algorithm", "Blossom algorithm"];
-candidates = ["Hemachandra"];
-print getCandidateSimilarity("Fibonacci heap", candidates, 2);
+#candidates = ["Hemachandra"];
+#print getCandidateSimilarity("Fibonacci heap", candidates, 2);
 
 def CVgooglesimilarity(pagecontent,target,candidate):
     pagetfidf = TfIdf(pagecontent)
