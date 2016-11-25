@@ -1,0 +1,163 @@
+Double-ended queue$Kinetic priority queue$0.518465480856
+Double-ended queue$U-form$0.0296807469137
+Double-ended queue$Obstack$0.00850137369758
+Double-ended queue$Associative array$0.615900084064
+Double-ended queue$Collection (abstract data type)$0.0328987627504
+Double-ended queue$Iterator$0.482318824645
+Double-ended queue$Set (abstract data type)$0.0944690919846
+Double-ended queue$Double-ended priority queue$0.867408437645
+Double-ended queue$Linked data structure$0.571264912697
+httplib.HTTPException: got more than 100 headersDouble-ended queue$Queue (abstract data type)$0.813778705637
+Double-ended queue$Peek (data type operation)$0.337758543165
+Double-ended queue$Stack (abstract data type)$0.75439912306
+Double-ended queue$Pile (abstract data type)$0.324505721101
+Double-ended queue$Multiset (abstract data type)$0.892111052864
+Stack (abstract data type)$Abstract data type$0.876836158192
+Stack (abstract data type)$Graph (abstract data type)$0.673109633524
+Stack (abstract data type)$Container (abstract data type)$0.85698921427
+Stack (abstract data type)$Priority queue$0.785900446417
+Stack (abstract data type)$U-form$0.42904504973
+Stack (abstract data type)$List (abstract data type)$0.790391044664
+Stack (abstract data type)$Pile (abstract data type)$0.155079669098
+Stack (abstract data type)$Obstack$0.949778434269
+Stack (abstract data type)$Associative array$0.889969859164
+Stack (abstract data type)$Collection (abstract data type)$0.582762343299
+Stack (abstract data type)$Iterator$0.722892913034
+Stack (abstract data type)$Multimap$0.725187467424
+Stack (abstract data type)$Set (abstract data type)$0.83627067817
+Stack (abstract data type)$Kinetic priority queue$0.136084934941
+Stack (abstract data type)$Double-ended priority queue$0.66662156677
+Stack (abstract data type)$Linked data structure$0.941400050678
+Stack (abstract data type)$Multiset (abstract data type)$0.830662571303
+Stack (abstract data type)$Peek (data type operation)$0.562190049592
+Stack (abstract data type)$Double-ended queue$0.756372045221
+Stack (abstract data type)$Queue (abstract data type)$0.562491780281
+Iterator$Abstract data type$0.575964964865
+Iterator$Graph (abstract data type)$0.870324665467
+Iterator$Container (abstract data type)$0.702072068437
+Iterator$Multimap$0.675881570193
+Iterator$U-form$0.0108487949208
+Iterator$List (abstract data type)$0.871626693355
+Iterator$Kinetic priority queue$0.311797752809
+Iterator$Obstack$0.119281592373
+Iterator$Associative array$0.70834297209
+Iterator$Collection (abstract data type)$0.301955145562
+Iterator$Pile (abstract data type)$0.110291508988
+Iterator$Priority queue$0.428853614265
+Iterator$Set (abstract data type)$0.901401626579
+Iterator$Double-ended priority queue$0.317182084777
+Iterator$Linked data structure$0.311955747679
+Iterator$Multiset (abstract data type)$0.851150691174
+Iterator$Peek (data type operation)$0.19812067924
+Iterator$Double-ended queue$0.482301249485
+Iterator$Queue (abstract data type)$0.358456468587
+Iterator$Stack (abstract data type)$0.756310733317
+Dijkstra's algorithm$Hierarchical closeness$0.38560760353
+Dijkstra's algorithm$Bellman–Ford algorithm$0.932334746646
+Dijkstra's algorithm$Longest path problem$0.575126311698
+Dijkstra's algorithm$Suurballe's algorithm$0.909051537462
+Dijkstra's algorithm$Edge disjoint shortest pair algorithm$0.885299273729
+Dijkstra's algorithm$Yen's algorithm$0.872082371478
+Dijkstra's algorithm$Hopcroft–Karp algorithm$0.715700934579
+Dijkstra's algorithm$Contraction hierarchies$0.636409994901
+Dijkstra's algorithm$Pathfinding$0.419820790285
+Dijkstra's algorithm$Euclidean shortest path$0.378069535619
+Dijkstra's algorithm$Floyd–Warshall algorithm$0.98867427568
+Dijkstra's algorithm$Dijkstra's algorithm$1.0
+Dijkstra's algorithm$Link-state routing protocol$0.976847050856
+Dijkstra's algorithm$Shortest Path Faster Algorithm$0.0670249889696
+Dijkstra's algorithm$Johnson's algorithm$0.853866602843
+Dijkstra's algorithm$Equal-cost multi-path routing$0.5046854083
+Dijkstra's algorithm$K shortest path routing$0.0561432969493
+Kruskal's algorithm$Prim's algorithm$0.957930367505
+Kruskal's algorithm$Dynamic connectivity$0.0553714285714
+Kruskal's algorithm$Graph bandwidth$0.0225684042341
+Kruskal's algorithm$Bidirectional search$0.46926728335
+Kruskal's algorithm$Euler tour technique$0.230250896057
+Kruskal's algorithm$Single-linkage clustering$0.864557988646
+Kruskal's algorithm$Tree traversal$0.288697118484
+Kruskal's algorithm$Dijkstra's algorithm$0.618715483289
+Kruskal's algorithm$Borůvka's algorithm$0.623857495497
+Kruskal's algorithm$Transitive reduction$0.173208095717
+Kruskal's algorithm$Stoer–Wagner algorithm$0.600633914422
+Kruskal's algorithm$Gomory–Hu tree$0.0352941176471
+Kruskal's algorithm$Edmonds' algorithm$0.689281221533
+Kruskal's algorithm$Minimum bottleneck spanning tree$0.883814314712
+Kruskal's algorithm$Graph embedding$0.0465971796444
+Kruskal's algorithm$Closure problem$0.214707305273
+Kruskal's algorithm$Suurballe's algorithm$0.330890260904
+Kruskal's algorithm$Force-directed graph drawing$0.0829147685239
+Kruskal's algorithm$Hopcroft–Karp algorithm$0.268489408854
+Kruskal's algorithm$Reverse-delete algorithm$0.853202401801
+Kruskal's algorithm$Karger's algorithm$0.610092592593
+Kruskal's algorithm$Junction tree algorithm$0.0489953604246
+Ford–Fulkerson algorithm$Longest path problem$0.0736377025037
+Ford–Fulkerson algorithm$Ford–Fulkerson algorithm$1.0
+Ford–Fulkerson algorithm$Suurballe's algorithm$0.130141190915
+Ford–Fulkerson algorithm$Max-flow min-cut theorem$0.523119392685
+Ford–Fulkerson algorithm$Hopcroft–Karp algorithm$0.34441391587
+Ford–Fulkerson algorithm$Yen's algorithm$0.0186226282502
+Ford–Fulkerson algorithm$Circulation problem$0.777777777778
+Ford–Fulkerson algorithm$Push–relabel maximum flow algorithm$0.885321100917
+Ford–Fulkerson algorithm$Out-of-kilter algorithm$0.0302457466919
+Ford–Fulkerson algorithm$Minimum-cost flow problem$0.897872340426
+Ford–Fulkerson algorithm$Maximum flow problem$0.717483597067
+Ford–Fulkerson algorithm$Approximate max-flow min-cut theorem$0.58829787234
+Ford–Fulkerson algorithm$Dijkstra's algorithm$0.395234586097
+Ford–Fulkerson algorithm$Flow network$0.668996960486
+Ford–Fulkerson algorithm$Widest path problem$0.339779492057
+Ford–Fulkerson algorithm$Dinic's algorithm$0.625717566016
+Ford–Fulkerson algorithm$Multi-commodity flow problem$0.818488585236
+Ford–Fulkerson algorithm$K shortest path routing$0.0Prim's algorithm$Euler tour technique$0.237042521684
+Prim's algorithm$Longest path problem$0.612671394799
+Prim's algorithm$Euler tour technique$0.237042521684
+Prim's algorithm$Longest path problem$0.612671394799
+Prim's algorithm$Graph isomorphism$0.548675292668
+Prim's algorithm$Dijkstra–Scholten algorithm$0.513274113591
+Prim's algorithm$Gomory–Hu tree$0.0198675496689
+Prim's algorithm$Bellman–Ford algorithm$0.311168019445
+Prim's algorithm$Kruskal's algorithm$0.95409776814
+Prim's algorithm$Hopcroft–Karp algorithm$0.237622056289
+Prim's algorithm$Reverse-delete algorithm$0.745013297872
+Prim's algorithm$Edmonds' algorithm$0.615288628472
+Prim's algorithm$Closure problem$0.580790960452
+Prim's algorithm$Tree traversal$0.472794464538
+Prim's algorithm$Degeneracy (graph theory)$0.90109034014
+Prim's algorithm$Minimum bottleneck spanning tree$0.772634445201
+Prim's algorithm$Borůvka's algorithm$0.620750293083
+Prim's algorithm$Iterative compression$0.761415525114
+Prim's algorithm$Bidirectional search$0.806966145833
+Prim's algorithm$Junction tree algorithm$0.114828209765
+Prim's algorithm$Dijkstra's algorithm$0.547632816232
+Prim's algorithm$Stoer–Wagner algorithm$0.514677103718
+CYK algorithm$Shunting-yard algorithm$0.302331940319
+CYK algorithm$Recursive descent parser$0.573715579375
+CYK algorithm$Bottom-up parsing$0.123287671233
+CYK algorithm$LALR parser$0.868069543093
+CYK algorithm$Left corner parser$0.440901213172
+CYK algorithm$LL parser$0.850580746768
+CYK algorithm$Scannerless parsing$0.751103350852
+CYK algorithm$Simple precedence parser$0.224617104029
+CYK algorithm$GLR parser$0.537000021493
+CYK algorithm$Simple LR parser$0.576031279362
+CYK algorithm$LR parser$0.818748492663
+CYK algorithm$Inside–outside algorithm$0.0
+CYK algorithm$Tail recursive parser$0.158797650174
+CYK algorithm$Top-down parsing$0.923142609209
+CYK algorithm$Chart parser$0.621805791104
+CYK algorithm$Earley parser$0.884022038162
+CYK algorithm$Shift-reduce parser$0.90052750339
+CYK algorithm$Recursive ascent parser$0.740219653478
+CYK algorithm$Pratt parser$0.199440514104
+CYK algorithm$Parsing expression grammar$0.828073089603
+Priority queue$Skew binomial heap$0.397149273869
+Priority queue$Linked data structure$0.969065199084
+Priority queue$Priority queue$0.999999999865
+Priority queue$Calendar queue in simulation$0.41428571382
+Priority queue$List (abstract data type)$0.842407157966
+Priority queue$Kinetic priority queue$0.80662151387
+Priority queue$Pagoda (data structure)$0.288119890851
+Priority queue$Double-ended queue$0.495087785861
+Priority queue$Min-max heap$0.109538671239
+Priority queue$Double-ended priority queue$0.817382704748
+Priority queue$Bucket queue$0.402382185223
