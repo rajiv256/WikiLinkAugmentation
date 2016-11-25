@@ -3,6 +3,7 @@ from selenium.common.exceptions import NoSuchElementException
 import socket
 from pyvirtualdisplay import Display
 from selenium import webdriver
+import variable
 import selenium
 import time
 from selenium.webdriver.common.keys import Keys
@@ -102,7 +103,7 @@ def googleSimilarity1(target,candidate,n):
         print link
 
 	try:
-	    words = cleanText(driver.find_element_by_tag_name("body").text);
+	    words = variable.cleanText(driver.find_element_by_tag_name("body").text);
         except NoSuchElementException:
 	    print "NoSuchElement"
 	    continue;
@@ -173,8 +174,9 @@ def googleSimilarity3(target, candidate, n):
     driver = webdriver.Chrome(PATH)
 
     for link in htmlLinks:
-        print link
+        #print link
         try :
+            print link
             response = urllib2.urlopen(link)
             html_string = response.read()
             soup = bsoup(html_string,"lxml")
@@ -182,11 +184,13 @@ def googleSimilarity3(target, candidate, n):
             text = soup.get_text().encode('ascii','ignore')
             words = re.sub('[^A-Za-z\']+', ' ', text).split(' ')
             words = [k.lower() for k in words if len(k)!=0]
-            print words
+            #print words
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
             continue ;
-
+        except urllib2.URLError:
+            print "URL not present"
+            continue
 
         wordsLen = len(words)
         words = " ".join(words)
@@ -197,16 +201,16 @@ def googleSimilarity3(target, candidate, n):
     return vectorSim(targetVector,candidVector);
 
 
-t=googleSimilarity3('Fibonacci Heap','Hemachandra',2)
-
+# t=googleSimilarity3('Double-ended queue','Kinetic priority queue',2)
+# print t
 
 
 
 '''
 #############################################################
-
+'''
 inputFo = open("SampleArticles","r");
-outputFo = open("GoogleSimilarity2", "a");
+outputFo = open("GoogleSimilarity4", "a");
 i=0;
 for line in inputFo:
     print "***************************"+str(i)+"************************"
@@ -219,4 +223,3 @@ for line in inputFo:
 inputFo.close();
 outputFo.close();
 
-'''
