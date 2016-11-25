@@ -238,7 +238,7 @@ googleSimilarity3('dijkstra\'s algorithm','Bellman-Ford algorithm',2)
 
 
 '''
-###############################################################
+#############################################################
 
 inputFo = open("SampleArticles","r");
 outputFo = open("GoogleSimilarity2", "a");
