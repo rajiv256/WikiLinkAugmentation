@@ -239,3 +239,10 @@ for line in inputFo:
 inputFo.close();
 outputFo.close();
 '''
+
+
+def googlesimilarity_relarticles(target_a , relarticles , depth):
+    googlesimilarites = []
+    for article in relarticles:
+        googlesimilarites[article] = googleSimilarity3(target_a, article, depth)
+    return googlesimilarites

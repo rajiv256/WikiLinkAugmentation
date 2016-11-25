@@ -24,13 +24,15 @@ def make_table(title , relarticles):
     hyperlink_similarities = map(lambda p : (p[0].title ,p[1]) ,hyperlink_similarities )
     hyperlink_similarities = dict(hyperlink_similarities)
     print 'hyperlink-similarity done'
-    #articles_for_google = map(lambda p : p[0] , content_based_sim.items() )[10 : ]
+    google_similarities = {}
+
+    #articles_for_google = map(lambda p : p[0] , content_based_sim.items() )[:]
     #google_similarities = getCandidateSimilarity(target_a.title,articles_for_google,2)
     #print "google - similarity"
-    # google_similarities[p] if (p in google_similarities.keys()) else  0
+
     links = see_also(title)
-    table = map(lambda p : (title, p ,  simDict[p],content_based_sim[p][0],  content_based_sim[p][1] ,hyperlink_similarities[p]  , see_also_or_not(p ,links) ) , relarticles )
-    table = sorted(table,key = lambda p : p[5] , reverse = True)
+    table = map(lambda p : (title, p ,  simDict[p],content_based_sim[p][0],  content_based_sim[p][1] ,hyperlink_similarities[p]  , google_similarities[p] if (p in google_similarities.keys()) else  0 , see_also_or_not(p ,links) ) , relarticles )
+    table = sorted(table,key = lambda p : p[7] , reverse = True)
     print "normal table done"
     table = final_scores(table)
     return table
@@ -79,7 +81,7 @@ def writeToFile3(table,filename):
     target.write( (target_name + "," +  str(len(table)) )  )
     target.write("\n")
     for t in table:
-        target.write( (t[1] + "," + str(t[3]) +"," +str(t[4]) ) )
+        target.write( (t[1] + "," + str(t[2]) +"," +str(t[3]) ) )
         target.write("\n")
     target.flush()
     target.close()
@@ -190,13 +192,23 @@ def final_scores(tuples) :
 
 
 def combined_score(table):
-    combinedscore = map(lambda p :  (p[0] , p[1], p[2][0] , sum(p[2][1:]) ,p[3] ) , table)
-    return sorted(combinedscore , key = lambda p : p[3],reverse = True)
+    combinedscore = []
+    bl = 0.4
+    st = 0.1
+    cs = 0.3
+    hs = 0.2
+    gs = 0.4
+    for t in table:
+        score = (t[2][0]*bl +  t[2][1]*st + t[2][2]*cs + t[2][3]*hs + t[2][4] *gs )
+        combinedscore += [ (t[0] ,t[1] ,score , t[3] ) ]
+    #combinedscore = map(lambda p :  (p[0] , p[1], p[2][0] , sum(p[2][1:]) ,p[3] ) , table)
+    return sorted(combinedscore , key = lambda p : p[2],reverse = True)
 
 
 
 def prune_articles(target_a,relarticles):
-    relarticles = SummarySim(target_a,relarticles)
+    relarticles = contentSim(target_a,relarticles)
+    #relarticles = SummarySim(target_a,relarticles)
     articles_stored = variable.allTfIdf.keys()
     see_also_articles = see_also(target_a.title)
     see_also_articles = filter(lambda p: (p[0] in articles_stored), see_also_articles)

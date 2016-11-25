@@ -68,13 +68,6 @@ print "Prim's algorithm"
 print sorted(d.items() , key = lambda p :p[1],reverse = True )[:100]
 '''
 
-
-
-
-
-
-
-
 '''
 target_a = ArticleClass.Article("Prim's algorithm")
 relarticles = [ "Dijkstra's algorithm"]
@@ -98,7 +91,7 @@ print target_a.hyperlinks
 
 start = time.time()
 
-testcases = ["Trie","Radix tree" , "Divide_and_conquer_algorithms"]
+testcases = ["Best-first search"]
 
 
 
@@ -111,9 +104,10 @@ testcases = ["Double-ended queue","Stack (abstract data type)","Iterator","Dijks
 
 #links = map(lambda p : (p , see_also(p) ) , testcases)
 #map( lambda p :see_also_or_not(p[0] , p[1] ) , links)
-makesamplecase_relarticleswrite(testcases , "SampleArticles2")
+makesamplecase_relarticleswrite(testcases , "testing/smalltescase1")
 
-makesamplecase_findrelarticles( "outputfile_new" , "suggestions_new.txt" , "SampleArticles2" , "Actual_see_also_new" )
+makesamplecase_findrelarticles( "testing/small_outputfile1" , "testing/small_suggestions1.txt" ,
+                                "testing/smalltescase1" , "testing/Actual_see_also_new1" )
 
 # table  = make_table("Queue (abstract data type)")
 # print table
