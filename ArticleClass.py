@@ -19,7 +19,7 @@ class Article:
         self.PrunedCategories = []
         self.successful = True
         if title not in variable.allTfIdf.keys():
-            print title
+            print ("Title: " + title)
             Content = givePrunedContent(title,"NULL")
             if(Content == "NULL"):
                 self.successful = False

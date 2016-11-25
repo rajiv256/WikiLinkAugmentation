@@ -1,0 +1,71 @@
+Prim's algorithm,1
+Dijkstra's algorithm,/wiki/Dijkstra%27s_algorithm
+Double-ended queue,3
+Pipe,/wiki/Pipeline_(Unix)#pipe_character
+Queue,/wiki/Queue_(data_structure)
+Priority queue,/wiki/Priority_queue
+Johnson's algorithm,0
+Iterator,6
+Iteratee,/wiki/Iteratee
+Design pattern,/wiki/Design_pattern_(computer_science)
+Iteration,/wiki/Iteration
+Iterator pattern,/wiki/Iterator_pattern
+Range,/wiki/Range_(computer_science)
+Visitor pattern,/wiki/Visitor_pattern
+Ford–Fulkerson algorithm,1
+Approximate max-flow min-cut theorem,/wiki/Approximate_max-flow_min-cut_theorem
+Merge sort,0
+Kruskal's algorithm,5
+Dijkstra's algorithm,/wiki/Dijkstra%27s_algorithm
+Prim's algorithm,/wiki/Prim%27s_algorithm
+Borůvka's algorithm,/wiki/Bor%C5%AFvka%27s_algorithm
+Reverse-delete algorithm,/wiki/Reverse-delete_algorithm
+Single-linkage clustering,/wiki/Single-linkage_clustering
+Priority queue,3
+Batch queue,/wiki/Batch_queue
+Command queue,/wiki/Command_queue
+Job scheduler,/wiki/Job_scheduler
+Flajolet-Martin algorithm,2
+Streaming algorithm,/wiki/Streaming_algorithm
+HyperLogLog,/wiki/HyperLogLog
+Insertion sort,0
+Dijkstra's algorithm,7
+A* search algorithm,/wiki/A*_search_algorithm
+Bellman–Ford algorithm,/wiki/Bellman%E2%80%93Ford_algorithm
+Euclidean shortest path,/wiki/Euclidean_shortest_path
+Flood fill,/wiki/Flood_fill
+Floyd–Warshall algorithm,/wiki/Floyd%E2%80%93Warshall_algorithm
+Johnson's algorithm,/wiki/Johnson%27s_algorithm
+Longest path problem,/wiki/Longest_path_problem
+JH (hash function),0
+Stack (abstract data type),1
+public domain material,/wiki/Copyright_status_of_work_by_the_U.S._government
+Minimax,8
+"Minimax principle",http://www.encyclopediaofmath.org/index.php?title=p/m063950
+A visualization applet,http://www.cut-the-knot.org/Curriculum/Games/MixedStrategies.shtml
+"Maximin principle" from A Dictionary of Philosophical Terms and Names.,http://www.swif.uniba.it/lei/foldop/foldoc.cgi?maximin+principle
+Play a betting-and-bluffing game against a mixed minimax strategy,http://www.bewersdorff-online.de/quaak/rules.htm
+[1],https://xlinux.nist.gov/dads/HTML/minimax.html
+Minimax,http://ksquared.de/gamevisual/launch.php
+Minimax Tutorial with a Numerical Solution Platform,http://apmonitor.com/me575/index.php/Main/MiniMax
+Java implementation used in a Checkers Game,https://github.com/ykaragol/checkersmaster/blob/master/CheckersMaster/src/checkers/algorithm/MinimaxAlgorithm.java
+Sion's minimax theorem,2
+Parthasarathy's theorem,/wiki/Parthasarathy%27s_theorem
+Saddle point,/wiki/Saddle_point
+Big O notation,6
+Asymptotic expansion,/wiki/Asymptotic_expansion
+Asymptotically optimal,/wiki/Asymptotically_optimal
+Big O in probability notation,/wiki/Big_O_in_probability_notation
+Limit superior and limit inferior,/wiki/Limit_superior_and_limit_inferior
+Nachbin's theorem,/wiki/Nachbin%27s_theorem
+Orders of approximation,/wiki/Orders_of_approximation
+CYK algorithm,3
+GLR parser,/wiki/GLR_parser
+Earley parser,/wiki/Earley_parser
+Packrat parser,/wiki/Packrat_parser
+AdaBoost,4
+Bootstrap aggregating,/wiki/Bootstrap_aggregating
+CoBoosting,/wiki/CoBoosting
+BrownBoost,/wiki/BrownBoost
+Gradient boosting,/wiki/Gradient_boosting
+Bubble sort,0

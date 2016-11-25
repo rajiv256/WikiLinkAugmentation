@@ -42,7 +42,12 @@ def giveArticlesGoogle(target,candidate,n):
     query = target+" , "+candidate
     driver = webdriver.Chrome(PATH)
     print "time1"
-    driver.get("https://www.google.com/search?q="+query)
+    socket.setdefaulttimeout(1000);
+    try:
+        driver.get("https://www.google.com/search?q="+query)
+    except socket.timeout:
+	    print "panic exception raised"
+	    return [];
     print "time2"
     length = len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
@@ -236,9 +241,11 @@ googleSimilarity3('dijkstra\'s algorithm','Bellman-Ford algorithm',2)
 ###############################################################
 
 inputFo = open("SampleArticles","r");
-outputFo = open("GoogleSimilarity", "a");
-
+outputFo = open("GoogleSimilarity2", "a");
+i=0;
 for line in inputFo:
+    print "***************************"+str(i)+"************************"
+    i=i+1;
     target, candidate = line.split("$");
     target = target.strip();
     candidate = candidate.strip();
