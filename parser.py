@@ -131,26 +131,14 @@ def see_also(title):
             if( k.next_sibling is None):
                 continue
             k = k.next_sibling.next_sibling
-            k1=k;
-            #print k
-            if k is None:
-                continue
-            while (  (k is not None) and (k.name != 'ul') ) :
-                #print k.name
-                k = k.next_sibling
-
-            if k==None:
-                while((k1 is not None) and (k1.name!='p')):
-                    k1 = k1.next_sibling
-            if k==None and k1!=None:
-                k = k1;
-            if(k==None and k1 == None):
-                continue;
-            if(k.name == 'p'):
-                links = [k]
-            else:
-                links = k.find_all('li')
-            for li in links :
+            links = []
+            k = bs(str(k),"lxml")
+            links += k.find_all('li')
+            k = bs(str(k), "lxml")
+            links += k.find_all('li')
+            k = bs(str(k), "lxml")
+            links += k.find_all('li')
+            for li in links:
                 if( len(li('a')) > 0):
                     ret.append((li('a')[0].get_text().encode('utf-8','ignore'),li('a')[0]['href'].encode('utf-8','ignore')))
     return ret
@@ -192,5 +180,5 @@ def get_categories(title) :
     except:
         print "some exception"
         return "NULL"
-#s = see_also("Software mining" )
+#s = see_also("Alpha beta pruning" )
 #print s
