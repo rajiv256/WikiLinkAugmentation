@@ -83,15 +83,14 @@ def googleSimilarity1(target,candidate,n):
     htmlLinks = giveArticlesGoogle(target,candidate,n);
     htmlLinks = htmlLinks[:10];
     # print "HTML Links :", htmlLinks;
-    scr = 0
-    sqt = 0
-    sqc = 0
+    targetVector = []
+    candidVector = []
     driver = webdriver.Chrome(PATH)
 
     for link in htmlLinks:
 	#driver.refresh()
         print "time5"
-   	socket.setdefaulttimeout(10) 
+   	socket.setdefaulttimeout(10)
 	try:
 	    driver.get("view-source:"+link)
 	except socket.timeout:
@@ -101,7 +100,7 @@ def googleSimilarity1(target,candidate,n):
 	    continue;
 	print "time6"
         print link
-        
+
 	try:
 	    words = cleanText(driver.find_element_by_tag_name("body").text);
         except NoSuchElementException:
@@ -114,58 +113,30 @@ def googleSimilarity1(target,candidate,n):
         # st = len(set(tLinks) & set(words))/float(len(set(tLinks)));
         # sc = len(set(cLinks) & set(words))/float(len(set(cLinks)));
         st = sum([words.count(x) for x in tLinks])
+        targetVector.append(st);
         sc = sum([words.count(x) for x in cLinks])
+        candidVector.append(sc);
         # print set(words);
-        print link,st,sc
-        scr += st*sc
-        sqt += st*st
-        sqc += sc*sc
+        # print link,st,sc
+        # scr += st*sc
+        # sqt += st*st
+        # sqc += sc*sc
     variable.display.stop()
     #driver.close();
     try:
 	driver.close()
     except WebDriverException:
 	pass;
-    if(sqt == 0 or sqc == 0):
-        return 0;
-    else:
-        return scr/math.sqrt(sqt*sqc)
-'''
-def googlesimilarity2(target,candidate):
-    htmlLinks = giveArticlesGoogle(target, candidate);
-    scr = 0
-    driver = webdriver.Chrome(PATH)
-    sim = 0;
-    for link in htmlLinks:
-        print "time7"
-	driver.get(link)
-	print "time8"
-        words = cleanText(driver.find_element_by_tag_name("body").text);
-        words = " ".join(words)
-        sim += CVgooglesmilarity(words,target,candidate)
-    print sim
-'''
-def cleanText(content):
-    #print content
-    # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
-    content = content.lower();
-    content = re.sub('[!@#$%&()\n=+\'\",\.\\+-/\{\}^<>\[\]|?_]+',' ',content);
-    content = re.sub('[0-9]+',' ',content);
-    # print content;
-    # content = re.sub('\\\u[0-9]*','',content);
-    # words = map(str,content.split(" "));
-    words = [];
-    for w in content.split(" "):
-        try:
-            words.append(str(w));
-        except UnicodeEncodeError:
-            pass
-        # print str(w);
-    words = [w for w in words if w not in variable.stopListBig];
-    # print len(words);
-    return words
+    return vectorSim(targetVector,candidVector);
 
-# print googleSimilarity1("Fibonacci heap" , "Iterator" , 2)
+def vectorSim(tv,cv):
+    numerator = 0.0;
+    denominator = 0.0;
+    xtx = sum([x*x for x in tv]);
+    yty = sum([y*y for y in cv]);
+    xty = sum([x*y for (x,y) in zip(tv,cv)]);
+    return float(xty)/(xtx+yty-xty);
+
 
 def getCandidateSimilarity(target, candidates, n):
     simDict = [];
@@ -197,9 +168,8 @@ def googleSimilarity3(target, candidate, n):
     htmlLinks = giveArticlesGoogle(target, candidate, n);
     htmlLinks = htmlLinks[:10];
     # print "HTML Links :", htmlLinks;
-    scr = 0
-    sqt = 0
-    sqc = 0
+    targetVector = []
+    candidVector = []
     driver = webdriver.Chrome(PATH)
 
     for link in htmlLinks:
@@ -221,19 +191,13 @@ def googleSimilarity3(target, candidate, n):
         wordsLen = len(words)
         words = " ".join(words)
         st = sum([words.count(x) for x in tLinks])
+        targetVector.append(st);
         sc = sum([words.count(x) for x in cLinks])
-        print link, st, sc
-        scr += st * sc
-        sqt += st * st
-        sqc += sc * sc
-
-    if (sqt == 0 or sqc == 0):
-        return 0;
-    else:
-        return scr / math.sqrt(sqt * sqc)
+        candidVector.append(sc);
+    return vectorSim(targetVector,candidVector);
 
 
-googleSimilarity3('dijkstra\'s algorithm','Bellman-Ford algorithm',2)
+t=googleSimilarity3('Fibonacci Heap','Hemachandra',2)
 
 
 
