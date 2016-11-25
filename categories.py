@@ -48,7 +48,7 @@ def getArticles(depth, category):
             idx = idx+1;
 
     subCat = list(set(subCat));
-    # print subCat;
+    #print subCat;
     for subcat in subCat:
         artParams = {'action':'query', 'list':'categorymembers', 'cmtitle':subcat, 'format':'json'}
         jsonResp = requests.get(WIKI_API, artParams).json();
@@ -65,11 +65,12 @@ def getArticles(depth, category):
             for artResp in jsonResp['query']['categorymembers']:
                 articleList.append(artResp['title']);
     articleList = list(set(articleList));
-    articleList = map(lambda p : p.encode('utf-8') , articleList)
-    subCat =  map(lambda p : p.encode('utf-8') , subCat)
-    #print (subCat,articleList);
+    #print subCat
+    articleList = map(lambda p : p.encode('utf-8','ignore') , articleList)
+    articleList = filter(lambda p: ("Category:" not in p) , articleList)
     return (subCat,articleList)
     
-#getArticles(0, "Machine_learning");
+#a = getArticles(0, "Abstract data types");
+#print a[1]
 #print getCategories('Iterator');
         

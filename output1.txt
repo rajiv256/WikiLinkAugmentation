@@ -1,0 +1,2 @@
+{'Graph isomorphism': 0.9734881683813488, 'Iterator': 0.6386965640369054, 'Fibonacci prime': 0.931267636947254, "Dijkstra's algorithm": 0.8821310404715218, 'Adaptive heap sort': 0.6578558584670872, 'Binary heap': 0.9999082640891194, 'Blossom algorithm': 0.5778530958581554}
+

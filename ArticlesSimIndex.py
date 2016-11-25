@@ -6,6 +6,10 @@ import ArticleClass
 from tfidf import *
 from parser import *
 
+def summarysimilarity(article1,article2):
+    Sim1 = CosSim(article1.summryTfIdf, article2.summryTfIdf)
+    return Sim1
+
 def articleSimilarity(article1,article2):
     # print "article1 : "
     # print article1.title
@@ -44,14 +48,26 @@ def artcatsimilarity(category,article2):
     return Sim1
 
 def hyperlinksimilarity(article1,article2):
+    #print "getting Fill_links"
+    #start = time.time()
     article1 = fill_links(article1)
     article2 = fill_links(article2)
+    #end = time.time()
+    #print (end-start)
+    #print "Done getting Fill_links"
+
     artcl1Anchors = map(lambda p : p[0] , article1.hyperlinks)
     artcl2Anchors = map(lambda p : p[0] , article2.hyperlinks)
-    print "article 1 anchors"
-    print artcl1Anchors
-    print "article 2 anchors"
-    print artcl2Anchors
-    print len(set(artcl1Anchors)&set(artcl2Anchors))
-    print len(set(artcl1Anchors)|set(artcl2Anchors))
+    #print artcl1Anchors
+    #print artcl2Anchors
+    # print "article 1 anchors"
+    # print artcl1Anchors
+    # print "article 2 anchors"
+    # print artcl2Anchors
+    #print len(set(artcl1Anchors)&set(artcl2Anchors))
+    #print len(set(artcl1Anchors)|set(artcl2Anchors))
+    if(len(set(artcl1Anchors)|set(artcl2Anchors))  == 0):
+        return 0
+    #end2 = time.time()
+    #print (end2 - end)
     return len(set(artcl1Anchors)&set(artcl2Anchors))/float(len(set(artcl1Anchors)|set(artcl2Anchors)))

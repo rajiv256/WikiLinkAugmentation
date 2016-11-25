@@ -3,8 +3,9 @@ import math
 import itertools
 from _ast import In
 from collections import Counter
-
+import pickle
 # from nltk.corpus.reader.util import concat
+import time
 
 wordDs ={}
 Allwords = []
@@ -15,6 +16,7 @@ def setallglobals(w,A,n,wcm):
     global wordDs
     global  Allwords
     global  N
+    global wordConceptMatrix
     wordDs = w
     Allwords = A
     N = n
@@ -97,29 +99,36 @@ def TfIdf(document):
     return tfidf
 
 
-
 def Invertedindex(Alldocuments):
     global wordConceptMatrix
     AllTfIdfs = map(lambda  doc :   (doc[0] , doc[1][0] )  ,Alldocuments)
     if 'treehowever' in Allwords:
         print 'yes'
-    wordConceptMatrix1ist = map(lambda p : (p,makeWordconceptvector(AllTfIdfs,p)) , Allwords)
-    wordConceptMatrixtest = map(lambda p : p[0] , wordConceptMatrix1ist)
-    if 'treehowever' in wordConceptMatrixtest:
-        print 'double yes'
-        print wordConceptMatrix['treehowever']
-    wordConceptMatrix = dict(wordConceptMatrix1ist)
-
+    length = len(Allwords)
+    print length
+    wordConceptMatrixlist = []
+    wordConceptMatrixlist = pickle.load(open("pickles/WordConceptMatrix_short.pkl", "rb"))
+    print len(wordConceptMatrixlist)
+    print wordConceptMatrixlist[0]
+    size = len(wordConceptMatrixlist)
+    i = size
+    print length
+    while(i < length):
+        wordConceptMatrixlist += map(lambda p : (Allwords[p],makeWordconceptvector(AllTfIdfs,Allwords[p])) , range(i,min(i+1000,length)) )
+        i += 1000;
+        print i
+        if( (i)% 5000 == 0):
+            print "dumping"
+            pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short.pkl", "wb"))
+    wordConceptMatrixtest = map(lambda p : p[0] , wordConceptMatrixlist)
+    pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short.pkl", "wb"))
+    print len(wordConceptMatrixlist)
+    wordConceptMatrix = wordConceptMatrixlist
     return wordConceptMatrix
 
-Completedwords = 0
 def makeWordconceptvector(tfidfs ,word):
     conceptvector={}
     threshold = 0.1;
-    global Completedwords
-    Completedwords += 1;
-    if(Completedwords % 1000 == 0):
-        print Completedwords
     for t in tfidfs:
         contenttfidf = t[1]
         if word in contenttfidf.keys():
@@ -131,21 +140,29 @@ def makeWordconceptvector(tfidfs ,word):
 
 def dotproduct(conceptrelev,wordrelev):
     return sum(map (lambda p: conceptrelev[p]*wordrelev[p] ,range(len(wordrelev)) ))
-def DocConceptVector(document):
-    doctfidf = document
+def DocConceptVector(Doctfidf):
+    doctfidf = Doctfidf
     #doctfidf = TfIdf(document)
-    wordkeys =  wordConceptMatrix.keys()
-    doctfidfkeys = list(filter(lambda p: p in wordkeys , doctfidf.keys() ) )
-    doctfidfkeys = list(filter(lambda p: wordConceptMatrix[p] != {}, doctfidfkeys ))
-    allocalConcepts = map(lambda p : wordConceptMatrix[p].keys() ,doctfidfkeys )
+    taken = int(math.ceil(len(doctfidf)*0.6 ))
+    doctfidf = dict ( sorted(doctfidf.items() , key = lambda p : p[1] ,reverse = True)[:taken] )
+    doctfidfkeys = list(filter(lambda p: p in Allwords , doctfidf.keys() ) )
+    #doctfidfkeys = list(filter(lambda p: wordConceptMatrix[p] != {}, doctfidfkeys ))
+    localwordConceptMatrix = dict ( map(lambda p : (p , wordConceptMatrix[p] ), doctfidfkeys ) )
+    allocalConcepts = map(lambda p : localwordConceptMatrix[p].keys() ,doctfidfkeys)
+    print len(allocalConcepts[1])
     allocalConcepts = list(itertools.chain(*allocalConcepts))
     allocalConcepts = list(set(allocalConcepts))
-    localwordConceptMat = map(lambda p:(map(lambda concept : wordConceptMatrix[p][concept] if concept in wordConceptMatrix[p] else 0,allocalConcepts) ), doctfidfkeys )
-    #for t in range(len(doctfidfkeys)):
-    #    print localwordConceptMat[t]
+    print len(allocalConcepts)
+    print "2"
+    start = time.time()
+    localwordConceptMat = map(lambda p:(map(lambda concept : localwordConceptMatrix[p][concept] if concept in localwordConceptMatrix[p] else 0,allocalConcepts) ), doctfidfkeys )
+    print "3"
+    end = time.time()
+    print (end-start)
     localwordConceptMatT = map(list,zip(*localwordConceptMat))
     doctfidfvalues = map(lambda p : doctfidf[p],doctfidfkeys )
     conceptvector =  map(lambda p : dotproduct( p,doctfidfvalues) , localwordConceptMatT)
+    print "4"
     conceptvector = zip(allocalConcepts ,conceptvector)
     return dict(conceptvector)
 
@@ -164,7 +181,19 @@ def CosSim(tfidf1,tfidf2):
     sim = float(sim) / (mag1*mag2)
     return sim;
 def ConceptVectorSimilarity(TfIdf1,TfIdf2):
+    print "getting Doc vector similarity"
+    start = time.time()
+    print len(TfIdf1)
+    print len(TfIdf2)
     conceptvector1 = DocConceptVector(TfIdf1)
     conceptvector2 = DocConceptVector(TfIdf2)
+    print "Done getting Doc vector similarity "
+    end = time.time()
+    print (end-start)
     similarity = CosSim(conceptvector1,conceptvector2)
     return similarity
+
+#taking only top 100 concepts for all words
+def sortwordconceptmatrix(wordconpmatrix):
+    wordconpmatrix = map(lambda  p : ( p[0] , dict(sorted( p[1].items() ,key =lambda x : x[1] , reverse = True)[:100])  )   , wordconpmatrix)
+    return wordconpmatrix
