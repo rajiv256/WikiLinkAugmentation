@@ -210,7 +210,7 @@ def googleSimilarity3(target, candidate, n):
             soup = bsoup(html_string,"lxml")
             time.sleep(2.5)  # This should be there. Other wise server will raise TOO MANY REQUESTS Error
             text = soup.get_text().encode('ascii','ignore')
-            words = re.sub('[^A-Za-z]+', ' ', text).split(' ')
+            words = re.sub('[^A-Za-z\']+', ' ', text).split(' ')
             words = [k.lower() for k in words if len(k)!=0]
             print words
         except urllib2.HTTPError :
