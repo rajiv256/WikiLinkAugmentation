@@ -11,16 +11,18 @@ wordDs ={}
 Allwords = []
 N = 0
 wordConceptMatrix = {}
-
+wordConceptMatrixkeys = []
 def setallglobals(w,A,n,wcm):
     global wordDs
     global  Allwords
     global  N
     global wordConceptMatrix
+    global wordConceptMatrixkeys
     wordDs = w
     Allwords = A
     N = n
     wordConceptMatrix = wcm
+    wordConceptMatrixkeys = wordConceptMatrix.keys()
     return
 
 
@@ -147,7 +149,7 @@ def DocConceptVector(Doctfidf):
     #doctfidf = TfIdf(document)
     taken = max( int(math.ceil(len(doctfidf)*0.6 )) , min(1000,len(doctfidf) )  )
     doctfidf = dict( sorted(doctfidf.items() , key = lambda p : p[1] ,reverse = True)[:taken] )
-    doctfidfkeys = list(filter(lambda p: p in Allwords , doctfidf.keys() ) )
+    doctfidfkeys = list(filter(lambda p: p in wordConceptMatrixkeys , doctfidf.keys() ) )
     #doctfidfkeys = list(filter(lambda p: wordConceptMatrix[p] != {}, doctfidfkeys ))
     localwordConceptMatrix = dict ( map(lambda p : (p , wordConceptMatrix[p] ), doctfidfkeys ) )
     allocalConcepts = map(lambda p : localwordConceptMatrix[p].keys() ,doctfidfkeys)

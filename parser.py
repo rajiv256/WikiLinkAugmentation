@@ -22,7 +22,6 @@ def process(title) :        #returns xml
     try:
         #print title
         s =  "NULL"
-
         if(title in variable.allhtmls.keys()):
             #print "html page found successful"
             s = variable.allhtmls[title]
@@ -30,6 +29,7 @@ def process(title) :        #returns xml
             print title
             ny = wi.WikipediaPage(title)
             s = ny.html()
+            variable.allhtmls[title] = s
         #print "coming here"
         s = s.encode('utf-8')
         soup = bs(s, 'lxml')

@@ -1,84 +1,160 @@
 Prim's algorithm,20
-Kruskal's algorithm,2.94208677155,0
-Reverse-delete algorithm,2.72522828429,0
-Minimum bottleneck spanning tree,1.72397682666,0
-Borůvka's algorithm,1.53174264191,0
-Dijkstra's algorithm,1.13700793508,1
-Euler tour technique,0.957575481181,0
-Gomory–Hu tree,0.930111618326,0
-Degeneracy (graph theory),0.905069778383,0
-Iterative compression,0.835717716789,0
-Dijkstra–Scholten algorithm,0.832469846632,0
-Bellman–Ford algorithm,0.763666246024,0
-Longest path problem,0.755365155199,0
-Tree traversal,0.733614911736,0
-Edmonds' algorithm,0.589489388455,0
-Stoer–Wagner algorithm,0.566660171105,0
-Junction tree algorithm,0.544786581726,0
-Closure problem,0.478912688899,0
-Hopcroft–Karp algorithm,0.400436571533,0
-Bidirectional search,0.344474412946,0
-Graph isomorphism,0.272908446734,0
+Kruskal's algorithm,2.94296588655,0
+Reverse-delete algorithm,2.60830190235,0
+Minimum bottleneck spanning tree,1.66391449389,0
+Borůvka's algorithm,1.49794803418,0
+Dijkstra's algorithm,1.36735367561,1
+Euler tour technique,0.96924273081,0
+Dijkstra–Scholten algorithm,0.879827832491,0
+Degeneracy (graph theory),0.857390837326,0
+Gomory–Hu tree,0.812951709191,0
+Bellman–Ford algorithm,0.805874144477,0
+Iterative compression,0.773298685399,0
+Tree traversal,0.728733546047,0
+Longest path problem,0.694533822233,0
+Stoer–Wagner algorithm,0.640275085147,0
+Edmonds' algorithm,0.559635517773,0
+Junction tree algorithm,0.544003945805,0
+Hopcroft–Karp algorithm,0.473524045002,0
+Closure problem,0.430895374253,0
+Bidirectional search,0.412976073582,0
+Graph isomorphism,0.244472550614,0
 Double-ended queue,20
-Queue (abstract data type),2.99999991261,1
-Priority queue,1.17314831705,1
-Pile (abstract data type),1.12330807522,0
-List (abstract data type),1.10569461282,0
-Collection (abstract data type),1.01999837541,0
-Linked data structure,0.996220614835,0
-Peek (data type operation),0.829854712639,0
-Double-ended priority queue,0.775417324861,0
-Kinetic priority queue,0.689882130671,0
-Set (abstract data type),0.649244162451,0
-Multiset (abstract data type),0.649244162451,0
-Container (abstract data type),0.619656792913,0
-Associative array,0.535419919818,0
-Abstract data type,0.503924321461,0
-Multimap,0.466321888022,0
-Stack (abstract data type),0.454939988086,0
-Graph (abstract data type),0.398284350743,0
-U-form,0.345364495286,0
-Obstack,0.112415979194,0
-Iterator,0.0120623286971,0
+Queue (abstract data type),2.99999991158,1
+Pile (abstract data type),1.37420686482,0
+List (abstract data type),1.30978757069,0
+Priority queue,1.30447953475,1
+Collection (abstract data type),1.1927704473,0
+Linked data structure,1.18490436323,0
+Peek (data type operation),0.934715499886,0
+Double-ended priority queue,0.91743244478,0
+Kinetic priority queue,0.772824064597,0
+Set (abstract data type),0.748432145683,0
+Multiset (abstract data type),0.748432145683,0
+Container (abstract data type),0.710589230471,0
+Associative array,0.655052353815,0
+Abstract data type,0.592290381126,0
+Multimap,0.538495597277,0
+Stack (abstract data type),0.530552075518,0
+U-form,0.38818306746,0
+Graph (abstract data type),0.220645022792,0
+Obstack,0.171581870658,0
+Iterator,0.0549838129406,0
 Johnson's algorithm,20
-Suurballe's algorithm,2.79387055974,0
-Floyd–Warshall algorithm,2.36741979666,0
-Bellman–Ford algorithm,2.09142027127,0
-Dijkstra's algorithm,1.81892941643,0
-Shortest Path Faster Algorithm,1.33039031143,0
-Yen's algorithm,1.25544051607,0
-Stoer–Wagner algorithm,1.05888990454,0
-Widest path problem,0.946862571938,0
-K shortest path routing,0.849965019231,0
-Longest path problem,0.828615988222,0
-Topological sorting,0.676843611312,0
-Path-based strong component algorithm,0.565305404018,0
-Reverse-delete algorithm,0.483963375986,0
-Closure problem,0.464664340936,0
-Knuth's Simpath algorithm,0.389878704584,0
-Euler tour technique,0.385499753815,0
-Graph bandwidth,0.373925631836,0
-Flow network,0.32193929118,0
-Dulmage–Mendelsohn decomposition,0.268150882474,0
+Suurballe's algorithm,2.99999990816,0
+Bellman–Ford algorithm,2.26857900677,0
+Floyd–Warshall algorithm,2.19821229805,0
+Shortest Path Faster Algorithm,1.88443482394,0
+Dijkstra's algorithm,1.8675436428,0
+Yen's algorithm,1.64384892126,0
+Widest path problem,1.41236928243,0
+K shortest path routing,1.40616063082,0
+Longest path problem,1.27231949183,0
+Topological sorting,0.927604051769,0
+Stoer–Wagner algorithm,0.843018978288,0
+Reverse-delete algorithm,0.798415247286,0
+Path-based strong component algorithm,0.755840330263,0
+Closure problem,0.746332567202,0
+Knuth's Simpath algorithm,0.735564686815,0
+Euler tour technique,0.69513195876,0
+Graph bandwidth,0.416980505277,0
+Flow network,0.414605581279,0
+Dulmage–Mendelsohn decomposition,0.384903828925,0
 Bron–Kerbosch algorithm,0.154411756599,0
 Iterator,20
-Container (abstract data type),2.14677097324,0
-Multimap,1.49661490794,0
-Associative array,1.23318741381,0
-Abstract data type,1.05877470297,0
-Collection (abstract data type),0.974534712055,0
-Set (abstract data type),0.864206213931,0
-Multiset (abstract data type),0.864206213931,0
-List (abstract data type),0.775623542132,0
-Queue (abstract data type),0.749367009917,0
-Priority queue,0.696685070233,0
-Stack (abstract data type),0.474661040845,0
-Double-ended queue,0.446160818616,0
-Linked data structure,0.373726840153,0
-Obstack,0.36900251424,0
-U-form,0.339867446261,0
-Peek (data type operation),0.316987894697,0
-Double-ended priority queue,0.106661537858,0
-Pile (abstract data type),0.0925553638971,0
-Kinetic priority queue,0.0244809139352,0
+Container (abstract data type),2.14677096795,0
+Multimap,1.6216419712,0
+Associative array,1.24204092186,0
+Abstract data type,1.10056170201,0
+List (abstract data type),0.970911621176,0
+Collection (abstract data type),0.961417364103,0
+Queue (abstract data type),0.890528868075,0
+Set (abstract data type),0.858990299072,0
+Multiset (abstract data type),0.858990299072,0
+Priority queue,0.697621342631,0
+Double-ended queue,0.505467810178,0
+Stack (abstract data type),0.478887177414,0
+Linked data structure,0.385302895143,0
+Obstack,0.363231632239,0
+U-form,0.341414389736,0
+Peek (data type operation),0.309091591995,0
+Double-ended priority queue,0.119094053847,0
+Pile (abstract data type),0.0923771994787,0
+Kinetic priority queue,0.0378899686725,0
 Graph (abstract data type),0.0,0
+Ford–Fulkerson algorithm,18
+Ford–Fulkerson algorithm,2.99999996305,0
+Dinic's algorithm,1.12652688049,0
+Circulation problem,0.930016065401,0
+Multi-commodity flow problem,0.903531207063,0
+Maximum flow problem,0.85361398094,0
+Out-of-kilter algorithm,0.783667401147,0
+Minimum-cost flow problem,0.7752010556,0
+Max-flow min-cut theorem,0.734658840306,0
+Approximate max-flow min-cut theorem,0.684874202713,1
+Flow network,0.661395357683,0
+Yen's algorithm,0.653400383207,0
+Hopcroft–Karp algorithm,0.641172824665,0
+Suurballe's algorithm,0.344932718221,0
+Widest path problem,0.273416444869,0
+Dijkstra's algorithm,0.266956864492,0
+Push–relabel maximum flow algorithm,0.254194809192,0
+Longest path problem,0.247824940003,0
+K shortest path routing,0.0883001286425,0
+Merge sort,14
+Merge sort,2.99999995547,0
+Merge algorithm,0.966999228477,0
+External sorting,0.871471191639,0
+Insertion sort,0.859609141041,0
+Sorting algorithm,0.858923300194,0
+Library sort,0.64153373064,0
+Integer sorting,0.518963842908,0
+Partial sorting,0.451915440821,0
+Batcher odd–even mergesort,0.41624181906,0
+Quicksort,0.386075021292,0
+Bitonic sorter,0.268666858446,0
+Sorting network,0.17203246265,0
+Tree sort,0.107793164506,0
+Pairwise sorting network,0.0568136344527,0
+Kruskal's algorithm,22
+Reverse-delete algorithm,2.94230760382,1
+Prim's algorithm,2.84572865922,1
+Minimum bottleneck spanning tree,2.0903986802,0
+Borůvka's algorithm,1.94499220281,1
+Edmonds' algorithm,1.34948144484,0
+Dynamic connectivity,1.29659209815,0
+Euler tour technique,1.14614467119,0
+Gomory–Hu tree,0.842299897774,0
+Stoer–Wagner algorithm,0.808029220894,0
+Dijkstra's algorithm,0.800077470873,1
+Tree traversal,0.790340713381,0
+Bidirectional search,0.7403203588,0
+Junction tree algorithm,0.734534221272,0
+Suurballe's algorithm,0.722315978206,0
+Closure problem,0.651666343502,0
+Karger's algorithm,0.64693966154,0
+Force-directed graph drawing,0.49011591915,0
+Graph bandwidth,0.475326483841,0
+Graph embedding,0.461524513875,0
+Single-linkage clustering,0.408333308323,1
+Hopcroft–Karp algorithm,0.400283292468,0
+Transitive reduction,0.192238803346,0
+Priority queue,18
+Priority queue,2.99999996675,0
+Monotone priority queue,1.69929853948,0
+Bucket queue,1.38290875021,0
+Kinetic priority queue,1.27544381908,0
+Double-ended priority queue,0.968173911985,0
+Queue (abstract data type),0.910223677076,0
+Calendar queue in simulation,0.855035416625,0
+AF-heap,0.788048579316,0
+Pagoda (data structure),0.665224993635,0
+Double-ended queue,0.633846260792,0
+Min-max heap,0.598366037525,0
+Randomized meldable heap,0.578235380625,0
+Skew binomial heap,0.389755335717,0
+Leftist tree,0.36160849028,0
+List (abstract data type),0.246171235063,0
+Van Emde Boas tree,0.239038857437,0
+Linked data structure,0.118199417151,0
+Stack (abstract data type),0.0567087688938,0

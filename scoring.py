@@ -11,17 +11,8 @@ from google_search import *
 def make_table(title , relarticles):
     target_a = ArticleClass.Article(title)
     print "article created succesfully"
+    print title
     #artlist = giveSimArtcls(target_a,0)
-    '''
-    relarticles = allrelevantarticles(target_a)
-    if title in relarticles:
-        relarticles.remove(title)
-    relarticles = map(lambda p : p.split("Category:")[1] if ("Category:" in p) else p , relarticles )
-    print "all relevant articles"
-    print relarticles
-    relarticles = prune_articles(target_a,relarticles)
-    return relarticles
-    '''
     simDict = referenceSimilarity(target_a.title,relarticles)
     print simDict
     print "reference similarity done"
@@ -43,6 +34,23 @@ def make_table(title , relarticles):
     print "normal table done"
     table = final_scores(table)
     return table
+
+
+def make_table_relarticles(title):
+    target_a = ArticleClass.Article(title)
+    print "article created succesfully"
+    print title
+    # artlist = giveSimArtcls(target_a,0)
+
+    relarticles = allrelevantarticles(target_a)
+    if title in relarticles:
+        relarticles.remove(title)
+    relarticles = map(lambda p : p.split("Category:")[1] if ("Category:" in p) else p , relarticles )
+    print "all relevant articles"
+    print relarticles
+    relarticles = prune_articles(target_a,relarticles)
+    return relarticles
+
 
 
 def writeToFile(table,filename):
@@ -99,49 +107,29 @@ def gettestcases(filename):
         line =f.readline()
     return testcases
 
+def makesamplecase_relarticleswrite(testcases , samplearticlesfile):
+    for s in testcases:
+        table = make_table_relarticles(s)
+        writeToFile2(s, table, samplearticlesfile)
 
 
-def makesamplecase(sample ,filename1 ,suggfile ,samplearticlesfile):
-
-    allarticles = variable.allTfIdf.keys();
-    #taking 20 samples
-    #sample = random.sample( allarticles)
-    '''
-    print "getting titles with see_also"
-    see_alsos = pickle.load( open("pickles/see_alsos.pkl", "rb"))
-    sample = list(set(allarticles)  - set( map(lambda p : p[0] ,see_alsos ) )  )
-    see_alsos += map(lambda p: (p , filter( lambda s : (s[0] in allarticles) ,see_also(p)) ),  sample)
-    pickle.dump(see_alsos , open("pickles/see_alsos.pkl", "wb"))
-    only_see_also_articles = filter(lambda p: len(p[1]) > 1,  see_alsos)
-    only_see_also_articles = map(lambda p : p[0] , only_see_also_articles )
-    print "done"
-    print len(only_see_also_articles)
-
-    sample = random.sample(only_see_also_articles, min(30 ,len(only_see_also_articles))  )
-    print sample
-    '''
-    #######WE GENERATE SAMPLE MANUALLY
-    #sample = []
-
-    testarticles = gettestcases("SampleArticles");
+def  makesamplecase_findrelarticles( filename1 ,suggfile ,samplearticlesfile,see_alsofile ):
+    testarticles = gettestcases(samplearticlesfile)
     print "printing test cases"
     print testarticles
     sample = testarticles.items()
+
     Table = []
-    Ranking = []
-    # f = open(samplearticlesfile , "wb")
-    # f.flush()
-    # f.close()
     for s in sample:
         table = make_table( s[0] , s[1] )
-        #writeToFile2(s, table, samplearticlesfile)
         Ranking = combined_score(table)
         Table += table
         writeToFile3(Ranking, suggfile)
         writeToFile(Table, filename1)
-        writeToFileSeeAlso( s[0] , see_also(s[0]) ,"Actual_See_also")
-    #writeToFile(Ranking, suggfile)
-    #writeToFile(Table,filename1)
+        writeToFileSeeAlso( s[0] , see_also(s[0]) ,see_alsofile)
+
+
+
 
 tuple_size = 6    # Size of the scores tuple with candidate
 import numpy
@@ -213,7 +201,7 @@ def prune_articles(target_a,relarticles):
     see_also_articles = see_also(target_a.title)
     see_also_articles = filter(lambda p: (p[0] in articles_stored), see_also_articles)
     see_also_articles = map(lambda p : p[0] , see_also_articles)
-    relarticles = relarticles[:20]
+    relarticles = relarticles[:30]
     print "pruned_articles"
     relarticles = map(lambda p: (p[0].title, p[1]), relarticles)
     print relarticles
