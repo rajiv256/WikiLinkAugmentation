@@ -139,6 +139,8 @@ def vectorSim(tv,cv):
     return float(xty)/(xtx+yty-xty);
 
 
+
+
 def getCandidateSimilarity(target, candidates, n):
     simDict = [];
     for candidate in candidates:
@@ -176,7 +178,6 @@ def googleSimilarity3(target, candidate, n):
     for link in htmlLinks:
         #print link
         try :
-            print link
             response = urllib2.urlopen(link)
             html_string = response.read()
             soup = bsoup(html_string,"lxml")
@@ -188,9 +189,7 @@ def googleSimilarity3(target, candidate, n):
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
             continue ;
-        except urllib2.URLError:
-            print "URL not present"
-            continue
+
 
         wordsLen = len(words)
         words = " ".join(words)
@@ -203,7 +202,14 @@ def googleSimilarity3(target, candidate, n):
 
 # t=googleSimilarity3('Double-ended queue','Kinetic priority queue',2)
 # print t
-
+# t=googleSimilarity3('Fibonacci Heap','Binomial Heap',2)
+'''
+def mahalanobisDistance(tv,cv):
+    mu = sum([(x+y)/2.0 for (x,y) in zip(tv,cv)]);
+    mtv = [x-y for (x,y) in zip(tv,mu)]
+    mcv = [x-y for (x,y) in zip(cv,mu)]
+    return math.sqrt(sum[((v-w)*(v-w))/(x*y) for ((v,w),(x,y)) in zip(zip(tv,cv),zip(mtv,mcv))]);
+'''
 
 
 '''
