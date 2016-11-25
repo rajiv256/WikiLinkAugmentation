@@ -9,7 +9,7 @@ import variable
 def smoothing(l) :
     ans = []
     for k in l :
-        k = k.encode('utf-8','ignore')
+        k = k.encode('utf-8')
         lsoup = bs(k,'lxml')
         s = lsoup('a')[0].text.encode('utf-8','ignore').lower()
         #TODO : Remove any link with special characters like \x, [ etc.,
@@ -31,7 +31,7 @@ def process(title) :        #returns xml
             ny = wi.WikipediaPage(title)
             s = ny.html()
         #print "coming here"
-        s = s.encode('utf-8','ignore')
+        s = s.encode('utf-8')
         soup = bs(s, 'lxml')
         #print "PRINTING SOUP"
         return soup
@@ -56,13 +56,14 @@ def all_links(title):   #return links for title
     links = []
     try:
         for k in paragraphs:
-            if k is None:
+            if ((k is None) ) :
                 continue
-            k = k.encode('utf-8','ignore')
+            k = k.encode('utf-8')
             lsoup = bs(k, 'lxml')
             links += lsoup('a')
         return smoothing(links)
     except:
+        print "some exception"
         return []
 
 
@@ -103,6 +104,7 @@ def summary_links(title) : #return summary links
         #print links
         return smoothing(links)
     except:
+        print "some exception"
         return []
 
 def fill_links(article):
@@ -111,7 +113,8 @@ def fill_links(article):
     article.hyperlinks = all_links(article.title)
     return article;
 
-def see_also(title) :
+def see_also(title):
+    #print title
     soup = process(title)
     if (soup == "NULL"):
         return []
@@ -119,12 +122,31 @@ def see_also(title) :
     ret = []
     for k in h2 :
         if "See also" in k.get_text() :
+            if( k.next_sibling is None):
+                continue
             k = k.next_sibling.next_sibling
-            while (k.name != 'ul') :
+            k1=k;
+            #print k
+            if k is None:
+                continue
+            while (  (k is not None) and (k.name != 'ul') ) :
+                #print k.name
                 k = k.next_sibling
-            links = k.find_all('li')
+
+            if k==None:
+                while((k1 is not None) and (k1.name!='p')):
+                    k1 = k1.next_sibling
+            if k==None and k1!=None:
+                k = k1;
+            if(k==None and k1 == None):
+                continue;
+            if(k.name == 'p'):
+                links = [k]
+            else:
+                links = k.find_all('li')
             for li in links :
-               ret.append((li('a')[0].get_text().encode('utf-8','ignore'),li('a')[0]['href'].encode('utf-8','ignore')))
+                if( len(li('a')) > 0):
+                    ret.append((li('a')[0].get_text().encode('utf-8','ignore'),li('a')[0]['href'].encode('utf-8','ignore')))
     return ret
 
 def filter_categories(categories_list) :
@@ -162,323 +184,7 @@ def get_categories(title) :
             raise  # Not error we are looking for
         pass  # Handle error here.
     except:
+        print "some exception"
         return "NULL"
-
-print see_also('dijkstra\'s algorithm')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#s = see_also("Software mining" )
+#print s

@@ -225,12 +225,29 @@ def contentSim(target,relarticles):
         if ("Category" in artclTitle):
             artclTitle = artclTitle.split("Category:")[1]
         artcl = ArticleClass.Article(artclTitle);
+        print artclTitle
         artclDict[artcl] = articleSimilarity(target, artcl);
         #print artclTitle
         #print artclDict[artcl]
     sortedList = sorted(artclDict.items(), key=lambda p: p[1][1], reverse=True);
     #filterList = [(x, (y, z)) for (x, (y, z)) in sortedList if z > thrshld];
     return sortedList
+
+def SummarySim(target,relarticles):
+    artclDict = {};
+    for artclTitle in relarticles:
+        if ("Category" in artclTitle):
+            artclTitle = artclTitle.split("Category:")[1]
+        artcl = ArticleClass.Article(artclTitle);
+        print artclTitle
+        artclDict[artcl] = summarysimilarity(target, artcl);
+        #print artclTitle
+        #print artclDict[artcl]
+    sortedList = sorted(artclDict.items(), key=lambda p: p[1], reverse=True);
+    #filterList = [(x, (y, z)) for (x, (y, z)) in sortedList if z > thrshld];
+    return sortedList
+
+
 
 def giveSimArtcls(article,thrshld):
     catgrys = pruneCategories(article);
@@ -279,25 +296,23 @@ def allrelevantarticles(article):
     print "pruned articles"
     print catgrys
     totalRelList = [];
-
     for catgry in catgrys:
         artclList = getArticles(DEPTH, catgry)[1];  # DONE by hemanth returns subCat & articles
         totalRelList +=  artclList;
+    articles_stored = variable.allTfIdf.keys()
+    totalRelList = filter(lambda p : (p in articles_stored) , totalRelList)
     return totalRelList
 
 
 def hyperlinkSim(target , relarticles):
     artclDict = {};
     for artclTitle in relarticles:
+        #print artclTitle
         if ("Category" in artclTitle):
             artclTitle = artclTitle.split("Category:")[1]
         artcl = ArticleClass.Article(artclTitle);
         artclDict[artcl] = hyperlinksimilarity(target, artcl);
-        # print artclTitle
-        #print "ARTICLE SIMILARITY : "
-        # print artclDict[artcl]
     sortedList = sorted(artclDict.items(), key=lambda p: p[1], reverse=True);
-    # filterList = [(x, (y, z)) for (x, (y, z)) in sortedList if z > thrshld];
     return sortedList
 
 

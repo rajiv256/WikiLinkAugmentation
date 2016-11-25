@@ -5,21 +5,27 @@ import variable
 from content import *
 from tfidf import *
 import random
+from google_search import *
+
 
 def make_table(title):
     target_a = ArticleClass.Article(title)
     print "article created succesfully"
     #artlist = giveSimArtcls(target_a,0)
     relarticles = allrelevantarticles(target_a)
-    relarticles = map(lambda p : p.split("Category:")[1] if ("Category" in p) else p , relarticles )
+    if title in relarticles:
+        relarticles.remove(title)
+    relarticles = map(lambda p : p.split("Category:")[1] if ("Category:" in p) else p , relarticles )
     print "all relevant articles"
     print relarticles
+    relarticles = prune_articles(target_a,relarticles)
+    return relarticles
 
+    '''
     simDict = referenceSimilarity(target_a.title,relarticles)
     print simDict
-
+    print "reference similarity done"
     content_based_sim = contentSim(target_a,relarticles)
-
     content_based_sim = map(lambda p : (p[0].title ,p[1]) ,content_based_sim )
     content_based_sim = dict(content_based_sim)
     print 'content-based-similarity done'
@@ -27,12 +33,18 @@ def make_table(title):
     hyperlink_similarities = map(lambda p : (p[0].title ,p[1]) ,hyperlink_similarities )
     hyperlink_similarities = dict(hyperlink_similarities)
     print 'hyperlink-similarity done'
-    table = map(lambda p : (title, p , simDict[p], content_based_sim[p][1] ,hyperlink_similarities[p] , see_also_or_not(title,p) ) , relarticles )
+    #articles_for_google = map(lambda p : p[0] , content_based_sim.items() )[10 : ]
+    #google_similarities = getCandidateSimilarity(target_a.title,articles_for_google,2)
+    #print "google - similarity"
+    # google_similarities[p] if (p in google_similarities.keys()) else  0
+    table = map(lambda p : (title, p ,  simDict[p], content_based_sim[p][1] ,hyperlink_similarities[p]  , see_also_or_not(title,p) ) , relarticles )
     table = sorted(table,key = lambda p : p[5] , reverse = True)
     print "normal table done"
     table = final_scores(table)
-    return table
 
+    table = []
+    return table
+    '''
 
 def writeToFile(table,filename):
     target = open(filename , 'w')
@@ -44,21 +56,48 @@ def writeToFile(table,filename):
     target.flush()
     target.close()
 
-def makesamplecase():
+def writeToFile2(s , table,filename ):
+    target = open(filename, 'a')
+    target.truncate()
+    for t in table:
+        target.write(s + "$"  + t)
+        target.write("\n")
+    target.flush()
+    target.close()
+
+
+def gettestcases(filename):
+    f = open(filename, 'r')
+    line =f.readline()
+    testcases = {}
+    while(line):
+        line = line.split("$")
+        if(line[0] not in testcases.keys()):
+            testcases[line[0]] = []
+        testcases[line[0]] += [line[1]]
+    return testcases
+
+def makesamplecase(filename1 ,suggfile):
     allarticles = variable.allTfIdf.keys();
     #taking 20 samples
-    sample = random.sample( range(len(allarticles)) , 2 )
-    print map(lambda p : allarticles[p] ,sample)
+    sample = random.sample( allarticles , 1000 )
+    print "getting titles with see_also"
+    only_see_also_articles = filter(lambda p: len(see_also(p)) > 0,  sample)
+    print "done"
+    sample = random.sample(only_see_also_articles, 30)
+    print sample
     Table = []
     Ranking = []
     for s in sample:
-        table = make_table(allarticles[s])
-        Ranking += combined_score(table)
+        table = make_table( s )
+        writeToFile2(s, table, "SampleArticles")
+        #Ranking += combined_score(table)
         Table += table
-        writeToFile(Ranking, 'suggestions.txt')
-        writeToFile(Table, 'output2.txt')
-    writeToFile(Ranking, 'suggestions.txt')
-    writeToFile(Table,'output2.txt')
+        #writeToFile(Ranking, suggfile)
+        #writeToFile(Table, filename1)
+
+    #writeToFile(Ranking, suggfile)
+    #writeToFile(Table,filename1)
 
 tuple_size = 6    # Size of the scores tuple with candidate
 import numpy
@@ -116,9 +155,24 @@ def final_scores(tuples) :
     candidates = ret[0]
     scores = normalize(ret[1])
     return map(lambda p : (target, candidates[p] , scores[p] ,label[p] ) , range(len(scores)) ) ;
-#print final_scores([("hell","hath",1,1,1,1,1,1),("hell","fury",2,2,2,2,2,2)])
 
 
 def combined_score(table):
     combinedscore = map(lambda p :  (p[1], sum(p[2]) ,p[3] ) , table)
-    return sorted(combinedscore , key = lambda p : p[1])
+    return sorted(combinedscore , key = lambda p : p[1],reverse = True)
+
+
+
+def prune_articles(target_a,relarticles):
+    relarticles = SummarySim(target_a,relarticles)
+    articles_stored = variable.allTfIdf.keys()
+    see_also_articles = see_also(target_a.title)
+    see_also_articles = filter(lambda p: (p in articles_stored), see_also_articles)
+    relarticles = relarticles[:20] + see_also_articles
+    relarticles = list(set(relarticles))
+
+    print "pruned_articles"
+    relarticles = map(lambda p: (p[0].title, p[1]), relarticles)
+    print relarticles
+    return map(lambda p : p[0] , relarticles)
+
