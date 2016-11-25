@@ -81,7 +81,7 @@ def googleSimilarity1(target,candidate,n):
     for link in htmlLinks:
 	#driver.refresh()
         print "time5"
-   	socket.setdefaulttimeout(100) 
+   	socket.setdefaulttimeout(100)
 	try:
 	    driver.get("view-source:"+link)
 	except socket.timeout:
@@ -152,12 +152,12 @@ def cleanText(content):
 
     return words
 
-#print googleSimilarity1("Fibonacci heap" , "Iterator" , 2)
+# print googleSimilarity1("Fibonacci heap" , "Iterator" , 2)
 
 def getCandidateSimilarity(target, candidates, n):
     simDict = {};
     for candidate in candidates:
-	simDict[candidate] = googleSimilarity1(target, candidate, n);
+        simDict[candidate] = googleSimilarity1(target, candidate, n);
     return simDict;
 
 #candidates = ["Iterator", "Binary heap", "Adaptive heap sort", "Fibonacci prime", "Graph isomorphism", "Dijkstra's algorithm", "Blossom algorithm"];
@@ -168,5 +168,3 @@ def CVgooglesimilarity(pagecontent,target,candidate):
     pagetfidf = TfIdf(pagecontent)
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
-
-
