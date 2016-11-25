@@ -1,6 +1,8 @@
 import pickle
 
-def getResult(inputFile):
+n=5;
+
+def getResult(inputFile,n):
     resultDict = {};
     f = open(inputFile,"r");
     while(True):
@@ -12,16 +14,18 @@ def getResult(inputFile):
         targetArticle = targetArticle[0];
         # print relevantCount,targetArticle;
         suggestions = []
-        for i in range(0,relevantCount):
+        for i in range(0,n):
             temp = f.readline().strip().split(",");
             suggestions += [(temp[0],float(temp[1]),int(temp[2]))];
+        for i in range(n,relevantCount):
+            temp = f.readline();
         resultDict[targetArticle] = suggestions;
         # print resultDict
     return resultDict;
 
 def getPrecision(inputFile):
     precDict = {}
-    results = getResult(inputFile);
+    results = getResult(inputFile,n);
     for key in results.keys():
         if(len(results[key])==0):
             precDict[key] = 0
@@ -49,9 +53,11 @@ def getWikiResult(inputFile):
     return resultDict;
 
 def getRecall(ourResultFile,wikiResultFile):
-    ourResult = dict(getResult(ourResultFile).items()[:5]);
+    ourResult = getResult(ourResultFile,n);
+    # print ourResult
     wikiResult = getWikiResult(wikiResultFile);
     recallDict = {}
+    # print ourResult.keys();
     for key in ourResult.keys():
         ourSeeAlso = [x[0].lower() for x in ourResult[key]];
         wikiSeeAlso = [x[0].lower() for x in wikiResult[key]];
@@ -63,7 +69,7 @@ def getRecall(ourResultFile,wikiResultFile):
     return recallDict;
 
 def getFilteredRecall(ourResultFile,wikiResultFile):
-    ourResult = dict(getResult(ourResultFile).items()[:5]);
+    ourResult = getResult(ourResultFile,n);
     wikiResult = getWikiResult(wikiResultFile);
     documentStored = pickle.load(open("docsStored.pkl","r"));
     recallDict = {}
@@ -83,6 +89,7 @@ def getFilteredRecall(ourResultFile,wikiResultFile):
 p = getPrecision("suggestions3.txt")
 t=getRecall("suggestions3.txt","Actual_See_also")
 s=getFilteredRecall("suggestions3.txt","Actual_See_also")
-print p
-print t
-print s
+print "article \tPrecision\tRecall\tFilteredRecall";
+for key in p.keys():
+    print str(key)+"\t"+str(p[key])+"\t"+str(t[key])+"\t"+str(s[key])
+# t=getResult("suggestions3.txt",5);

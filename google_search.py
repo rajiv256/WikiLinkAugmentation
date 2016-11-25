@@ -11,6 +11,10 @@ import wikipedia
 import re
 from tfidf import *
 import math
+import urllib2
+from bs4 import BeautifulSoup as bsoup
+import re
+
 display = Display(visible=0, size=(800, 600))
 display.start()
 #
@@ -57,7 +61,7 @@ def giveArticlesGoogle(target,candidate,n):
         results += map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
         print len(results);
 
-    noWiki = filter(lambda y: (y.find("wikivisually.com")==-1 and y.find("wikiwand.com")==-1 and y.find("wikipedia.org") == -1 and y.find(".pdf") == -1 and y.find("www.youtube.com") == -1 and y.find("books.google.co") == -1), results)
+    noWiki = filter(lambda y: (y.find("wikivisually.com")==-1 and y.find("wikiwand.com")==-1 and y.find("wikipedia.org") == -1 and y.find(".pdf") == -1 and y.find("www.youtube.com") == -1 and y.find("books.google.co") == -1) and y.find(".ppt")==-1 and y.find(".ps")==-1, results)
     print len(noWiki);
     #variable.display.stop()
 #    driver.close()
@@ -87,7 +91,7 @@ def googleSimilarity1(target,candidate,n):
     for link in htmlLinks:
 	#driver.refresh()
         print "time5"
-   	socket.setdefaulttimeout(10)
+   	socket.setdefaulttimeout(10) 
 	try:
 	    driver.get("view-source:"+link)
 	except socket.timeout:
@@ -97,24 +101,22 @@ def googleSimilarity1(target,candidate,n):
 	    continue;
 	print "time6"
         print link
-
+        
 	try:
 	    words = cleanText(driver.find_element_by_tag_name("body").text);
         except NoSuchElementException:
 	    print "NoSuchElement"
 	    continue;
 
-	# print words
-        # x=raw_input("hi");
-        wordsLen = len(words);
+        wordsLen = len(words)
         words = " ".join(words)
         # print words, tLinks;
         # st = len(set(tLinks) & set(words))/float(len(set(tLinks)));
         # sc = len(set(cLinks) & set(words))/float(len(set(cLinks)));
-        st = sum([words.count(x) for x in tLinks]);
-        sc = sum([words.count(x) for x in cLinks]);
+        st = sum([words.count(x) for x in tLinks])
+        sc = sum([words.count(x) for x in cLinks])
         # print set(words);
-        print link,st,sc;
+        print link,st,sc
         scr += st*sc
         sqt += st*st
         sqc += sc*sc
@@ -181,7 +183,63 @@ def CVgooglesimilarity(pagecontent,target,candidate):
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
 
-###############################################################
+## Written by rajiv
+def googleSimilarity3(target, candidate, n):
+    tLinks = wikipedia.page(target).links
+    cLinks = wikipedia.page(candidate).links
+    tLinks.append(target)
+    cLinks.append(candidate)
+
+    tLinks = map(lambda p: p.lower(), tLinks)
+    cLinks = map(lambda p: p.lower(), cLinks)
+    #print tLinks
+
+    htmlLinks = giveArticlesGoogle(target, candidate, n);
+    htmlLinks = htmlLinks[:10];
+    # print "HTML Links :", htmlLinks;
+    scr = 0
+    sqt = 0
+    sqc = 0
+    driver = webdriver.Chrome(PATH)
+
+    for link in htmlLinks:
+        print link
+        try :
+            response = urllib2.urlopen(link)
+            html_string = response.read()
+            soup = bsoup(html_string,"lxml")
+            time.sleep(2.5)  # This should be there. Other wise server will raise TOO MANY REQUESTS Error
+            text = soup.get_text().encode('ascii','ignore')
+            words = re.sub('[^A-Za-z\']+', ' ', text).split(' ')
+            words = [k.lower() for k in words if len(k)!=0]
+            print words
+        except urllib2.HTTPError :
+            print "HTTP Error raised. This happens."
+            continue ;
+
+
+        wordsLen = len(words)
+        words = " ".join(words)
+        st = sum([words.count(x) for x in tLinks])
+        sc = sum([words.count(x) for x in cLinks])
+        print link, st, sc
+        scr += st * sc
+        sqt += st * st
+        sqc += sc * sc
+
+    if (sqt == 0 or sqc == 0):
+        return 0;
+    else:
+        return scr / math.sqrt(sqt * sqc)
+
+
+googleSimilarity3('dijkstra\'s algorithm','Bellman-Ford algorithm',2)
+
+
+
+
+'''
+#############################################################
 
 inputFo = open("SampleArticles","r");
 outputFo = open("GoogleSimilarity2", "a");
@@ -192,7 +250,9 @@ for line in inputFo:
     target, candidate = line.split("$");
     target = target.strip();
     candidate = candidate.strip();
-    outputFo.write(target+"$"+candidate+"$"+str(googleSimilarity1(target, candidate,2))+"\n");
+    outputFo.write(target+"$"+candidate+"$"+str(googleSimilarity3(target, candidate,2))+"\n");
     outputFo.flush();
 inputFo.close();
 outputFo.close();
+
+'''
