@@ -213,7 +213,7 @@ def mahalanobisDistance(tv,cv):
 
 
 '''
-#############################################################
+##################################################################
 '''
 inputFo = open("SampleArticles","r");
 outputFo = open("GoogleSimilarity4", "a");
