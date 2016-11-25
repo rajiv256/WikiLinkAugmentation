@@ -3,7 +3,7 @@ from selenium import webdriver
 import selenium
 import time
 from selenium.webdriver.common.keys import Keys
-
+import re
 DEPTH = 0;
 
 stopListSmall = ["a","an","and","are","as","at","be","by","for","from","has","he","in","is","it","its","of","on","or","that","the","to","was","were","will","with",""];
@@ -16,3 +16,32 @@ allTfIdf = {};
 allhtmls = {}
 Allcontent = {}
 display = Display(visible=0, size=(800, 600))
+
+
+
+def cleanText(content):
+    #print content
+    # content = content.decode('utf-8').encode('ascii','xmlcharrefreplace');
+    content = content.lower()
+    content = re.sub('[^A-Za-z\']+', ' ', content)
+    content = content.replace("'" , "")
+    # content = content.lower();
+    # content = re.sub('[!@#$%&()\n=+\'\",\.\\+-/\{\}^<>\[\]|?_]+',' ',content);
+    # content = re.sub('[0-9]+',' ',content);
+    # print content;
+    # content = re.sub('\\\u[0-9]*','',content);
+    # words = map(str,content.split(" "));
+    words = [];
+    for w in content.split(" "):
+        try:
+            words.append(str(w));
+        except UnicodeEncodeError:
+            word = w.decode('utf-8').encode('ascii', 'replace').replace('?', " ").split(" ")
+            words += word
+            pass
+        # print str(w);
+    words = [w for w in words if w not in stopListBig];
+    words = [k for k in words if len(k) != 0]
+    # print len(words);
+    cleancontent = " ".join(words)
+    return cleancontent

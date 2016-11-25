@@ -89,9 +89,9 @@ def TfIdf(document):
     print Completedtfidf
     for x in docwords:
         if (x in Allwords):
-            Allwords += [x]
             localwordDs[x] = wordDs[x]
         else:
+            Allwords += [x]
             localwordDs[x] = 1
     InverseDocfreq = map(lambda p : (p , math.log( N / localwordDs[p] ) ) ,docwords)
     tfidf = map (lambda p : (p[0],termfrequencies[p[0]]*p[1]) ,InverseDocfreq )
@@ -107,12 +107,12 @@ def Invertedindex(Alldocuments):
     length = len(Allwords)
     print length
     wordConceptMatrixlist = []
-    #wordConceptMatrixlist = pickle.load(open("pickles/WordConceptMatrix_short_500.pkl", "rb"))
+    wordConceptMatrixlist = pickle.load(open("pickles/WordConceptMatrix_short_500.pkl", "rb"))
     print len(wordConceptMatrixlist)
-    print wordConceptMatrixlist[0]
+    #print wordConceptMatrixlist[0]
     size = len(wordConceptMatrixlist)
     i = size
-    length = 30000
+
     print length
     while(i < length):
         wordConceptMatrixlist += map(lambda p : (Allwords[p],makeWordconceptvector(AllTfIdfs,Allwords[p])) , range(i,min(i+1000,length)) )

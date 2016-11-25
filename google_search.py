@@ -108,8 +108,6 @@ def googleSimilarity1(target,candidate,n):
 	    print "NoSuchElement"
 	    continue;
 
-        wordsLen = len(words)
-        words = " ".join(words)
         # print words, tLinks;
         # st = len(set(tLinks) & set(words))/float(len(set(tLinks)));
         # sc = len(set(cLinks) & set(words))/float(len(set(cLinks)));
@@ -164,8 +162,15 @@ def googleSimilarity3(target, candidate, n):
     tLinks.append(target)
     cLinks.append(candidate)
 
-    tLinks = map(lambda p: p.lower(), tLinks)
-    cLinks = map(lambda p: p.lower(), cLinks)
+    #tLinks = map(lambda p: p.lower(), tLinks)
+    #cLinks = map(lambda p: p.lower(), cLinks)
+
+    tLinks = map(lambda p: variable.cleanText(p) , tLinks)
+    cLinks = map(lambda p: variable.cleanText(p) , cLinks)
+
+    #tLinks = map(lambda p: p.decode('utf-8').encode('ascii', 'replace').replace('?', " "), tLinks)
+    #cLinks = map(lambda p: p.decode('utf-8').encode('ascii', 'replace').replace('?', " "), cLinks)
+
     #print tLinks
 
     htmlLinks = giveArticlesGoogle(target, candidate, n);
@@ -183,9 +188,10 @@ def googleSimilarity3(target, candidate, n):
             soup = bsoup(html_string,"lxml")
             time.sleep(2.5)  # This should be there. Other wise server will raise TOO MANY REQUESTS Error
             text = soup.get_text().encode('ascii','ignore')
-            words = re.sub('[^A-Za-z\']+', ' ', text).split(' ')
-            words = [k.lower() for k in words if len(k)!=0]
-            #print words
+            text = variable.cleanText(text)
+            words = text.split(" ")
+
+            print words
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
             continue ;
@@ -195,7 +201,6 @@ def googleSimilarity3(target, candidate, n):
 
 
         wordsLen = len(words)
-        words = " ".join(words)
         st = sum([words.count(x) for x in tLinks])
         targetVector.append(st);
         sc = sum([words.count(x) for x in cLinks])

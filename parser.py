@@ -52,7 +52,7 @@ def all_links(title):   #return links for title
     soup = process(title)
     if(soup == "NULL"):
         return []
-    paragraphs = soup('p') + soup('table') + soup('ul')
+    paragraphs = soup('p') #+ soup('table') + soup('ul')
     links = []
     try:
         for k in paragraphs:
@@ -61,7 +61,9 @@ def all_links(title):   #return links for title
             k = k.encode('utf-8')
             lsoup = bs(k, 'lxml')
             links += lsoup('a')
-        return smoothing(links)
+        links = smoothing(links)
+        links = filter(lambda p: ("/wiki/" in p[1]), links)
+        return links
     except:
         print "some exception"
         return []
@@ -101,8 +103,10 @@ def summary_links(title) : #return summary links
                     k = bs(s,'lxml')
                     links += k('a')
                 part = part.next_sibling
-        #print links
-        return smoothing(links)
+        links = smoothing(links)
+        links = filter(lambda p: ("/wiki/" in p[1]), links)
+
+        return links
     except:
         print "some exception"
         return []
@@ -180,5 +184,5 @@ def get_categories(title) :
     except:
         print "some exception"
         return "NULL"
-#s = see_also("Alpha beta pruning" )
+#s = see_also("Software mining" )
 #print s
