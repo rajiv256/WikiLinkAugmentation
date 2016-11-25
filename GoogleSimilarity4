@@ -7,7 +7,7 @@ Double-ended queue$Iterator$0.482318824645
 Double-ended queue$Set (abstract data type)$0.0944690919846
 Double-ended queue$Double-ended priority queue$0.867408437645
 Double-ended queue$Linked data structure$0.571264912697
-httplib.HTTPException: got more than 100 headersDouble-ended queue$Queue (abstract data type)$0.813778705637
+Double-ended queue$Queue (abstract data type)$0.813778705637
 Double-ended queue$Peek (data type operation)$0.337758543165
 Double-ended queue$Stack (abstract data type)$0.75439912306
 Double-ended queue$Pile (abstract data type)$0.324505721101
@@ -108,7 +108,8 @@ Ford–Fulkerson algorithm$Flow network$0.668996960486
 Ford–Fulkerson algorithm$Widest path problem$0.339779492057
 Ford–Fulkerson algorithm$Dinic's algorithm$0.625717566016
 Ford–Fulkerson algorithm$Multi-commodity flow problem$0.818488585236
-Ford–Fulkerson algorithm$K shortest path routing$0.0Prim's algorithm$Euler tour technique$0.237042521684
+Ford–Fulkerson algorithm$K shortest path routing$0.0
+Prim's algorithm$Euler tour technique$0.237042521684
 Prim's algorithm$Longest path problem$0.612671394799
 Prim's algorithm$Euler tour technique$0.237042521684
 Prim's algorithm$Longest path problem$0.612671394799
