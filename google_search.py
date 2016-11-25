@@ -1,3 +1,4 @@
+from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import NoSuchElementException
 import socket
 from pyvirtualdisplay import Display
@@ -10,8 +11,8 @@ import wikipedia
 import re
 from tfidf import *
 import math
-#display = Display(visible=0, size=(800, 600))
-#display.start()
+display = Display(visible=0, size=(800, 600))
+display.start()
 #
 #driver = webdriver.Firefox("chromedriver")
 #
@@ -34,7 +35,7 @@ variable.display.start()
 PATH = "./chromedriver"
 def giveArticlesGoogle(target,candidate,n):
 
-    query = target+" "+candidate
+    query = target+" , "+candidate
     driver = webdriver.Chrome(PATH)
     print "time1"
     driver.get("https://www.google.com/search?q="+query)
@@ -81,7 +82,7 @@ def googleSimilarity1(target,candidate,n):
     for link in htmlLinks:
 	#driver.refresh()
         print "time5"
-   	socket.setdefaulttimeout(100) 
+   	socket.setdefaulttimeout(10) 
 	try:
 	    driver.get("view-source:"+link)
 	except socket.timeout:
@@ -91,11 +92,13 @@ def googleSimilarity1(target,candidate,n):
 	    continue;
 	print "time6"
         print link
-        try:
+        
+	try:
 	    words = cleanText(driver.find_element_by_tag_name("body").text);
         except NoSuchElementException:
 	    print "NoSuchElement"
 	    continue;
+
 	# print words
         # x=raw_input("hi");
         wordsLen = len(words);
@@ -111,7 +114,11 @@ def googleSimilarity1(target,candidate,n):
         sqt += st*st
         sqc += sc*sc
     variable.display.stop()
-    #driver.close()
+    #driver.close();
+    try:
+	driver.close()
+    except WebDriverException:
+	pass;
     if(sqt == 0 or sqc == 0):
         return 0;
     else:
@@ -170,3 +177,16 @@ def CVgooglesimilarity(pagecontent,target,candidate):
     return pagetfidf[target]*pagetfidf[candidate]
 
 
+###############################################################
+
+inputFo = open("SampleArticles","r");
+outputFo = open("GoogleSimilarity", "a");
+
+for line in inputFo:
+    target, candidate = line.split("$");
+    target = target.strip();
+    candidate = candidate.strip();
+    outputFo.write(target+"$"+candidate+"$"+str(googleSimilarity1(target, candidate,2))+"\n");
+    outputFo.flush();
+inputFo.close();
+outputFo.close();
