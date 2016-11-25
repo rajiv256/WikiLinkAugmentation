@@ -1,3 +1,4 @@
+# coding=utf-8
 import  wikipedia as wi
 from bs4 import BeautifulSoup as bs
 import ArticleClass
@@ -43,9 +44,12 @@ setallglobals(wordDs,Allwords,N,wordConceptMatrix)
 
 #wordConceptMatrix = Invertedindex(variable.allTfIdf.items())
 wordConceptMatrix  = pickle.load(open("pickles/WordConceptMatrix_short.pkl", "rb"))
+#print map(lambda p : len(p[1].items()) , wordConceptMatrix)
+
 wordConceptMatrix = sortwordconceptmatrix(wordConceptMatrix)
+#print len(wordConceptMatrix[100][1].items())
 wordConceptMatrix = dict(wordConceptMatrix)
-print len(wordConceptMatrix)
+
 
 print "Done with Concept matrix"
 #pickle.dump(wordConceptMatrix, open("pickles/WordConceptMatrix_short.pkl", "wb"))
@@ -59,18 +63,22 @@ print "Done with htmls"
 print N
 print "setted all globals"
 
+
+target_a = ArticleClass.Article("Prim's algorithm")
+print len(target_a.contentTfIdf)
+d = DocConceptVector(target_a.contentTfIdf)
+print "Prim's algorithm"
+print sorted(d.items() , key = lambda p :p[1],reverse = True )[:100]
+
 '''
-target_a = ArticleClass.Article("Graph (abstract data type)")
+target_a = ArticleClass.Article("Dijkstra's algorithm")
 print len(target_a.contentTfIdf)
 d = DocConceptVector(target_a.contentTfIdf)
-#print sorted(d.items() , key = lambda p :p[1],reverse = True )
+print "Dijsktra algorithm"
+print sorted(d.items() , key = lambda p :p[1],reverse = True )[:100]
+'''
 
-target_a = ArticleClass.Article("Queue (abstract data type)")
-print len(target_a.contentTfIdf)
-d = DocConceptVector(target_a.contentTfIdf)
-#print sorted(d.items() , key = lambda p :p[1],reverse = True )
-
-
+'''
 target_a = ArticleClass.Article("Boundary particle method")
 target_a = fill_links(target_a)
 print target_a.hyperlinks
@@ -93,15 +101,19 @@ hyperlink_similarities = dict(hyperlink_similarities)
 print 'hyperlink-similarity done'
 '''
 
-
-
-
+#print (variable.allhtmls["Ford–Fulkerson algorithm"])
+s = "Ford–Fulkerson algorithm"
+s.decode('utf-8').encode('ascii','replace').replace("?"," ")
+print s
+'''
 start = time.time()
-makesamplecase("outputfile2" , "suggestions2.txt")
+makesamplecase( ["Double-ended queue","Stack (abstract data type)","Iterator","Dijkstra's algorithm","Kruskal's algorithm",
+                 "Ford–Fulkerson algorithm","Prim's algorithm","CYK algorithm","Priority queue","Bubble sort","Insertion sort",
+                 "Smooth sort","Merge sort","Sion's minimax theorem","Minimax","JH (hash function)","Big O notation","Flajolet-Martin algorithm",
+                 "Johnson's algorithm","AdaBoost"] , "outputfile3" , "suggestions3.txt" , "SampleArticles")
 # table  = make_table("Queue (abstract data type)")
 # print table
 # writeToFile(table)
 end =time.time()
 print (end-start)
-
-
+'''

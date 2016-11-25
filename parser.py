@@ -113,8 +113,14 @@ def fill_links(article):
     article.hyperlinks = all_links(article.title)
     return article;
 
+global_x = 1
+
 def see_also(title):
     #print title
+    global global_x
+    global_x +=1
+    if(global_x % 500==0 ):
+        print global_x
     soup = process(title)
     if (soup == "NULL"):
         return []

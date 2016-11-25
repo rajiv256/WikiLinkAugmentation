@@ -8,10 +8,11 @@ import random
 from google_search import *
 
 
-def make_table(title):
+def make_table(title , relarticles):
     target_a = ArticleClass.Article(title)
     print "article created succesfully"
     #artlist = giveSimArtcls(target_a,0)
+    '''
     relarticles = allrelevantarticles(target_a)
     if title in relarticles:
         relarticles.remove(title)
@@ -20,7 +21,6 @@ def make_table(title):
     print relarticles
     relarticles = prune_articles(target_a,relarticles)
     return relarticles
-
     '''
     simDict = referenceSimilarity(target_a.title,relarticles)
     print simDict
@@ -37,21 +37,20 @@ def make_table(title):
     #google_similarities = getCandidateSimilarity(target_a.title,articles_for_google,2)
     #print "google - similarity"
     # google_similarities[p] if (p in google_similarities.keys()) else  0
-    table = map(lambda p : (title, p ,  simDict[p], content_based_sim[p][1] ,hyperlink_similarities[p]  , see_also_or_not(title,p) ) , relarticles )
+    links = see_also(title)
+    table = map(lambda p : (title, p ,  simDict[p],content_based_sim[p][0],  content_based_sim[p][1] ,hyperlink_similarities[p]  , see_also_or_not(p ,links) ) , relarticles )
     table = sorted(table,key = lambda p : p[5] , reverse = True)
     print "normal table done"
     table = final_scores(table)
-
-    table = []
     return table
-    '''
+
 
 def writeToFile(table,filename):
     target = open(filename , 'w')
     target.truncate()
     for t in table:
         for i in range(len(t)):
-            target.write(str(t[i]) + " ")
+            target.write(str(t[i]) + ",")
         target.write("\n")
     target.flush()
     target.close()
@@ -65,6 +64,28 @@ def writeToFile2(s , table,filename ):
     target.flush()
     target.close()
 
+def writeToFile3(table,filename):
+    target = open(filename , 'a+')
+    target.truncate()
+    target_name = table[0][0]
+    target.write( (target_name + "," +  str(len(table)) )  )
+    target.write("\n")
+    for t in table:
+        target.write( (t[1] + "," + str(t[3]) +"," +str(t[4]) ) )
+        target.write("\n")
+    target.flush()
+    target.close()
+
+def writeToFileSeeAlso(target_name  , see_alsos , filename):
+    target = open(filename , 'a+')
+    target.truncate()
+    target.write( (target_name +"," + str(len(see_alsos)) ))
+    target.write("\n")
+    for s in see_alsos:
+        target.write( (s[0] + "," + str(s[1]) ) )
+        target.write("\n")
+    target.flush()
+    target.close()
 
 def gettestcases(filename):
     f = open(filename, 'r')
@@ -74,28 +95,51 @@ def gettestcases(filename):
         line = line.split("$")
         if(line[0] not in testcases.keys()):
             testcases[line[0]] = []
-        testcases[line[0]] += [line[1]]
+        testcases[line[0]] += [line[1].strip()]
+        line =f.readline()
     return testcases
 
-def makesamplecase(filename1 ,suggfile):
+
+
+def makesamplecase(sample ,filename1 ,suggfile ,samplearticlesfile):
+
     allarticles = variable.allTfIdf.keys();
     #taking 20 samples
-    sample = random.sample( allarticles , 1000 )
+    #sample = random.sample( allarticles)
+    '''
     print "getting titles with see_also"
-    only_see_also_articles = filter(lambda p: len(see_also(p)) > 0,  sample)
+    see_alsos = pickle.load( open("pickles/see_alsos.pkl", "rb"))
+    sample = list(set(allarticles)  - set( map(lambda p : p[0] ,see_alsos ) )  )
+    see_alsos += map(lambda p: (p , filter( lambda s : (s[0] in allarticles) ,see_also(p)) ),  sample)
+    pickle.dump(see_alsos , open("pickles/see_alsos.pkl", "wb"))
+    only_see_also_articles = filter(lambda p: len(p[1]) > 1,  see_alsos)
+    only_see_also_articles = map(lambda p : p[0] , only_see_also_articles )
     print "done"
-    sample = random.sample(only_see_also_articles, 30)
+    print len(only_see_also_articles)
+
+    sample = random.sample(only_see_also_articles, min(30 ,len(only_see_also_articles))  )
     print sample
+    '''
+    #######WE GENERATE SAMPLE MANUALLY
+    #sample = []
+
+    testarticles = gettestcases("SampleArticles");
+    print "printing test cases"
+    print testarticles
+    sample = testarticles.items()
     Table = []
     Ranking = []
+    # f = open(samplearticlesfile , "wb")
+    # f.flush()
+    # f.close()
     for s in sample:
-        table = make_table( s )
-        writeToFile2(s, table, "SampleArticles")
-        #Ranking += combined_score(table)
+        table = make_table( s[0] , s[1] )
+        #writeToFile2(s, table, samplearticlesfile)
+        Ranking = combined_score(table)
         Table += table
-        #writeToFile(Ranking, suggfile)
-        #writeToFile(Table, filename1)
-
+        writeToFile3(Ranking, suggfile)
+        writeToFile(Table, filename1)
+        writeToFileSeeAlso( s[0] , see_also(s[0]) ,"Actual_See_also")
     #writeToFile(Ranking, suggfile)
     #writeToFile(Table,filename1)
 
@@ -150,7 +194,7 @@ def final_scores(tuples) :
     label = []
     for i in range(len(tuples)) :
         label += [tuples[i][len(tuples[i]) - 1]]
-        tuples[i] = tuples[i][1: (len(tuples[i]) -1 ) ]
+        tuples[i] = tuples[i][ 1: (len(tuples[i]) -1 ) ]
     ret = split_tuple(tuples)
     candidates = ret[0]
     scores = normalize(ret[1])
@@ -158,8 +202,8 @@ def final_scores(tuples) :
 
 
 def combined_score(table):
-    combinedscore = map(lambda p :  (p[1], sum(p[2]) ,p[3] ) , table)
-    return sorted(combinedscore , key = lambda p : p[1],reverse = True)
+    combinedscore = map(lambda p :  (p[0] , p[1], p[2][0] , sum(p[2][1:]) ,p[3] ) , table)
+    return sorted(combinedscore , key = lambda p : p[3],reverse = True)
 
 
 
@@ -167,12 +211,16 @@ def prune_articles(target_a,relarticles):
     relarticles = SummarySim(target_a,relarticles)
     articles_stored = variable.allTfIdf.keys()
     see_also_articles = see_also(target_a.title)
-    see_also_articles = filter(lambda p: (p in articles_stored), see_also_articles)
-    relarticles = relarticles[:20] + see_also_articles
-    relarticles = list(set(relarticles))
-
+    see_also_articles = filter(lambda p: (p[0] in articles_stored), see_also_articles)
+    see_also_articles = map(lambda p : p[0] , see_also_articles)
+    relarticles = relarticles[:20]
     print "pruned_articles"
     relarticles = map(lambda p: (p[0].title, p[1]), relarticles)
     print relarticles
-    return map(lambda p : p[0] , relarticles)
+    relarticles =  map(lambda p : p[0] , relarticles)
+    relarticles = relarticles + see_also_articles
+    relarticles = list(set(relarticles))
+    print relarticles
+    return  relarticles
+
 

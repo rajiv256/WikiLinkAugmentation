@@ -12,6 +12,9 @@ from socket import error as SocketError
 import sys,ssl
 import errno
 
+from nltk import word_tokenize
+
+
 def giveRawContent(article):
     print article
     try:
@@ -51,7 +54,6 @@ def giveRawContent(article):
 def givePrunedContent(article,Content):
     content = "NULL"
     if (Content == "NULL") :
-        print article
         try:
             page = wikipedia.page(article);
             content = page.content;
@@ -86,18 +88,28 @@ def givePrunedContent(article,Content):
     #HTML = page.html();
     # content = content.decode('utf-8').encode('utf-8','xmlcharrefreplace');
     content = content.lower();
-    content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^]+',' ',content);
-    content = re.sub('[0-9]+',' ',content);
+
+    #$ & +,:;=?@  # |'<>.^*()%!-
+
+    # content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^:;?]+',' ',content);
+    # content = re.sub('[0-9]+',' ',content);
     # print content;
     # content = re.sub('\\\u[0-9]*','',content);
-    # words = map(str,content.split(" "));
+
+    
+
+    #words = map(str,content.split(" "));
+
     words = [];
     for w in content.split(" "):
         try:
             words.append(str(w));
         except UnicodeEncodeError:
+            word = w.decode('utf-8').encode('ascii' ,'replace').replace('?' , " ").split(" ")
+            words += word
             pass
-        # print str(w);
+            #print str(w);
+
     words = [w for w in words if w not in stopListBig];
     # print len(words);
     #print words
@@ -264,16 +276,23 @@ def giveSimArtcls(article,thrshld):
     return totalSimList;
 
 
+import  urllib2
 
 def referenceSimilarity(target,allrelarticles):
     simDict = {}
-    target = target.lower().split('(')[0][:-1]
+    target = target.decode('utf-8').encode('ascii', 'replace').replace('?', " ")
+    target = target.lower().split('(')[0]
+    if(target[-1] == " " ):
+        target = target[:-1]
     for relarticle in allrelarticles:
         candidate_article = ArticleClass.Article(relarticle)
         if ("Category" in relarticle):
             relarticle = relarticle.split("Category:")[1]
-        links = [re.sub('_',' ',x[1].split("/")[-1]).lower() for x in all_links(relarticle)]
-        map(lambda p : p.split('(')[0][:-1]  ,links )
+        links = [re.sub('_',' ',x.split("/")[-1]).lower() for x in all_links(relarticle)]
+        relarticle_links = [urllib2.unquote(x[1]) for x in links]  # converting to string and then comparing
+        links = [w.decode('utf-8').encode('ascii', 'replace').replace('?', " ") for w in links]
+
+        links = map(lambda p : p.split('(')[0][:-1] if(p.split('(')[0][-1] == " ") else p.split('(')[0] ,links )
         if target in links:
             print "present in links"
             simDict[relarticle] = 1.0       #/len(links);
@@ -315,10 +334,15 @@ def hyperlinkSim(target , relarticles):
     sortedList = sorted(artclDict.items(), key=lambda p: p[1], reverse=True);
     return sortedList
 
-
-def see_also_or_not(title,candidate):
-    links = see_also(title)
+def see_also_or_not(candidate,links):
+    #links = see_also(title)
+    candidate = candidate.decode('utf-8').encode('ascii', 'replace').replace('?', " ")
     for i in links:
-        if(candidate.lower() == i[0].lower()):
+        link = urllib2.unquote(i[1])
+        link = link.decode('utf-8').encode('ascii', 'replace').replace('?', " ")
+        link = link.split("/wiki/")[1]
+        link = link.replace("_"," ").split("(")[0].replace(" ","")
+        candidate = candidate.split("(")[0].replace(" ","")
+        if(candidate.lower() == link.lower()):
             return 1
     return 0

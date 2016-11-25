@@ -107,11 +107,12 @@ def Invertedindex(Alldocuments):
     length = len(Allwords)
     print length
     wordConceptMatrixlist = []
-    wordConceptMatrixlist = pickle.load(open("pickles/WordConceptMatrix_short.pkl", "rb"))
+    #wordConceptMatrixlist = pickle.load(open("pickles/WordConceptMatrix_short_500.pkl", "rb"))
     print len(wordConceptMatrixlist)
     print wordConceptMatrixlist[0]
     size = len(wordConceptMatrixlist)
     i = size
+    length = 30000
     print length
     while(i < length):
         wordConceptMatrixlist += map(lambda p : (Allwords[p],makeWordconceptvector(AllTfIdfs,Allwords[p])) , range(i,min(i+1000,length)) )
@@ -119,21 +120,22 @@ def Invertedindex(Alldocuments):
         print i
         if( (i)% 5000 == 0):
             print "dumping"
-            pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short.pkl", "wb"))
+            pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short_500.pkl", "wb"))
     wordConceptMatrixtest = map(lambda p : p[0] , wordConceptMatrixlist)
-    pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short.pkl", "wb"))
+    pickle.dump(wordConceptMatrixlist, open("pickles/WordConceptMatrix_short_500.pkl", "wb"))
     print len(wordConceptMatrixlist)
     wordConceptMatrix = wordConceptMatrixlist
     return wordConceptMatrix
 
 def makeWordconceptvector(tfidfs ,word):
     conceptvector={}
-    threshold = 0.1;
+    #threshold = 0.1;
     for t in tfidfs:
         contenttfidf = t[1]
         if word in contenttfidf.keys():
-            if(contenttfidf[word] > threshold):
-                conceptvector[t[0]] = contenttfidf[word]
+            #if(contenttfidf[word] > threshold):
+            conceptvector[t[0]] = contenttfidf[word]
+    conceptvector = dict(sorted(conceptvector.items(),key = lambda p : p[1],reverse=True)[:500] )
     return conceptvector
 
 
@@ -143,13 +145,13 @@ def dotproduct(conceptrelev,wordrelev):
 def DocConceptVector(Doctfidf):
     doctfidf = Doctfidf
     #doctfidf = TfIdf(document)
-    taken = int(math.ceil(len(doctfidf)*0.6 ))
-    doctfidf = dict ( sorted(doctfidf.items() , key = lambda p : p[1] ,reverse = True)[:taken] )
+    taken = max( int(math.ceil(len(doctfidf)*0.6 )) , min(1000,len(doctfidf) )  )
+    doctfidf = dict( sorted(doctfidf.items() , key = lambda p : p[1] ,reverse = True)[:taken] )
     doctfidfkeys = list(filter(lambda p: p in Allwords , doctfidf.keys() ) )
     #doctfidfkeys = list(filter(lambda p: wordConceptMatrix[p] != {}, doctfidfkeys ))
     localwordConceptMatrix = dict ( map(lambda p : (p , wordConceptMatrix[p] ), doctfidfkeys ) )
     allocalConcepts = map(lambda p : localwordConceptMatrix[p].keys() ,doctfidfkeys)
-    print len(allocalConcepts[1])
+    print len(allocalConcepts[0])
     allocalConcepts = list(itertools.chain(*allocalConcepts))
     allocalConcepts = list(set(allocalConcepts))
     print len(allocalConcepts)
