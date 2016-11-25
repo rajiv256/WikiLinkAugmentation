@@ -134,7 +134,7 @@ def vectorSim(tv,cv):
     xtx = sum([x*x for x in tv]);
     yty = sum([y*y for y in cv]);
     xty = sum([x*y for (x,y) in zip(tv,cv)]);
-    return float(xty)/(xtx+yty-xty);
+    return float(xty)/(xtx+yty-xty+0.00001);
 
 
 
@@ -195,6 +195,9 @@ def googleSimilarity3(target, candidate, n):
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
             continue ;
+        except urllib2.URLError :
+            print "Error...But Its ok!"
+            continue ;
 
 
         wordsLen = len(words)
@@ -230,6 +233,7 @@ for line in inputFo:
     target, candidate = line.split("$");
     target = target.strip();
     candidate = candidate.strip();
+    print target,candidate
     outputFo.write(target+"$"+candidate+"$"+str(googleSimilarity3(target, candidate,2))+"\n");
     outputFo.flush();
 inputFo.close();
