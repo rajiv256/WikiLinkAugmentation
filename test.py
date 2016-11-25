@@ -101,19 +101,25 @@ hyperlink_similarities = dict(hyperlink_similarities)
 print 'hyperlink-similarity done'
 '''
 
-#print (variable.allhtmls["Ford–Fulkerson algorithm"])
-s = "Ford–Fulkerson algorithm"
-s.decode('utf-8').encode('ascii','replace').replace("?"," ")
-print s
-'''
+
+
 start = time.time()
-makesamplecase( ["Double-ended queue","Stack (abstract data type)","Iterator","Dijkstra's algorithm","Kruskal's algorithm",
+
+
+testcases = ["Double-ended queue","Stack (abstract data type)","Iterator","Dijkstra's algorithm","Kruskal's algorithm",
                  "Ford–Fulkerson algorithm","Prim's algorithm","CYK algorithm","Priority queue","Bubble sort","Insertion sort",
                  "Smooth sort","Merge sort","Sion's minimax theorem","Minimax","JH (hash function)","Big O notation","Flajolet-Martin algorithm",
-                 "Johnson's algorithm","AdaBoost"] , "outputfile3" , "suggestions3.txt" , "SampleArticles")
+                 "Johnson's algorithm","AdaBoost"]
+
+#links = map(lambda p : (p , see_also(p) ) , testcases)
+#map( lambda p :see_also_or_not(p[0] , p[1] ) , links)
+
+
+makesamplecase( testcases, "outputfile3" , "suggestions3.txt" , "SampleArticles")
+
 # table  = make_table("Queue (abstract data type)")
 # print table
 # writeToFile(table)
 end =time.time()
 print (end-start)
-'''
+

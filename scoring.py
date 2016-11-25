@@ -65,7 +65,7 @@ def writeToFile2(s , table,filename ):
     target.close()
 
 def writeToFile3(table,filename):
-    target = open(filename , 'a+')
+    target = open(filename , 'a')
     target.truncate()
     target_name = table[0][0]
     target.write( (target_name + "," +  str(len(table)) )  )
@@ -77,7 +77,7 @@ def writeToFile3(table,filename):
     target.close()
 
 def writeToFileSeeAlso(target_name  , see_alsos , filename):
-    target = open(filename , 'a+')
+    target = open(filename , 'a')
     target.truncate()
     target.write( (target_name +"," + str(len(see_alsos)) ))
     target.write("\n")

@@ -56,8 +56,8 @@ def hyperlinksimilarity(article1,article2):
     #print (end-start)
     #print "Done getting Fill_links"
 
-    artcl1Anchors = map(lambda p : p[0] , article1.hyperlinks)
-    artcl2Anchors = map(lambda p : p[0] , article2.hyperlinks)
+    artcl1Anchors = map(lambda p : p[1] , article1.hyperlinks)
+    artcl2Anchors = map(lambda p : p[1] , article2.hyperlinks)
     #print artcl1Anchors
     #print artcl2Anchors
     # print "article 1 anchors"

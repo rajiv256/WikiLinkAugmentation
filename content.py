@@ -86,34 +86,8 @@ def givePrunedContent(article,Content):
     else:
         content = Content
     #HTML = page.html();
-    # content = content.decode('utf-8').encode('utf-8','xmlcharrefreplace');
-    content = content.lower();
-
     #$ & +,:;=?@  # |'<>.^*()%!-
-
-    # content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^:;?]+',' ',content);
-    # content = re.sub('[0-9]+',' ',content);
-    # print content;
-    # content = re.sub('\\\u[0-9]*','',content);
-
-    
-
-    #words = map(str,content.split(" "));
-
-    words = [];
-    for w in content.split(" "):
-        try:
-            words.append(str(w));
-        except UnicodeEncodeError:
-            word = w.decode('utf-8').encode('ascii' ,'replace').replace('?' , " ").split(" ")
-            words += word
-            pass
-            #print str(w);
-
-    words = [w for w in words if w not in stopListBig];
-    # print len(words);
-    #print words
-    content = " ".join(words);
+    content = cleanText(content)
     return (content);
 
 def giveSummary(article,Content):
@@ -150,24 +124,7 @@ def giveSummary(article,Content):
             return "NULL"
     else:
         content = Content
-    # content = content.decode('utf-8').encode('utf-8','xmlcharrefreplace');
-    content = content.lower();
-    content = re.sub('[!@#$%&()\n=\'\",\.\\+-/{}^]+', ' ', content);
-    content = re.sub('[0-9]+', ' ', content);
-    # print content;
-    # content = re.sub('\\\u[0-9]*','',content);
-    # words = map(str,content.split(" "));
-    words = [];
-    for w in content.split(" "):
-        try:
-            words.append(str(w));
-        except UnicodeEncodeError:
-            pass
-            # print str(w);
-    words = [w for w in words if w not in stopListBig];
-    # print len(words);
-    #print words
-    summry = " ".join(words);
+    summry = cleanText(content)
     return summry;
 
 
@@ -288,20 +245,22 @@ def referenceSimilarity(target,allrelarticles):
         candidate_article = ArticleClass.Article(relarticle)
         if ("Category" in relarticle):
             relarticle = relarticle.split("Category:")[1]
-        links = [re.sub('_',' ',x.split("/")[-1]).lower() for x in all_links(relarticle)]
-        relarticle_links = [urllib2.unquote(x[1]) for x in links]  # converting to string and then comparing
+        #print all_links(relarticle)
+        relarticle_links = [urllib2.unquote(x[1]) for x in all_links(relarticle)]  # converting to string and then comparing
+        #relarticle_links = filter(lambda p : ("/wiki/" in p) , relarticle_links)
+        #print "printing links"
+        #print relarticle_links
+        links = [x.split("/wiki/")[1].replace("_"," ").lower() for x in relarticle_links]
         links = [w.decode('utf-8').encode('ascii', 'replace').replace('?', " ") for w in links]
-
         links = map(lambda p : p.split('(')[0][:-1] if(p.split('(')[0][-1] == " ") else p.split('(')[0] ,links )
-        if target in links:
-            print "present in links"
+        if target.lower() in links:
             simDict[relarticle] = 1.0       #/len(links);
         else:
             simDict[relarticle] = 0
 
         #checking in content also
         content = candidate_article.content
-        if(target in content):
+        if(target.lower() in content):
             simDict[relarticle] = 1.0
 
     simDict= sorted(simDict.items() , key = lambda p : p[1],reverse =True)
@@ -336,6 +295,9 @@ def hyperlinkSim(target , relarticles):
 
 def see_also_or_not(candidate,links):
     #links = see_also(title)
+    #print candidate
+    #print links
+
     candidate = candidate.decode('utf-8').encode('ascii', 'replace').replace('?', " ")
     for i in links:
         link = urllib2.unquote(i[1])

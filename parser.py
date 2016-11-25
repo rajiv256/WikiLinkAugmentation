@@ -52,7 +52,7 @@ def all_links(title):   #return links for title
     soup = process(title)
     if(soup == "NULL"):
         return []
-    paragraphs = soup('p') + soup('table') + soup('ul')
+    paragraphs = soup('p') #+ soup('table') + soup('ul')
     links = []
     try:
         for k in paragraphs:
@@ -61,7 +61,9 @@ def all_links(title):   #return links for title
             k = k.encode('utf-8')
             lsoup = bs(k, 'lxml')
             links += lsoup('a')
-        return smoothing(links)
+        links = smoothing(links)
+        links = filter(lambda p: ("/wiki/" in p[1]), links)
+        return links
     except:
         print "some exception"
         return []
@@ -101,8 +103,10 @@ def summary_links(title) : #return summary links
                     k = bs(s,'lxml')
                     links += k('a')
                 part = part.next_sibling
-        #print links
-        return smoothing(links)
+        links = smoothing(links)
+        links = filter(lambda p: ("/wiki/" in p[1]), links)
+
+        return links
     except:
         print "some exception"
         return []
@@ -136,9 +140,9 @@ def see_also(title):
             if k is None:
                 continue
             while (  (k is not None) and (k.name != 'ul') ) :
-                #print k.name
+                if(k.name == "h2"):
+                    break
                 k = k.next_sibling
-
             if k==None:
                 while((k1 is not None) and (k1.name!='p')):
                     k1 = k1.next_sibling
@@ -149,10 +153,13 @@ def see_also(title):
             if(k.name == 'p'):
                 links = [k]
             else:
+                if(k.name == 'h2'):
+                    break
                 links = k.find_all('li')
             for li in links :
                 if( len(li('a')) > 0):
                     ret.append((li('a')[0].get_text().encode('utf-8','ignore'),li('a')[0]['href'].encode('utf-8','ignore')))
+    ret = filter(lambda p: ("/wiki/" in p[1]), ret)
     return ret
 
 def filter_categories(categories_list) :
@@ -192,5 +199,5 @@ def get_categories(title) :
     except:
         print "some exception"
         return "NULL"
-#s = see_also("Software mining" )
+#s = see_also("MiniMax" )
 #print s
