@@ -23,7 +23,10 @@ def getPrecision(inputFile):
     precDict = {}
     results = getResult(inputFile);
     for key in results.keys():
-        precDict[key] = len([x for x in results[key] if x[2] == 1])/float(len(results[key]));
+        if(len(results[key])==0):
+            precDict[key] = 0
+        else:
+            precDict[key] = float(len([x for x in results[key] if x[2] == 1])) /float(len(results[key]));
     return precDict;
 
 def getWikiResult(inputFile):
@@ -46,18 +49,21 @@ def getWikiResult(inputFile):
     return resultDict;
 
 def getRecall(ourResultFile,wikiResultFile):
-    ourResult = getResult(ourResultFile);
+    ourResult = dict(getResult(ourResultFile).items()[:5]);
     wikiResult = getWikiResult(wikiResultFile);
     recallDict = {}
     for key in ourResult.keys():
         ourSeeAlso = [x[0].lower() for x in ourResult[key]];
         wikiSeeAlso = [x[0].lower() for x in wikiResult[key]];
         # print key,wikiSeeAlso
-        recallDict[key] = len(list(set(ourSeeAlso)&set(wikiSeeAlso)))/float(len(wikiSeeAlso));
+        if(len(wikiSeeAlso) ==0):
+            recallDict[key] = 0
+        else:
+            recallDict[key] = float(len(list(set(ourSeeAlso)&set(wikiSeeAlso))))/float(len(wikiSeeAlso));
     return recallDict;
 
 def getFilteredRecall(ourResultFile,wikiResultFile):
-    ourResult = getResult(ourResultFile);
+    ourResult = dict(getResult(ourResultFile).items()[:5]);
     wikiResult = getWikiResult(wikiResultFile);
     documentStored = pickle.load(open("docsStored.pkl","r"));
     recallDict = {}
@@ -65,12 +71,18 @@ def getFilteredRecall(ourResultFile,wikiResultFile):
         ourSeeAlso = [x[0].lower() for x in ourResult[key]];
         wikiSeeAlso = [x[0].lower() for x in wikiResult[key] if x[0].lower() in documentStored];
         # print key,ourSeeAlso,wikiSeeAlso
-        recallDict[key] = len(list(set(ourSeeAlso)&set(wikiSeeAlso)))/float(len(wikiSeeAlso));
+        if (len(wikiSeeAlso) == 0):
+            recallDict[key] = 0
+        else:
+            recallDict[key] = float(len(list(set(ourSeeAlso) & set(wikiSeeAlso)))) / float(len(wikiSeeAlso));
     return recallDict;
 # def getRecall(inputFile,wikiSeeAlso):
 
 
 # def givePrecision(inputFile):
-
-t=getRecall("results","wikiSeeAlso")
-s=getFilteredRecall("results","wikiSeeAlso")
+p = getPrecision("suggestions3.txt")
+t=getRecall("suggestions3.txt","Actual_See_also")
+s=getFilteredRecall("suggestions3.txt","Actual_See_also")
+print p
+print t
+print s
