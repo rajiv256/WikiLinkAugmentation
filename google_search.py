@@ -158,7 +158,7 @@ def cleanText(content):
     # print len(words);
     return words
 
-#print googleSimilarity1("Fibonacci heap" , "Iterator" , 2)
+# print googleSimilarity1("Fibonacci heap" , "Iterator" , 2)
 
 def getCandidateSimilarity(target, candidates, n):
     simDict = [];
@@ -175,7 +175,6 @@ def CVgooglesimilarity(pagecontent,target,candidate):
     pagetfidf = TfIdf(pagecontent)
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
-
 
 ###############################################################
 

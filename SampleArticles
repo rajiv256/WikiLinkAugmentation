@@ -1,80 +1,338 @@
-Microscope image processing$The Cancer Imaging Archive (TCIA)
-Microscope image processing$Template matching
-Microscope image processing$Gradient-domain image processing
-Microscope image processing$Visual computing
-Microscope image processing$Digital image processing
-Microscope image processing$Microscope image processing
-Microscope image processing$Image geometry correction
-Microscope image processing$Standard test image
-Microscope image processing$Sub-pixel resolution
-Microscope image processing$Gigamacro
-Microscope image processing$Free boundary condition
-Microscope image processing$Digital image
-Microscope image processing$Computational photography (artistic)
-Microscope image processing$Image gradient
-Microscope image processing$Image processing
-Microscope image processing$Color moments
-Microscope image processing$Neighborhood operation
-Microscope image processing$Image restoration
-Microscope image processing$Binary image
-Microscope image processing$Image differencing
-Abel transform$Foveated imaging
-Abel transform$Image processing
-Abel transform$Shepp–Logan phantom
-Abel transform$Imaging technology
-Abel transform$Image geometry correction
-Abel transform$Iterative reconstruction
-Abel transform$List of Fourier-related transforms
-Abel transform$Distance transform
-Abel transform$Dynamic imaging
-Abel transform$Super-resolution imaging
-Abel transform$Generalised Hough transform
-Abel transform$Randomized Hough transform
-Abel transform$Curvelet
-Abel transform$3D reconstruction from multiple images
-Abel transform$Image restoration
-Abel transform$Polynomial texture mapping
-Abel transform$Imaging phantom
-Abel transform$Projection-slice theorem
-Abel transform$Medical imaging
-Abel transform$Standard test image
-Mathematical optimization$Meta-optimization
-Mathematical optimization$Online optimization
-Mathematical optimization$Constructive cooperative coevolution
-Mathematical optimization$Global optimization
-Mathematical optimization$Vector optimization
-Mathematical optimization$Bilevel optimization
-Mathematical optimization$Quadratic programming
-Mathematical optimization$Simulation-based optimization
-Mathematical optimization$Ordinal optimization
-Mathematical optimization$Conic optimization
-Mathematical optimization$Continuous optimization
-Mathematical optimization$Shape optimization
-Mathematical optimization$Discrete optimization
-Mathematical optimization$Deterministic global optimization
-Mathematical optimization$Random optimization
-Mathematical optimization$Nonlinear programming
-Mathematical optimization$Robust optimization
-Mathematical optimization$Multi-objective optimization
-Mathematical optimization$Constrained optimization
-Mathematical optimization$Test functions for optimization
-Amdahl's law$Gustafson's law
-Amdahl's law$Karp–Flatt metric
-Amdahl's law$Scalable parallelism
-Amdahl's law$Parallel random-access machine
-Amdahl's law$Data dependency
-Amdahl's law$Speedup
-Amdahl's law$Parallel slowdown
-Amdahl's law$Analysis of parallel algorithms
-Amdahl's law$Granularity (parallel computing)
-Five-point stencil$Adaptive stepsize
-Five-point stencil$Walk-on-spheres method
-Five-point stencil$Eigenvalues and eigenvectors of the second derivative
-Five-point stencil$Central differencing scheme
-Five-point stencil$Numerical partial differential equations
-Five-point stencil$Principles of grid generation
-Five-point stencil$Non-compact stencil
-Five-point stencil$Finite difference method
-Five-point stencil$Numerical methods for ordinary differential equations
-Five-point stencil$Diffuse element method
-Five-point stencil$Numerical resistivity
+Double-ended queue$Abstract data type
+Double-ended queue$Graph (abstract data type)
+Double-ended queue$Container (abstract data type)
+Double-ended queue$Priority queue
+Double-ended queue$Multimap
+Double-ended queue$List (abstract data type)
+Double-ended queue$Kinetic priority queue
+Double-ended queue$U-form
+Double-ended queue$Obstack
+Double-ended queue$Associative array
+Double-ended queue$Collection (abstract data type)
+Double-ended queue$Iterator
+Double-ended queue$Set (abstract data type)
+Double-ended queue$Double-ended priority queue
+Double-ended queue$Linked data structure
+Double-ended queue$Queue (abstract data type)
+Double-ended queue$Peek (data type operation)
+Double-ended queue$Stack (abstract data type)
+Double-ended queue$Pile (abstract data type)
+Double-ended queue$Multiset (abstract data type)
+Stack (abstract data type)$Abstract data type
+Stack (abstract data type)$Graph (abstract data type)
+Stack (abstract data type)$Container (abstract data type)
+Stack (abstract data type)$Priority queue
+Stack (abstract data type)$U-form
+Stack (abstract data type)$List (abstract data type)
+Stack (abstract data type)$Pile (abstract data type)
+Stack (abstract data type)$Obstack
+Stack (abstract data type)$Associative array
+Stack (abstract data type)$Collection (abstract data type)
+Stack (abstract data type)$Iterator
+Stack (abstract data type)$Multimap
+Stack (abstract data type)$Set (abstract data type)
+Stack (abstract data type)$Kinetic priority queue
+Stack (abstract data type)$Double-ended priority queue
+Stack (abstract data type)$Linked data structure
+Stack (abstract data type)$Multiset (abstract data type)
+Stack (abstract data type)$Peek (data type operation)
+Stack (abstract data type)$Double-ended queue
+Stack (abstract data type)$Queue (abstract data type)
+Iterator$Abstract data type
+Iterator$Graph (abstract data type)
+Iterator$Container (abstract data type)
+Iterator$Multimap
+Iterator$U-form
+Iterator$List (abstract data type)
+Iterator$Kinetic priority queue
+Iterator$Obstack
+Iterator$Associative array
+Iterator$Collection (abstract data type)
+Iterator$Pile (abstract data type)
+Iterator$Priority queue
+Iterator$Set (abstract data type)
+Iterator$Double-ended priority queue
+Iterator$Linked data structure
+Iterator$Multiset (abstract data type)
+Iterator$Peek (data type operation)
+Iterator$Double-ended queue
+Iterator$Queue (abstract data type)
+Iterator$Stack (abstract data type)
+Dijkstra's algorithm$Hierarchical closeness
+Dijkstra's algorithm$Bellman–Ford algorithm
+Dijkstra's algorithm$Longest path problem
+Dijkstra's algorithm$Suurballe's algorithm
+Dijkstra's algorithm$Edge disjoint shortest pair algorithm
+Dijkstra's algorithm$Yen's algorithm
+Dijkstra's algorithm$Hopcroft–Karp algorithm
+Dijkstra's algorithm$Contraction hierarchies
+Dijkstra's algorithm$Pathfinding
+Dijkstra's algorithm$Euclidean shortest path
+Dijkstra's algorithm$Floyd–Warshall algorithm
+Dijkstra's algorithm$Dijkstra's algorithm
+Dijkstra's algorithm$Link-state routing protocol
+Dijkstra's algorithm$Shortest Path Faster Algorithm
+Dijkstra's algorithm$Johnson's algorithm
+Dijkstra's algorithm$Equal-cost multi-path routing
+Dijkstra's algorithm$K shortest path routing
+Kruskal's algorithm$Prim's algorithm
+Kruskal's algorithm$Dynamic connectivity
+Kruskal's algorithm$Graph bandwidth
+Kruskal's algorithm$Bidirectional search
+Kruskal's algorithm$Euler tour technique
+Kruskal's algorithm$Single-linkage clustering
+Kruskal's algorithm$Tree traversal
+Kruskal's algorithm$Dijkstra's algorithm
+Kruskal's algorithm$Borůvka's algorithm
+Kruskal's algorithm$Transitive reduction
+Kruskal's algorithm$Stoer–Wagner algorithm
+Kruskal's algorithm$Gomory–Hu tree
+Kruskal's algorithm$Edmonds' algorithm
+Kruskal's algorithm$Minimum bottleneck spanning tree
+Kruskal's algorithm$Graph embedding
+Kruskal's algorithm$Closure problem
+Kruskal's algorithm$Suurballe's algorithm
+Kruskal's algorithm$Force-directed graph drawing
+Kruskal's algorithm$Hopcroft–Karp algorithm
+Kruskal's algorithm$Reverse-delete algorithm
+Kruskal's algorithm$Karger's algorithm
+Kruskal's algorithm$Junction tree algorithm
+Ford–Fulkerson algorithm$Longest path problem
+Ford–Fulkerson algorithm$Ford–Fulkerson algorithm
+Ford–Fulkerson algorithm$Suurballe's algorithm
+Ford–Fulkerson algorithm$Max-flow min-cut theorem
+Ford–Fulkerson algorithm$Hopcroft–Karp algorithm
+Ford–Fulkerson algorithm$Yen's algorithm
+Ford–Fulkerson algorithm$Circulation problem
+Ford–Fulkerson algorithm$Push–relabel maximum flow algorithm
+Ford–Fulkerson algorithm$Out-of-kilter algorithm
+Ford–Fulkerson algorithm$Minimum-cost flow problem
+Ford–Fulkerson algorithm$Maximum flow problem
+Ford–Fulkerson algorithm$Approximate max-flow min-cut theorem
+Ford–Fulkerson algorithm$Dijkstra's algorithm
+Ford–Fulkerson algorithm$Flow network
+Ford–Fulkerson algorithm$Widest path problem
+Ford–Fulkerson algorithm$Dinic's algorithm
+Ford–Fulkerson algorithm$Multi-commodity flow problem
+Ford–Fulkerson algorithm$K shortest path routing
+Prim's algorithm$Euler tour technique
+Prim's algorithm$Longest path problem
+Prim's algorithm$Graph isomorphism
+Prim's algorithm$Dijkstra–Scholten algorithm
+Prim's algorithm$Gomory–Hu tree
+Prim's algorithm$Bellman–Ford algorithm
+Prim's algorithm$Kruskal's algorithm
+Prim's algorithm$Hopcroft–Karp algorithm
+Prim's algorithm$Reverse-delete algorithm
+Prim's algorithm$Edmonds' algorithm
+Prim's algorithm$Closure problem
+Prim's algorithm$Tree traversal
+Prim's algorithm$Degeneracy (graph theory)
+Prim's algorithm$Minimum bottleneck spanning tree
+Prim's algorithm$Borůvka's algorithm
+Prim's algorithm$Iterative compression
+Prim's algorithm$Bidirectional search
+Prim's algorithm$Junction tree algorithm
+Prim's algorithm$Dijkstra's algorithm
+Prim's algorithm$Stoer–Wagner algorithm
+CYK algorithm$Shunting-yard algorithm
+CYK algorithm$Recursive descent parser
+CYK algorithm$Bottom-up parsing
+CYK algorithm$LALR parser
+CYK algorithm$Left corner parser
+CYK algorithm$LL parser
+CYK algorithm$Scannerless parsing
+CYK algorithm$Simple precedence parser
+CYK algorithm$GLR parser
+CYK algorithm$Simple LR parser
+CYK algorithm$LR parser
+CYK algorithm$Inside–outside algorithm
+CYK algorithm$Tail recursive parser
+CYK algorithm$Top-down parsing
+CYK algorithm$Chart parser
+CYK algorithm$Earley parser
+CYK algorithm$Shift-reduce parser
+CYK algorithm$Recursive ascent parser
+CYK algorithm$Pratt parser
+CYK algorithm$Parsing expression grammar
+Priority queue$Skew binomial heap
+Priority queue$Linked data structure
+Priority queue$Priority queue
+Priority queue$Calendar queue in simulation
+Priority queue$List (abstract data type)
+Priority queue$Kinetic priority queue
+Priority queue$Pagoda (data structure)
+Priority queue$Double-ended queue
+Priority queue$Min-max heap
+Priority queue$Double-ended priority queue
+Priority queue$Bucket queue
+Priority queue$AF-heap
+Priority queue$Stack (abstract data type)
+Priority queue$Randomized meldable heap
+Priority queue$Leftist tree
+Priority queue$Monotone priority queue
+Priority queue$Queue (abstract data type)
+Priority queue$Van Emde Boas tree
+Bubble sort$Odd–even sort
+Bubble sort$Bubble sort
+Bubble sort$Partial sorting
+Bubble sort$Cocktail shaker sort
+Bubble sort$Insertion sort
+Bubble sort$Comb sort
+Bubble sort$Gnome sort
+Bubble sort$Merge algorithm
+Bubble sort$Shellsort
+Bubble sort$Tree sort
+Insertion sort$Library sort
+Insertion sort$Tree sort
+Insertion sort$Bubble sort
+Insertion sort$Counting sort
+Insertion sort$Cocktail shaker sort
+Insertion sort$Insertion sort
+Insertion sort$Quicksort
+Insertion sort$Shellsort
+Merge sort$Library sort
+Merge sort$Tree sort
+Merge sort$Partial sorting
+Merge sort$Pairwise sorting network
+Merge sort$Insertion sort
+Merge sort$Quicksort
+Merge sort$Bitonic sorter
+Merge sort$Sorting network
+Merge sort$Batcher odd–even mergesort
+Merge sort$Merge algorithm
+Merge sort$External sorting
+Merge sort$Integer sorting
+Merge sort$Sorting algorithm
+Merge sort$Merge sort
+Sion's minimax theorem$Fenchel's duality theorem
+Sion's minimax theorem$Duality gap
+Sion's minimax theorem$Convex analysis
+Sion's minimax theorem$Linear matrix inequality
+Sion's minimax theorem$Biconvex optimization
+Sion's minimax theorem$Wolfe conditions
+Sion's minimax theorem$In-crowd algorithm
+Sion's minimax theorem$Conic optimization
+Sion's minimax theorem$Max–min inequality
+Sion's minimax theorem$Convex optimization
+Sion's minimax theorem$Pseudoconvex function
+Sion's minimax theorem$Danskin's theorem
+Sion's minimax theorem$Stress majorization
+Sion's minimax theorem$Subderivative
+Sion's minimax theorem$Shape optimization
+Sion's minimax theorem$Basis pursuit denoising
+Sion's minimax theorem$Bregman method
+Sion's minimax theorem$Quasiconvex function
+Sion's minimax theorem$Topological derivative
+Sion's minimax theorem$Minimax theorem
+Minimax$Knuth's Simpath algorithm
+Minimax$Killer heuristic
+Minimax$Nash equilibrium
+Minimax$Expectiminimax tree
+Minimax$Variation (game tree)
+Minimax$Minimax
+Minimax$Late Move Reductions
+Minimax$Negamax
+Minimax$MTD-f
+Minimax$Search game
+Minimax$Best Node Search
+Minimax$God's algorithm
+Minimax$Combinatorial search
+Minimax$Price of stability
+Minimax$Alpha–beta pruning
+JH (hash function)$Hash list
+JH (hash function)$Grøstl
+JH (hash function)$Merkle–Damgård construction
+JH (hash function)$SHA-2
+JH (hash function)$Collision attack
+JH (hash function)$RadioGatún
+JH (hash function)$SHA-3
+JH (hash function)$Merkle tree
+JH (hash function)$Comparison of cryptographic hash functions
+JH (hash function)$SANDstorm hash
+JH (hash function)$HAS-160
+JH (hash function)$JH (hash function)
+JH (hash function)$Hash function security summary
+JH (hash function)$Cryptographic hash function
+JH (hash function)$HAS-V
+JH (hash function)$N-Hash
+JH (hash function)$Hash calendar
+Big O notation$Randomized algorithm
+Big O notation$Probabilistic analysis of algorithms
+Big O notation$Kernelization
+Big O notation$Deterministic algorithm
+Big O notation$Half-exponential function
+Big O notation$Polynomial delay
+Big O notation$Asymptotically optimal algorithm
+Big O notation$Accounting method
+Big O notation$Charging argument
+Big O notation$Cache-oblivious algorithm
+Big O notation$Bidimensionality
+Big O notation$Master theorem
+Big O notation$Pseudo-polynomial time
+Big O notation$Reservoir sampling
+Big O notation$Polylogarithmic function
+Big O notation$Time complexity
+Big O notation$Worst-case complexity
+Big O notation$Memory bound function
+Big O notation$Output-sensitive algorithm
+Big O notation$Analysis of algorithms
+Flajolet-Martin algorithm$Lossy Count Algorithm
+Flajolet-Martin algorithm$Jump-and-Walk algorithm
+Flajolet-Martin algorithm$Serial algorithm
+Flajolet-Martin algorithm$Streaming algorithm
+Flajolet-Martin algorithm$XOR swap algorithm
+Flajolet-Martin algorithm$AVT Statistical filtering algorithm
+Flajolet-Martin algorithm$In-place algorithm
+Flajolet-Martin algorithm$Driver scheduling problem
+Flajolet-Martin algorithm$Sequential algorithm
+Flajolet-Martin algorithm$Randomized rounding
+Flajolet-Martin algorithm$Distributed tree search
+Flajolet-Martin algorithm$Algorithmics
+Flajolet-Martin algorithm$HyperLogLog
+Flajolet-Martin algorithm$Spreading activation
+Flajolet-Martin algorithm$Devex algorithm
+Flajolet-Martin algorithm$Adaptive algorithm
+Flajolet-Martin algorithm$KHOPCA clustering algorithm
+Flajolet-Martin algorithm$Flajolet–Martin algorithm
+Flajolet-Martin algorithm$One-pass algorithm
+Flajolet-Martin algorithm$Boyer–Moore majority vote algorithm
+Flajolet-Martin algorithm$Communication-avoiding algorithms
+Johnson's algorithm$Knuth's Simpath algorithm
+Johnson's algorithm$Longest path problem
+Johnson's algorithm$Path-based strong component algorithm
+Johnson's algorithm$Euler tour technique
+Johnson's algorithm$Suurballe's algorithm
+Johnson's algorithm$Bellman–Ford algorithm
+Johnson's algorithm$Yen's algorithm
+Johnson's algorithm$Reverse-delete algorithm
+Johnson's algorithm$Topological sorting
+Johnson's algorithm$Closure problem
+Johnson's algorithm$Graph bandwidth
+Johnson's algorithm$Bron–Kerbosch algorithm
+Johnson's algorithm$Floyd–Warshall algorithm
+Johnson's algorithm$Dijkstra's algorithm
+Johnson's algorithm$Flow network
+Johnson's algorithm$Shortest Path Faster Algorithm
+Johnson's algorithm$Dulmage–Mendelsohn decomposition
+Johnson's algorithm$Widest path problem
+Johnson's algorithm$K shortest path routing
+Johnson's algorithm$Stoer–Wagner algorithm
+AdaBoost$Statistical classification
+AdaBoost$Support vector machine
+AdaBoost$Linear classifier
+AdaBoost$ID3 algorithm
+AdaBoost$Generalization error
+AdaBoost$BrownBoost
+AdaBoost$Winnow (algorithm)
+AdaBoost$Perceptron
+AdaBoost$Gradient boosting
+AdaBoost$Decision tree learning
+AdaBoost$Bootstrap aggregating
+AdaBoost$Cascading classifiers
+AdaBoost$AdaBoost
+AdaBoost$Boosting (machine learning)
+AdaBoost$Margin classifier
+AdaBoost$LogitBoost
+AdaBoost$Quadratic classifier
+AdaBoost$CoBoosting
