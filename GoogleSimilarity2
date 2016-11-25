@@ -1,0 +1,131 @@
+Sion's minimax theorem$Fenchel's duality theorem$0.970142500145
+Sion's minimax theorem$Duality gap$0.471705657183
+Sion's minimax theorem$Convex analysis$0.976461782654
+Sion's minimax theorem$Linear matrix inequality$0.976280104839
+Sion's minimax theorem$Biconvex optimization$0.844276599085
+Sion's minimax theorem$Wolfe conditions$0.36584493638
+Sion's minimax theorem$In-crowd algorithm$0
+Sion's minimax theorem$Conic optimization$0.56474965957
+Sion's minimax theorem$Max–min inequality$0.879738699812
+Sion's minimax theorem$Convex optimization$0.976829944744
+Sion's minimax theorem$Pseudoconvex function$0.871443834678
+Sion's minimax theorem$Danskin's theorem$0.897101923969
+Sion's minimax theorem$Stress majorization$0.389060456615
+Sion's minimax theorem$Subderivative$0.707870461031
+Sion's minimax theorem$Shape optimization$0.574937156652
+Sion's minimax theorem$Basis pursuit denoising$0.998591097603
+Sion's minimax theorem$Bregman method$0.983694420151
+Sion's minimax theorem$Quasiconvex function$0.919384485403
+Sion's minimax theorem$Topological derivative$0.367899435879
+Sion's minimax theorem$Minimax theorem$0.970359737881
+Minimax$Knuth's Simpath algorithm$0.446420486833
+Minimax$Killer heuristic$0.740255869933
+Minimax$Nash equilibrium$0.967820328278
+Minimax$Expectiminimax tree$0.99592072787
+Minimax$Variation (game tree)$0.980162792365
+Minimax$Minimax$1.0
+Minimax$Late Move Reductions$0.980643140504
+Minimax$Negamax$0.948569873193
+Minimax$MTD-f$0.87844838266
+Minimax$Search game$0.972921529337
+Minimax$Best Node Search$0.885558790799
+Minimax$God's algorithm$0.824438753449
+Minimax$Combinatorial search$0.890288352421
+Minimax$Price of stability$0.690018949495
+Minimax$Alpha–beta pruning$0.980563138147
+JH (hash function)$Hash list$0.940858003211
+JH (hash function)$Grøstl$0.990876081061
+JH (hash function)$Merkle–Damgård construction$0.99487213158
+JH (hash function)$SHA-2$0.811081137531
+JH (hash function)$Collision attack$0.929369980463
+JH (hash function)$RadioGatún$0.994914795902
+JH (hash function)$SHA-3$0.890328454869
+JH (hash function)$Merkle tree$0.748645673759
+JH (hash function)$Comparison of cryptographic hash functions$0.997631328643
+JH (hash function)$SANDstorm hash$0.991208011489
+JH (hash function)$HAS-160$0.975392719901
+JH (hash function)$JH (hash function)$1.0
+JH (hash function)$Hash function security summary$0.998228872164
+JH (hash function)$Cryptographic hash function$0.99620575161
+JH (hash function)$HAS-V$0.856077869361
+JH (hash function)$N-Hash$0.994812258492
+JH (hash function)$Hash calendar$0.990258997966
+Big O notation$Randomized algorithm$0.902637085463
+Big O notation$Probabilistic analysis of algorithms$0.982218668296
+Big O notation$Kernelization$0.901487986097
+Big O notation$Deterministic algorithm$0.978296302955
+Big O notation$Half-exponential function$0.413412861898
+Big O notation$Polynomial delay$0.484062355647
+Big O notation$Asymptotically optimal algorithm$0.996560685074
+Big O notation$Accounting method$0.815657701381
+Big O notation$Charging argument$0.95995947695
+Big O notation$Cache-oblivious algorithm$0.98811519801
+Big O notation$Bidimensionality$0.542332032424
+Big O notation$Master theorem$0.867471661912
+Big O notation$Pseudo-polynomial time$0.837483869248
+Big O notation$Reservoir sampling$0.357200302593
+Big O notation$Polylogarithmic function$0.990638590691
+Big O notation$Time complexity$0.984564060438
+Big O notation$Worst-case complexity$0.738885920504
+Big O notation$Memory bound function$0.967432236996
+Big O notation$Output-sensitive algorithm$0.844300138008
+Big O notation$Analysis of algorithms$0.987040226597
+Flajolet-Martin algorithm$Lossy Count Algorithm$0.975964444181
+Flajolet-Martin algorithm$Jump-and-Walk algorithm$0.999544456817
+Flajolet-Martin algorithm$Serial algorithm$0.965467901723
+Flajolet-Martin algorithm$Streaming algorithm$0.979844604866
+Flajolet-Martin algorithm$XOR swap algorithm$0.998251019495
+Flajolet-Martin algorithm$AVT Statistical filtering algorithm$0.439830465021
+Flajolet-Martin algorithm$In-place algorithm$0.994702472636
+Flajolet-Martin algorithm$Driver scheduling problem$0.99772120941
+Flajolet-Martin algorithm$Sequential algorithm$0.999434976687
+Flajolet-Martin algorithm$Randomized rounding$0.898177426278
+Flajolet-Martin algorithm$Distributed tree search$0.75565361221
+Flajolet-Martin algorithm$Algorithmics$0.97825327164
+Flajolet-Martin algorithm$HyperLogLog$0.962202040958
+Flajolet-Martin algorithm$Spreading activation$0.270172064339
+Flajolet-Martin algorithm$Devex algorithm$0.999274709299
+Flajolet-Martin algorithm$Adaptive algorithm$0.999554484194
+Flajolet-Martin algorithm$KHOPCA clustering algorithm$0.918446665884
+Flajolet-Martin algorithm$Flajolet–Martin algorithm$1.0
+Flajolet-Martin algorithm$One-pass algorithm$0.965241803702
+Flajolet-Martin algorithm$Boyer–Moore majority vote algorithm$0.999121655056
+Flajolet-Martin algorithm$Communication-avoiding algorithms$0.860700871308
+Johnson's algorithm$Knuth's Simpath algorithm$0.7409230309
+Johnson's algorithm$Longest path problem$0.55119457942
+Johnson's algorithm$Path-based strong component algorithm$0.490673696602
+Johnson's algorithm$Euler tour technique$0.999082073191
+Johnson's algorithm$Suurballe's algorithm$0.981257682173
+Johnson's algorithm$Bellman–Ford algorithm$0.96393526858
+Johnson's algorithm$Yen's algorithm$0.996316762778
+Johnson's algorithm$Reverse-delete algorithm$0.626746140963
+Johnson's algorithm$Topological sorting$0.868175180886
+Johnson's algorithm$Closure problem$0.606259840573
+Johnson's algorithm$Graph bandwidth$0.670306918223
+Johnson's algorithm$Bron–Kerbosch algorithm$0.681815425787
+Johnson's algorithm$Floyd–Warshall algorithm$0.966030435895
+Johnson's algorithm$Dijkstra's algorithm$0.912804917434
+Johnson's algorithm$Flow network$0.635954058592
+Johnson's algorithm$Shortest Path Faster Algorithm$0.200902694511
+Johnson's algorithm$Dulmage–Mendelsohn decomposition$0.99007907296
+Johnson's algorithm$Widest path problem$0.942202898718
+Johnson's algorithm$K shortest path routing$0.791501903528
+Johnson's algorithm$Stoer–Wagner algorithm$0.660673665415
+AdaBoost$Statistical classification$0.9360003301
+AdaBoost$Support vector machine$0.837858797224
+AdaBoost$Linear classifier$0.877960213506
+AdaBoost$ID3 algorithm$0.912744381045
+AdaBoost$Generalization error$0.887704312716
+AdaBoost$BrownBoost$0.899191811055
+AdaBoost$Winnow (algorithm)$1.0
+AdaBoost$Perceptron$0.886050057265
+AdaBoost$Gradient boosting$0.981689629996
+AdaBoost$Decision tree learning$0.986573535426
+AdaBoost$Bootstrap aggregating$0.989916624267
+AdaBoost$Cascading classifiers$0.523618392335
+AdaBoost$AdaBoost$1.0
+AdaBoost$Boosting (machine learning)$0.980374165501
+AdaBoost$Margin classifier$0.974265831246
+AdaBoost$LogitBoost$0.838493544526
+AdaBoost$Quadratic classifier$0.971831522472
+AdaBoost$CoBoosting$0.975159289423

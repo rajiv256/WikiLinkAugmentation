@@ -38,7 +38,12 @@ def giveArticlesGoogle(target,candidate,n):
     query = target+" , "+candidate
     driver = webdriver.Chrome(PATH)
     print "time1"
-    driver.get("https://www.google.com/search?q="+query)
+    socket.setdefaulttimeout(1000);
+    try:
+        driver.get("https://www.google.com/search?q="+query)
+    except socket.timeout:
+	    print "panic exception raised"
+	    return [];
     print "time2"
     length = len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
@@ -82,7 +87,7 @@ def googleSimilarity1(target,candidate,n):
     for link in htmlLinks:
 	#driver.refresh()
         print "time5"
-   	socket.setdefaulttimeout(10) 
+   	socket.setdefaulttimeout(10)
 	try:
 	    driver.get("view-source:"+link)
 	except socket.timeout:
@@ -92,7 +97,7 @@ def googleSimilarity1(target,candidate,n):
 	    continue;
 	print "time6"
         print link
-        
+
 	try:
 	    words = cleanText(driver.find_element_by_tag_name("body").text);
         except NoSuchElementException:
@@ -179,9 +184,11 @@ def CVgooglesimilarity(pagecontent,target,candidate):
 ###############################################################
 
 inputFo = open("SampleArticles","r");
-outputFo = open("GoogleSimilarity", "a");
-
+outputFo = open("GoogleSimilarity2", "a");
+i=0;
 for line in inputFo:
+    print "***************************"+str(i)+"************************"
+    i=i+1;
     target, candidate = line.split("$");
     target = target.strip();
     candidate = candidate.strip();
