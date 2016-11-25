@@ -138,6 +138,8 @@ def vectorSim(tv,cv):
     return float(xty)/(xtx+yty-xty);
 
 
+
+
 def getCandidateSimilarity(target, candidates, n):
     simDict = [];
     for candidate in candidates:
@@ -182,7 +184,7 @@ def googleSimilarity3(target, candidate, n):
             text = soup.get_text().encode('ascii','ignore')
             words = re.sub('[^A-Za-z\']+', ' ', text).split(' ')
             words = [k.lower() for k in words if len(k)!=0]
-            print words
+            # print words
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
             continue ;
@@ -197,16 +199,20 @@ def googleSimilarity3(target, candidate, n):
     return vectorSim(targetVector,candidVector);
 
 
-t=googleSimilarity3('Fibonacci Heap','Hemachandra',2)
-
+# t=googleSimilarity3('Fibonacci Heap','Binomial Heap',2)
+def mahalanobisDistance(tv,cv):
+    mu = sum([(x+y)/2.0 for (x,y) in zip(tv,cv)]);
+    mtv = [x-y for (x,y) in zip(tv,mu)]
+    mcv = [x-y for (x,y) in zip(cv,mu)]
+    return math.sqrt(sum[((v-w)*(v-w))/(x*y) for ((v,w),(x,y)) in zip(zip(tv,cv),zip(mtv,mcv))]);
 
 
 
 '''
 #############################################################
-
+'''
 inputFo = open("SampleArticles","r");
-outputFo = open("GoogleSimilarity2", "a");
+outputFo = open("GoogleSimilarity4", "a");
 i=0;
 for line in inputFo:
     print "***************************"+str(i)+"************************"
@@ -218,5 +224,3 @@ for line in inputFo:
     outputFo.flush();
 inputFo.close();
 outputFo.close();
-
-'''
