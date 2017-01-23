@@ -3,7 +3,11 @@ from selenium import webdriver
 import selenium
 import time
 from selenium.webdriver.common.keys import Keys
-import re
+
+import nltk,re
+from nltk import word_tokenize
+
+
 DEPTH = 0;
 
 stopListSmall = ["a","an","and","are","as","at","be","by","for","from","has","he","in","is","it","its","of","on","or","that","the","to","was","were","will","with",""];
@@ -45,3 +49,22 @@ def cleanText(content):
     # print len(words);
     cleancontent = " ".join(words)
     return cleancontent
+
+#returns only required slice of the entire content
+def slice(raw) :
+    return raw
+
+
+def tokenize(raw) :
+    raw = slice(raw)
+    tokens = word_tokenize(raw,'english')
+    return tokens
+
+def lemmatize(raw) :
+    tokens = tokenize(raw)
+    wnl = nltk.WordNetLemmatizer()
+    tokens = [wnl.lemmatize(t) for t in tokens]
+    ret = " ".join(tokens)
+    return ret
+
+

@@ -15,7 +15,7 @@ import math
 import urllib2
 from bs4 import BeautifulSoup as bsoup
 import re
-import variable
+
 display = Display(visible=0, size=(800, 600))
 display.start()
 #
@@ -123,9 +123,9 @@ def googleSimilarity1(target,candidate,n):
     variable.display.stop()
     #driver.close();
     try:
-	driver.close()
+	    driver.close()
     except WebDriverException:
-	pass;
+	    pass;
     return vectorSim(targetVector,candidVector);
 
 def vectorSim(tv,cv):
@@ -223,7 +223,6 @@ def mahalanobisDistance(tv,cv):
 '''
 ##################################################################
 '''
-'''
 inputFo = open("SampleArticles","r");
 outputFo = open("GoogleSimilarity4", "a");
 i=0;
@@ -238,11 +237,4 @@ for line in inputFo:
     outputFo.flush();
 inputFo.close();
 outputFo.close();
-'''
 
-
-def googlesimilarity_relarticles(target_a , relarticles , depth):
-    googlesimilarites = []
-    for article in relarticles:
-        googlesimilarites[article] = googleSimilarity3(target_a, article, depth)
-    return googlesimilarites
