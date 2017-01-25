@@ -12,14 +12,16 @@ def make_table(title , relarticles):
     target_a = ArticleClass.Article(title)
     print "article created succesfully"
     print title
-    #artlist = giveSimArtcls(target_a,0)
+    #BACKLINK
     simDict = referenceSimilarity(target_a.title,relarticles)
     print simDict
     print "reference similarity done"
+    #CONTENT SIMILARITY
     content_based_sim = contentSim(target_a,relarticles)
     content_based_sim = map(lambda p : (p[0].title ,p[1]) ,content_based_sim )
     content_based_sim = dict(content_based_sim)
     print 'content-based-similarity done'
+    #HYPERLINK
     hyperlink_similarities = hyperlinkSim(target_a,relarticles)
     hyperlink_similarities = map(lambda p : (p[0].title ,p[1]) ,hyperlink_similarities )
     hyperlink_similarities = dict(hyperlink_similarities)
@@ -42,8 +44,6 @@ def make_table_relarticles(title):
     target_a = ArticleClass.Article(title)
     print "article created succesfully"
     print title
-    # artlist = giveSimArtcls(target_a,0)
-
     relarticles = allrelevantarticles(target_a)
     if title in relarticles:
         relarticles.remove(title)
@@ -120,7 +120,6 @@ def  makesamplecase_findrelarticles( filename1 ,suggfile ,samplearticlesfile,see
     print "printing test cases"
     print testarticles
     sample = testarticles.items()
-
     Table = []
     for s in sample:
         table = make_table( s[0] , s[1] )
@@ -157,7 +156,6 @@ def normalize(table) :
             table[i][j] = l[i]
     return table
 
-#print normalize([[1,1,1,1],[2,2,2,2]])
 def split_tuple(tuple) :
     candidates = []
     sz = len(tuple[0])

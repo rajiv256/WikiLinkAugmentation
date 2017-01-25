@@ -3,11 +3,11 @@ from selenium.common.exceptions import NoSuchElementException
 import socket
 from pyvirtualdisplay import Display
 from selenium import webdriver
-import variable
+
 import selenium
 import time
 from selenium.webdriver.common.keys import Keys
-import variable
+
 import wikipedia
 import re
 from tfidf import *
@@ -18,6 +18,7 @@ import re
 
 display = Display(visible=0, size=(800, 600))
 display.start()
+import justext
 #
 #driver = webdriver.Firefox("chromedriver")
 #
@@ -108,20 +109,11 @@ def googleSimilarity1(target,candidate,n):
 	    print "NoSuchElement"
 	    continue;
 
-        # print words, tLinks;
-        # st = len(set(tLinks) & set(words))/float(len(set(tLinks)));
-        # sc = len(set(cLinks) & set(words))/float(len(set(cLinks)));
         st = sum([words.count(x) for x in tLinks])
         targetVector.append(st);
         sc = sum([words.count(x) for x in cLinks])
         candidVector.append(sc);
-        # print set(words);
-        # print link,st,sc
-        # scr += st*sc
-        # sqt += st*st
-        # sqc += sc*sc
     variable.display.stop()
-    #driver.close();
     try:
 	    driver.close()
     except WebDriverException:
@@ -146,14 +138,6 @@ def getCandidateSimilarity(target, candidates, n):
     simDict = dict ( sorted(simDict , key = lambda p : p [1] ,reverse = True) )
     return simDict;
 
-#candidates = ["Iterator", "Binary heap", "Adaptive heap sort", "Fibonacci prime", "Graph isomorphism", "Dijkstra's algorithm", "Blossom algorithm"];
-#candidates = ["Hemachandra"];
-#print getCandidateSimilarity("Fibonacci heap", candidates, 2);
-
-def CVgooglesimilarity(pagecontent,target,candidate):
-    pagetfidf = TfIdf(pagecontent)
-    DocConceptVector(pagetfidf)
-    return pagetfidf[target]*pagetfidf[candidate]
 
 ## Written by rajiv
 def googleSimilarity3(target, candidate, n):
@@ -162,35 +146,32 @@ def googleSimilarity3(target, candidate, n):
     tLinks.append(target)
     cLinks.append(candidate)
 
-    #tLinks = map(lambda p: p.lower(), tLinks)
-    #cLinks = map(lambda p: p.lower(), cLinks)
-
     tLinks = map(lambda p: variable.cleanText(p) , tLinks)
     cLinks = map(lambda p: variable.cleanText(p) , cLinks)
 
-    #tLinks = map(lambda p: p.decode('utf-8').encode('ascii', 'replace').replace('?', " "), tLinks)
-    #cLinks = map(lambda p: p.decode('utf-8').encode('ascii', 'replace').replace('?', " "), cLinks)
-
-    #print tLinks
-
     htmlLinks = giveArticlesGoogle(target, candidate, n);
     htmlLinks = htmlLinks[:10];
-    # print "HTML Links :", htmlLinks;
     targetVector = []
     candidVector = []
     driver = webdriver.Chrome(PATH)
 
     for link in htmlLinks:
-        #print link
         try :
             response = urllib2.urlopen(link)
+            '''
             html_string = response.read()
             soup = bsoup(html_string,"lxml")
             time.sleep(2.5)  # This should be there. Other wise server will raise TOO MANY REQUESTS Error
             text = soup.get_text().encode('ascii','ignore')
             text = variable.cleanText(text)
             words = text.split(" ")
-
+            '''
+            text = ''
+            paragraphs = justext.justext(response.content, justext.get_stoplist("English"))
+            for paragraph in paragraphs:
+                if not paragraph.is_boilerplate:
+                    text += paragraph.text
+            words = text.split(" ")
             print words
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
@@ -198,8 +179,6 @@ def googleSimilarity3(target, candidate, n):
         except urllib2.URLError :
             print "Error...But Its ok!"
             continue ;
-
-
         wordsLen = len(words)
         st = sum([words.count(x) for x in tLinks])
         targetVector.append(st);
