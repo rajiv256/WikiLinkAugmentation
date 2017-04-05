@@ -60,34 +60,6 @@ print "Done with htmls"
 print N
 print "setted all globals"
 
-'''
-target_a = ArticleClass.Article("Prim's algorithm")
-print len(target_a.contentTfIdf)
-d = DocConceptVector(target_a.contentTfIdf)
-print "Prim's algorithm"
-print sorted(d.items() , key = lambda p :p[1],reverse = True )[:100]
-'''
-
-'''
-target_a = ArticleClass.Article("Prim's algorithm")
-relarticles = [ "Dijkstra's algorithm"]
-
-print target_a.summryTfIdf
-
-d = SummarySim(target_a,relarticles)
-
-print d
-#print "Dijsktra algorithm"
-#print sorted(d.items() , key = lambda p :p[1],reverse = True )[:100]
-'''
-
-'''
-target_a = ArticleClass.Article("Boundary particle method")
-target_a = fill_links(target_a)
-print target_a.hyperlinks
-'''
-
-
 
 start = time.time()
 
@@ -102,17 +74,13 @@ testcases = ["Double-ended queue","Stack (abstract data type)","Iterator","Dijks
                  "Johnson's algorithm","AdaBoost"]
 '''
 
-#links = map(lambda p : (p , see_also(p) ) , testcases)
-#map( lambda p :see_also_or_not(p[0] , p[1] ) , links)
+#gives candidates
 makesamplecase_relarticleswrite(testcases , "testing/smalltescase1")
 
+
+#gives candidates scores
 makesamplecase_findrelarticles( "testing/small_outputfile1" , "testing/small_suggestions1.txt" ,
                                 "testing/smalltescase1" , "testing/Actual_see_also_new1" )
-
-# table  = make_table("Queue (abstract data type)")
-# print table
-# writeToFile(table)
-
 
 end =time.time()
 print (end-start)
