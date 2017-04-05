@@ -136,7 +136,12 @@ def vectorSim(tv,cv):
     xty = sum([x*y for (x,y) in zip(tv,cv)]);
     return float(xty)/(xtx+yty-xty+0.00001);
 
+def eucledianSim(tv,cv):
+    sum = 0
+    for i in range(len(tv)):
+        sum += (tv[i]-cv[i])**2
 
+    return ((1.0)/float(math.sqrt(sum)+1))
 
 
 def getCandidateSimilarity(target, candidates, n):
@@ -191,25 +196,27 @@ def googleSimilarity3(target, candidate, n):
             text = variable.cleanText(text)
             words = text.split(" ")
 
-            print words
+            print len(words)
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
-            continue ;
+            continue
         except urllib2.URLError :
             print "Error...But Its ok!"
-            continue ;
+            continue
 
 
         wordsLen = len(words)
         st = sum([words.count(x) for x in tLinks])
-        targetVector.append(st);
+        targetVector.append(st)
         sc = sum([words.count(x) for x in cLinks])
-        candidVector.append(sc);
-    return vectorSim(targetVector,candidVector);
+        candidVector.append(sc)
+    return eucledianSim(targetVector,candidVector)
 
-
-# t=googleSimilarity3('Double-ended queue','Kinetic priority queue',2)
+# start = time.time()
+# t=googleSimilarity3('Text mining','Concept mining',2)
 # print t
+# end  = time.time()
+# print (end-start)
 # t=googleSimilarity3('Fibonacci Heap','Binomial Heap',2)
 '''
 def mahalanobisDistance(tv,cv):
@@ -220,21 +227,24 @@ def mahalanobisDistance(tv,cv):
 '''
 
 
-'''
+
 ##################################################################
-'''
-inputFo = open("SampleArticles","r");
-outputFo = open("GoogleSimilarity4", "a");
+
+inputFo = open("SampleArticles_new","r")
+outputFo = open("GoogleSimilarity3_euclidean_new", "a")
 i=0;
 for line in inputFo:
-    print "***************************"+str(i)+"************************"
+    #print "***************************"+str(i)+"************************"
     i=i+1;
-    target, candidate = line.split("$");
-    target = target.strip();
-    candidate = candidate.strip();
-    print target,candidate
-    outputFo.write(target+"$"+candidate+"$"+str(googleSimilarity3(target, candidate,2))+"\n");
-    outputFo.flush();
-inputFo.close();
-outputFo.close();
+    target, candidate,score = line.split("$")
+    target = target.strip()
+    candidate = candidate.strip()
+    if ((float(score) < 0.001) | ("Main category" in candidate)):
+        continue
+    ans = str(googleSimilarity3(target, candidate,2))
+    print target,candidate,ans
+    outputFo.write(target+"$"+candidate+"$"+ ans +"\n")
+    outputFo.flush()
+inputFo.close()
+outputFo.close()
 
