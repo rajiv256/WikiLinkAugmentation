@@ -193,19 +193,17 @@ def googleSimilarity3(target, candidate, n):
     #cLinks = wikipedia.page(candidate).links
     tLinks.append(target)
     cLinks.append(candidate)
-    if '' in tLinks:
-        tLinks.remove('')
-    if '' in cLinks:
-        cLinks.remove('')
+
+    tLinks = list(filter(lambda p: p != '', tLinks))
+    cLinks = list(filter(lambda p: p != '', cLinks))
     #tLinks = map(lambda p: p.lower(), tLinks)
     #cLinks = map(lambda p: p.lower(), cLinks)
 
     tLinks = map(lambda p: variable.cleanText(p) , tLinks)
     cLinks = map(lambda p: variable.cleanText(p) , cLinks)
-    if '' in tLinks:
-        tLinks.remove('')
-    if '' in cLinks:
-        cLinks.remove('')
+
+    tLinks = list(filter(lambda p : p != '' , tLinks))
+    cLinks = list(filter(lambda p: p != '', cLinks))
 
     tLinks = list(set(tLinks))
     cLinks = list(set(cLinks))
@@ -275,7 +273,7 @@ def mahalanobisDistance(tv,cv):
 ##################################################################
 
 inputFo = open("NewTesting/Adaboost_relarticles_2008","r")
-outputFo = open("NewTesting/GoogleSimilarity3_Adaboost_relarticles_2008", "w")
+outputFo = open("NewTesting/GoogleSimilarity3_AdaBoost_relarticles_2008", "w")
 i=0;
 cand_score = {}
 target = ''
@@ -300,7 +298,7 @@ outputFo.close()
 #sorting candidates according to scores.
 sorted_candidates = sorted(cand_score.items(), key=operator.itemgetter(1), reverse=True)
 
-outputFo = open("NewTesting/GoogleSimilarity3_Adaboost_relarticles_2008", "w")
+outputFo = open("NewTesting/GoogleSimilarity3_AdaBoost_relarticles_2008", "w")
 for cand in sorted_candidates:
     outputFo.write(target+"$" + cand[1][1] + "$"+cand[0]+"$"+ cand[1][0]+"\n")
 outputFo.flush()
