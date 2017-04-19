@@ -15,6 +15,8 @@ import math
 import urllib2
 from bs4 import BeautifulSoup as bsoup
 import re
+import operator
+import httplib
 
 display = Display(visible=0, size=(800, 600))
 display.start()
@@ -38,6 +40,7 @@ display.start()
 variable.display.start()
 #PATH = "/home/sahiti/NLP/Project2/chromedriver"
 PATH = "./chromedriver"
+
 def giveArticlesGoogle(target,candidate,n):
 
     query = target+" , "+candidate
@@ -48,7 +51,10 @@ def giveArticlesGoogle(target,candidate,n):
         driver.get("https://www.google.com/search?q="+query)
     except socket.timeout:
 	    print "panic exception raised"
-	    return [];
+	    return []
+    except httplib.BadStatusLine:
+        print "HTTP bad status line"
+        return []
     print "time2"
     length = len(driver.find_elements_by_css_selector('h3'))
     results = map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
@@ -62,7 +68,7 @@ def giveArticlesGoogle(target,candidate,n):
         results += map(lambda p: p.find_element_by_tag_name("a").get_attribute("href"), driver.find_elements_by_css_selector('h3')[:length-1])
         print len(results);
 
-    noWiki = filter(lambda y: (y.find("wikivisually.com")==-1 and y.find("wikiwand.com")==-1 and y.find("wikipedia.org") == -1 and y.find(".pdf") == -1 and y.find("www.youtube.com") == -1 and y.find("books.google.co") == -1) and y.find(".ppt")==-1 and y.find(".ps")==-1, results)
+    noWiki = filter(lambda y: (y.find("wikivisually.com")==-1 and y.find("wikiwand.com")==-1 and y.find("wikipedia.org") == -1 and y.find(".pdf") == -1 and y.find("www.youtube.com") == -1 and y.find("books.google.co") == -1) and y.find("github.com/") == -1 and y.find(".ppt")==-1 and y.find(".ps")==-1, results)
     print len(noWiki);
     #variable.display.stop()
 #    driver.close()
@@ -160,19 +166,49 @@ def CVgooglesimilarity(pagecontent,target,candidate):
     DocConceptVector(pagetfidf)
     return pagetfidf[target]*pagetfidf[candidate]
 
+FILENAME = 'NewTesting/Extracted_text_adaboost/out_links.txt'
+def get_older_links(article):
+    f = open(FILENAME , 'r') ;
+    line = f.readline();
+    while line:
+        items = line.split(":")
+        if(items[0].lower() == article.lower()):
+            if ('[' not in items[1]) :
+                return []
+            else:
+                s = items[1].split('[')[1].split(']')[0].split(',')
+                links = [n.strip() for n in s]
+                return links
+        line = f.readline()
+    f.close()
+    return []
+
 ## Written by rajiv
 def googleSimilarity3(target, candidate, n):
-    tLinks = wikipedia.page(target).links
-    cLinks = wikipedia.page(candidate).links
+
+    tLinks = get_older_links(target)
+    cLinks = get_older_links(candidate)
+
+    #tLinks = wikipedia.page(target).links
+    #cLinks = wikipedia.page(candidate).links
     tLinks.append(target)
     cLinks.append(candidate)
-
+    if '' in tLinks:
+        tLinks.remove('')
+    if '' in cLinks:
+        cLinks.remove('')
     #tLinks = map(lambda p: p.lower(), tLinks)
     #cLinks = map(lambda p: p.lower(), cLinks)
 
     tLinks = map(lambda p: variable.cleanText(p) , tLinks)
     cLinks = map(lambda p: variable.cleanText(p) , cLinks)
+    if '' in tLinks:
+        tLinks.remove('')
+    if '' in cLinks:
+        cLinks.remove('')
 
+    tLinks = list(set(tLinks))
+    cLinks = list(set(cLinks))
     #tLinks = map(lambda p: p.decode('utf-8').encode('ascii', 'replace').replace('?', " "), tLinks)
     #cLinks = map(lambda p: p.decode('utf-8').encode('ascii', 'replace').replace('?', " "), cLinks)
 
@@ -180,13 +216,14 @@ def googleSimilarity3(target, candidate, n):
 
     htmlLinks = giveArticlesGoogle(target, candidate, n);
     htmlLinks = htmlLinks[:10];
-    # print "HTML Links :", htmlLinks;
+    #print "HTML Links :", htmlLinks;
     targetVector = []
     candidVector = []
     driver = webdriver.Chrome(PATH)
-
+    print tLinks
+    print cLinks
     for link in htmlLinks:
-        #print link
+        print link
         try :
             response = urllib2.urlopen(link)
             html_string = response.read()
@@ -195,8 +232,8 @@ def googleSimilarity3(target, candidate, n):
             text = soup.get_text().encode('ascii','ignore')
             text = variable.cleanText(text)
             words = text.split(" ")
-
             print len(words)
+
         except urllib2.HTTPError :
             print "HTTP Error raised. This happens."
             continue
@@ -206,11 +243,18 @@ def googleSimilarity3(target, candidate, n):
 
 
         wordsLen = len(words)
+
+        #print words
+        words = " ".join(words)
         st = sum([words.count(x) for x in tLinks])
         targetVector.append(st)
+        sc = [words.count(x) for x in cLinks]
+#        print sc
         sc = sum([words.count(x) for x in cLinks])
         candidVector.append(sc)
-    return eucledianSim(targetVector,candidVector)
+    print targetVector
+    print candidVector
+    return vectorSim(targetVector,candidVector)
 
 # start = time.time()
 # t=googleSimilarity3('Text mining','Concept mining',2)
@@ -230,22 +274,36 @@ def mahalanobisDistance(tv,cv):
 
 ##################################################################
 
-inputFo = open("SampleArticles_new","r")
-outputFo = open("GoogleSimilarity3_euclidean_new", "a")
+inputFo = open("NewTesting/Adaboost_relarticles_2008","r")
+outputFo = open("NewTesting/GoogleSimilarity3_Adaboost_relarticles_2008", "w")
 i=0;
+cand_score = {}
+target = ''
+#inputFo = ['Hierarchical clustering$ Cluster analysis$Cluster analysis$0.3146116143073884' ]
 for line in inputFo:
     #print "***************************"+str(i)+"************************"
     i=i+1;
-    target, candidate,score = line.split("$")
+    target, category ,candidate,score = line.split("$")
     target = target.strip()
     candidate = candidate.strip()
-    if ((float(score) < 0.001) | ("Main category" in candidate)):
+    if ((float(score) < 0.001) | ("Main Category" in candidate)):
         continue
+    print candidate
     ans = str(googleSimilarity3(target, candidate,2))
     print target,candidate,ans
-    outputFo.write(target+"$"+candidate+"$"+ ans +"\n")
+    cand_score[candidate] = (ans , category) ;
+    outputFo.write(target+"$" + category + "$"+candidate+"$"+ ans +"\n")
     outputFo.flush()
+
 inputFo.close()
+outputFo.close()
+#sorting candidates according to scores.
+sorted_candidates = sorted(cand_score.items(), key=operator.itemgetter(1), reverse=True)
+
+outputFo = open("NewTesting/GoogleSimilarity3_Adaboost_relarticles_2008", "w")
+for cand in sorted_candidates:
+    outputFo.write(target+"$" + cand[1][1] + "$"+cand[0]+"$"+ cand[1][0]+"\n")
+outputFo.flush()
 outputFo.close()
 
 #########################
